@@ -6,65 +6,90 @@
 //
 
 import SwiftUI
-import RealityKit
-import ARKit
+
+enum ActiveTab: Int {
+    case home = 0
+    case glass = 1
+    case bag = 2
+}
 
 struct ContentView : View {
-        
+    
+    @State private var activeTab: ActiveTab = .glass
+    
     var body: some View {
-        ARViewContainer()
-            .edgesIgnoringSafeArea(.all)
+        let homeView = WebView(selectedTab: .home)
+        let glassView = WebView(selectedTab: .glass)
+        let bagView = WebView(selectedTab: .bag)
+        
+        TabView(selection: $activeTab) {
+            VStack {
+                HStack {
+                    Button {
+                        homeView.openMenu()
+                    } label: {
+                        Image("menuButtonIcon")
+                            .renderingMode(.template)
+                    }
+                    .padding()
+                    Spacer()
+                }
+                homeView
+            }
+            .tabItem {
+                Image("tabItem.home")
+                    .renderingMode(.template)
+            }
+            .tag(ActiveTab.home)
+            
+            VStack {
+                HStack {
+                    Button {
+                        glassView.openMenu()
+                    } label: {
+                        Image("menuButtonIcon")
+                            .renderingMode(.template)
+                    }
+                    .padding()
+                    Spacer()
+                }
+                glassView
+            }
+            .tabItem {
+                Image("tabItem.glasses")
+                    .renderingMode(.template)
+            }
+            .tag(ActiveTab.glass)
+            
+            VStack {
+                HStack {
+                    Button {
+                        bagView.openMenu()
+                    } label: {
+                        Image("menuButtonIcon")
+                            .renderingMode(.template)
+                    }
+                    .padding()
+                    Spacer()
+                }
+                bagView
+                    .onAppear {
+                        bagView.reload()
+                    }
+            }
+            .tabItem {
+                VStack {
+                    Image("tabItem.bag")
+                        .renderingMode(.template)
+                }
+            }
+            .tag(ActiveTab.bag)
+        }
     }
 }
 
-struct ARViewContainer: UIViewRepresentable {
-    
-    func makeUIView(context: Context) -> ARView {
-        let arView = ARView(frame: .zero)
-        arView.renderOptions = [.disablePersonOcclusion]
-        
-        let faceTrackingConfig = ARFaceTrackingConfiguration()
-        arView.session.run(faceTrackingConfig, options: [.resetTracking, .removeExistingAnchors])
-        
-        loadModel(arView)
-
-        return arView
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
-    
-    func updateUIView(_ uiView: ARView, context: Context) {}
-    
-    private func loadModel(_ arView: ARView) {
-        let url = URL(string: "https://gressotest.s3.us-east-2.amazonaws.com/santiago/Santiago.reality")
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let destination = documents.appendingPathComponent(url!.lastPathComponent)
-        let session = URLSession(configuration: .default,
-                                 delegate: nil,
-                                 delegateQueue: nil)
-        
-        var request = URLRequest(url: url!)
-        request.httpMethod = "GET"
-        
-        let downloadTask = session.downloadTask(with: request, completionHandler: { (location: URL?,
-                                                                                     response: URLResponse?,
-                                                                                     error: Error?) -> Void in
-            let fileManager = FileManager.default
-            
-            if fileManager.fileExists(atPath: destination.path) {
-                try! fileManager.removeItem(atPath: destination.path)
-            }
-            try! fileManager.moveItem(atPath: location!.path,
-                                      toPath: destination.path)
-            
-            DispatchQueue.main.async {
-                do {
-                    let model = try Entity.loadAnchor(contentsOf: destination)
-                    arView.scene.addAnchor(model)
-                } catch {
-                    print("Fail loading entity.")
-                }
-            }
-        })
-        downloadTask.resume()
-    }
-    
 }
