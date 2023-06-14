@@ -10,59 +10,78 @@ import UIKit
 import WebKit
 
 struct WebView: UIViewRepresentable {
-    
-    private let urlString: String
-    
-    init(selectedTab: ActiveTab) {
-        switch selectedTab {
-        case .home:
-            urlString = "https://gresso.com"
-        case .glass:
-            urlString = "https://gresso.com/pages/ar"
-        case .bag:
-            urlString = "https://gresso.com/cart"
-        }
-    }
-    
-    let baseWebView = BaseWebView()
+    typealias UIViewType = BaseWebView
+
+    let webView: BaseWebView
     
     func makeUIView(context: Context) -> BaseWebView {
-        baseWebView
+        webView
     }
     
-    func updateUIView(_ uiView: BaseWebView, context: Context) {
+    func updateUIView(_ uiView: BaseWebView, context: Context) { }
+}
+
+final class WebViewModel: ObservableObject {
+    
+    @Published var canGoBack: Bool = false
+    
+    let webView: BaseWebView
+    
+    init(urlString: String) {
+        webView = BaseWebView(frame: .zero)
+        
         guard let url = URL(string: urlString) else { return }
-        uiView.load(URLRequest(url: url))
+        webView.load(URLRequest(url: url))
+        
+        setupBindings()
+    }
+    
+    private func setupBindings() {
+        webView.publisher(for: \.canGoBack)
+            .assign(to: &$canGoBack)
+    }
+    
+    func goBack() {
+        webView.goBack()
     }
     
     func openMenu() {
-        baseWebView.openMenu()
+        webView.openMenu()
     }
     
     func reload() {
-        guard let url = URL(string: urlString) else { return }
-        baseWebView.load(URLRequest(url: url))
+        webView.reload()
     }
 }
 
-final class BaseWebView: WKWebView, WKNavigationDelegate {
-    
+final class BaseWebView: WKWebView {
+        
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
-        customUserAgent = "Gresso"
         
+        allowsBackForwardNavigationGestures = true
+        customUserAgent = "Gresso"
         addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+        removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
+    }
+    
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        let estimatedProgress = Float(estimatedProgress)
         if keyPath == "estimatedProgress" {
+            let estimatedProgress = Float(estimatedProgress)
             guard estimatedProgress >= 0.1 else { return }
             removeHeaderFooter()
+        }
+        if keyPath == #keyPath(WKWebView.canGoBack) {
+            print("###", canGoBack)
         }
     }
     

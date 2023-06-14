@@ -17,21 +17,36 @@ struct ContentView : View {
     
     @State private var activeTab: ActiveTab = .glass
     
+    @StateObject var homeModel = WebViewModel(urlString: "https://gresso.com")
+    @StateObject var glassModel = WebViewModel(urlString: "https://gresso.com/pages/ar")
+    @StateObject var bagModel = WebViewModel(urlString: "https://gresso.com/cart")
+    
     var body: some View {
-        let homeView = WebView(selectedTab: .home)
-        let glassView = WebView(selectedTab: .glass)
-        let bagView = WebView(selectedTab: .bag)
+        let homeView = WebView(webView: homeModel.webView)
+        let glassView = WebView(webView: glassModel.webView)
+        let bagView = WebView(webView: bagModel.webView)
         
         TabView(selection: $activeTab) {
             VStack {
                 HStack {
                     Button {
-                        homeView.openMenu()
+                        homeModel.openMenu()
                     } label: {
                         Image("menuButtonIcon")
                             .renderingMode(.template)
                     }
                     .padding()
+                    
+                    if homeModel.canGoBack {
+                        Button {
+                            homeModel.goBack()
+                        } label: {
+                            Image(systemName: "chevron.backward")
+                                .renderingMode(.template)
+                        }
+                        .padding()
+                    }
+                    
                     Spacer()
                 }
                 homeView
@@ -45,12 +60,13 @@ struct ContentView : View {
             VStack {
                 HStack {
                     Button {
-                        glassView.openMenu()
+                        glassModel.goBack()
                     } label: {
-                        Image("menuButtonIcon")
+                        Image(systemName: "chevron.backward")
                             .renderingMode(.template)
                     }
                     .padding()
+                    .disabled(!glassModel.canGoBack)
                     Spacer()
                 }
                 glassView
@@ -64,17 +80,18 @@ struct ContentView : View {
             VStack {
                 HStack {
                     Button {
-                        bagView.openMenu()
+                        bagModel.goBack()
                     } label: {
-                        Image("menuButtonIcon")
+                        Image(systemName: "chevron.backward")
                             .renderingMode(.template)
                     }
                     .padding()
+                    .disabled(!bagModel.canGoBack)
                     Spacer()
                 }
                 bagView
                     .onAppear {
-                        bagView.reload()
+                        bagModel.reload()
                     }
             }
             .tabItem {
