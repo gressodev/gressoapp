@@ -15,11 +15,20 @@ enum ActiveTab: Int {
 
 struct ContentView : View {
     
+    @State private var destination: URL?
+    
+    @State private var showingAR = false
+    
+    @StateObject private var viewModel = ViewModel()
+    
     @State private var activeTab: ActiveTab = .glass
     
     @StateObject var homeModel = WebViewModel(urlString: "https://gresso.com")
     @StateObject var glassModel = WebViewModel(urlString: "https://gresso.com/pages/ar")
     @StateObject var bagModel = WebViewModel(urlString: "https://gresso.com/cart")
+    
+    @State private var doGlassesHaveModel = false
+    @State private var isModelLoading = false
     
     var body: some View {
         let homeView = WebView(webView: homeModel.webView)
@@ -48,6 +57,20 @@ struct ContentView : View {
                     }
                     
                     Spacer()
+                    
+                    if doGlassesHaveModel {
+                        Button {
+                            showingAR = true
+                        } label: {
+                            Image("virtualTryOnIcon")
+                                .renderingMode(.template)
+                                .frame(maxHeight: 16)
+                        }
+                        .padding()
+                    } else if isModelLoading {
+                        ProgressView()
+                            .padding()
+                    }
                 }
                 homeView
             }
@@ -102,6 +125,34 @@ struct ContentView : View {
             }
             .tag(ActiveTab.bag)
         }
+        .sheet(isPresented: $showingAR) {
+            if let destination {
+                ARViewContainer(destination: destination)
+                    .edgesIgnoringSafeArea(.all)
+            }
+        }
+        .onChange(of: homeModel.urlChanges) { url in
+            guard let url else { return }
+            
+            var query: String
+            if #available(iOS 16.0, *) {
+                query = url.query() ?? ""
+            } else {
+                query = url.query ?? ""
+            }
+            isModelLoading = true
+            viewModel.downloadGlasses(with: url.lastPathComponent, query, completion: { url in
+                DispatchQueue.main.async {
+                    if let url {
+                        destination = url
+                        doGlassesHaveModel = true
+                    } else {
+                        doGlassesHaveModel = false
+                    }
+                    isModelLoading = false
+                }
+            })
+        }
     }
 }
 
@@ -109,4 +160,17 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
+}
+
+import Factory
+
+final class ViewModel: ObservableObject {
+    
+    @Injected(\.loadGlassesService) private var loadGlassesService
+    
+    func downloadGlasses(with modelName: String, _ colorName: String, completion: @escaping (URL?) -> Void) {
+        loadGlassesService.loadModel(with: modelName, colorName, completion: completion)
+//        loadGlassesService.loadModels(with: modelName, completion: completion)
+    }
+    
 }

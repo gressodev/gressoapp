@@ -24,6 +24,7 @@ struct WebView: UIViewRepresentable {
 final class WebViewModel: ObservableObject {
     
     @Published var canGoBack: Bool = false
+    @Published var urlChanges: URL? = nil
     
     let webView: BaseWebView
     
@@ -39,6 +40,9 @@ final class WebViewModel: ObservableObject {
     private func setupBindings() {
         webView.publisher(for: \.canGoBack)
             .assign(to: &$canGoBack)
+        
+        webView.publisher(for: \.url)
+            .assign(to: &$urlChanges)
     }
     
     func goBack() {
@@ -62,7 +66,6 @@ final class BaseWebView: WKWebView {
         allowsBackForwardNavigationGestures = true
         customUserAgent = "Gresso"
         addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        addObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack), options: .new, context: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -71,7 +74,6 @@ final class BaseWebView: WKWebView {
     
     deinit {
         removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-        removeObserver(self, forKeyPath: #keyPath(WKWebView.canGoBack))
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -79,9 +81,6 @@ final class BaseWebView: WKWebView {
             let estimatedProgress = Float(estimatedProgress)
             guard estimatedProgress >= 0.1 else { return }
             removeHeaderFooter()
-        }
-        if keyPath == #keyPath(WKWebView.canGoBack) {
-            print("###", canGoBack)
         }
     }
     
