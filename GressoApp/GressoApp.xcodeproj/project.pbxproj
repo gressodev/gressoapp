@@ -7,29 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B2D099B17BCBD58E02F577F /* Pods_GressoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7C9FEC5F0653B9033FF1F4D /* Pods_GressoApp.framework */; };
 		F5396D672A30E6E50059E331 /* GressoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5396D662A30E6E50059E331 /* GressoAppApp.swift */; };
 		F5396D692A30E6E50059E331 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5396D682A30E6E50059E331 /* ContentView.swift */; };
 		F5396D6B2A30E6E90059E331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5396D6A2A30E6E90059E331 /* Assets.xcassets */; };
 		F5396D6E2A30E6E90059E331 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5396D6D2A30E6E90059E331 /* Preview Assets.xcassets */; };
+		F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */; };
+		F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */; };
 		F584DFCA2A349965002517FD /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F584DFC92A349965002517FD /* WebView.swift */; };
 		F584DFCE2A34F0A7002517FD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */; };
-		F5A82A742A39F3E000B033EF /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = F5A82A732A39F3E000B033EF /* Factory */; };
-		F5A82A772A39F41B00B033EF /* Factory+Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A82A762A39F41B00B033EF /* Factory+Register.swift */; };
-		F5A82A792A3A3C9100B033EF /* LoadGlassesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5A82A782A3A3C9100B033EF /* LoadGlassesService.swift */; };
 		F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E7C89B6D35279DF90857E08A /* Pods-GressoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GressoApp.release.xcconfig"; path = "Target Support Files/Pods-GressoApp/Pods-GressoApp.release.xcconfig"; sourceTree = "<group>"; };
+		F2A9727F84C6265F59F48430 /* Pods-GressoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GressoApp.debug.xcconfig"; path = "Target Support Files/Pods-GressoApp/Pods-GressoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		F5396D632A30E6E50059E331 /* GressoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GressoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5396D662A30E6E50059E331 /* GressoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GressoAppApp.swift; sourceTree = "<group>"; };
 		F5396D682A30E6E50059E331 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F5396D6A2A30E6E90059E331 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5396D6D2A30E6E90059E331 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3ServiceHandler.swift; sourceTree = "<group>"; };
+		F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFittingRoomView.swift; sourceTree = "<group>"; };
 		F584DFC92A349965002517FD /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
-		F5A82A762A39F41B00B033EF /* Factory+Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Factory+Register.swift"; sourceTree = "<group>"; };
-		F5A82A782A3A3C9100B033EF /* LoadGlassesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadGlassesService.swift; sourceTree = "<group>"; };
 		F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		F7C9FEC5F0653B9033FF1F4D /* Pods_GressoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GressoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,18 +40,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5A82A742A39F3E000B033EF /* Factory in Frameworks */,
+				2B2D099B17BCBD58E02F577F /* Pods_GressoApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B801C65EDFB2183C112CC6AE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7C9FEC5F0653B9033FF1F4D /* Pods_GressoApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DDE9DD00B7232C2E1ED8E8B9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F2A9727F84C6265F59F48430 /* Pods-GressoApp.debug.xcconfig */,
+				E7C89B6D35279DF90857E08A /* Pods-GressoApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F5396D5A2A30E6E50059E331 = {
 			isa = PBXGroup;
 			children = (
 				F5396D652A30E6E50059E331 /* GressoApp */,
 				F5396D642A30E6E50059E331 /* Products */,
+				DDE9DD00B7232C2E1ED8E8B9 /* Pods */,
+				B801C65EDFB2183C112CC6AE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,8 +89,8 @@
 				F5396D682A30E6E50059E331 /* ContentView.swift */,
 				F584DFC92A349965002517FD /* WebView.swift */,
 				F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */,
-				F5A82A752A39F41100B033EF /* DI */,
-				F5A82A5C2A39F14D00B033EF /* NetworkService */,
+				F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */,
+				F5A82A5C2A39F14D00B033EF /* Services */,
 				F5396D6A2A30E6E90059E331 /* Assets.xcassets */,
 				F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */,
 				F5396D6C2A30E6E90059E331 /* Preview Content */,
@@ -84,20 +106,12 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		F5A82A5C2A39F14D00B033EF /* NetworkService */ = {
+		F5A82A5C2A39F14D00B033EF /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				F5A82A782A3A3C9100B033EF /* LoadGlassesService.swift */,
+				F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */,
 			);
-			path = NetworkService;
-			sourceTree = "<group>";
-		};
-		F5A82A752A39F41100B033EF /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				F5A82A762A39F41B00B033EF /* Factory+Register.swift */,
-			);
-			path = DI;
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,9 +121,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F5396D712A30E6E90059E331 /* Build configuration list for PBXNativeTarget "GressoApp" */;
 			buildPhases = (
+				6243332DE28F603A7C11A22B /* [CP] Check Pods Manifest.lock */,
 				F5396D5F2A30E6E50059E331 /* Sources */,
 				F5396D602A30E6E50059E331 /* Frameworks */,
 				F5396D612A30E6E50059E331 /* Resources */,
+				6D41CBF4D979FFCA9C16A616 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -117,7 +133,6 @@
 			);
 			name = GressoApp;
 			packageProductDependencies = (
-				F5A82A732A39F3E000B033EF /* Factory */,
 			);
 			productName = GressoApp;
 			productReference = F5396D632A30E6E50059E331 /* GressoApp.app */;
@@ -148,7 +163,6 @@
 			);
 			mainGroup = F5396D5A2A30E6E50059E331;
 			packageReferences = (
-				F5A82A722A39F3E000B033EF /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			productRefGroup = F5396D642A30E6E50059E331 /* Products */;
 			projectDirPath = "";
@@ -172,17 +186,59 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6243332DE28F603A7C11A22B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-GressoApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6D41CBF4D979FFCA9C16A616 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GressoApp/Pods-GressoApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-GressoApp/Pods-GressoApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GressoApp/Pods-GressoApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F5396D5F2A30E6E50059E331 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5A82A792A3A3C9100B033EF /* LoadGlassesService.swift in Sources */,
+				F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */,
 				F584DFCA2A349965002517FD /* WebView.swift in Sources */,
 				F5396D692A30E6E50059E331 /* ContentView.swift in Sources */,
 				F5396D672A30E6E50059E331 /* GressoAppApp.swift in Sources */,
 				F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */,
-				F5A82A772A39F41B00B033EF /* Factory+Register.swift in Sources */,
+				F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,6 +361,7 @@
 		};
 		F5396D722A30E6E90059E331 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F2A9727F84C6265F59F48430 /* Pods-GressoApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -346,6 +403,7 @@
 		};
 		F5396D732A30E6E90059E331 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7C89B6D35279DF90857E08A /* Pods-GressoApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -407,25 +465,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		F5A82A722A39F3E000B033EF /* XCRemoteSwiftPackageReference "Factory" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hmlongco/Factory.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		F5A82A732A39F3E000B033EF /* Factory */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5A82A722A39F3E000B033EF /* XCRemoteSwiftPackageReference "Factory" */;
-			productName = Factory;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5396D5B2A30E6E50059E331 /* Project object */;
 }

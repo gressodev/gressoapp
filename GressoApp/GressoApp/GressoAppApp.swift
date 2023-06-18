@@ -6,9 +6,17 @@
 //
 
 import SwiftUI
+import AWSCore
 
 @main
 struct GressoAppApp: App {
+    
+    init() {
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .USEast2, identityPoolId: "us-east-2:8b7fcad8-4407-4d04-a0bd-2e134d84e98d")
+        let configuration = AWSServiceConfiguration(region: .USEast2, credentialsProvider: credentialsProvider)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

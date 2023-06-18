@@ -11,9 +11,11 @@ import ARKit
 
 struct ARViewContainer: UIViewRepresentable {
     
-    let arView = ARView(frame: .zero)
+    private let arView = ARView(frame: .zero)
     
-    let destination: URL
+    let destinations: [URL]
+    @Binding var currentIndex: Int
+    @State private var currentDestination: URL?
     
     func makeUIView(context: Context) -> ARView {
         arView.renderOptions = [.disablePersonOcclusion]
@@ -21,32 +23,42 @@ struct ARViewContainer: UIViewRepresentable {
         let faceTrackingConfig = ARFaceTrackingConfiguration()
         arView.session.run(faceTrackingConfig, options: [.resetTracking, .removeExistingAnchors])
         
-        loadModel(destination: destination)
+        let tap = UITapGestureRecognizer(target: context.coordinator,
+                                         action: #selector(context.coordinator.handleTap(_:)))
+        arView.addGestureRecognizer(tap)
         
         return arView
     }
     
-    func updateUIView(_ uiView: ARView, context: Context) {}
-    
-    private func loadModel(destination: URL) {
-        DispatchQueue.main.async {
+    func updateUIView(_ uiView: ARView, context: Context) {
+        uiView.scene.anchors.removeAll()
+        
+        if let currentDestination {
             do {
-                let model = try Entity.loadAnchor(contentsOf: destination)
-                arView.scene.addAnchor(model)
+                let anchor = AnchorEntity()
+                let model = try Entity.loadAnchor(contentsOf: currentDestination)
+                anchor.addChild(model)
+                uiView.scene.addAnchor(anchor)
             } catch {
-                print("Fail loading entity.")
+                print("Fail loading entity.", error.localizedDescription)
             }
         }
     }
     
-    private func loadModels(destination: URL) {
-        DispatchQueue.main.async {
-            do {
-                let model = try Entity.loadAnchor(contentsOf: destination)
-                arView.scene.addAnchor(model)
-            } catch {
-                print("Fail loading entity.")
-            }
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, UIGestureRecognizerDelegate {
+        var parent: ARViewContainer
+        
+        init(_ parent: ARViewContainer) {
+            self.parent = parent
+        }
+        
+        @objc func handleTap(_ sender: UITapGestureRecognizer) {
+            parent.currentDestination = parent.destinations[parent.currentIndex]
         }
     }
+    
 }

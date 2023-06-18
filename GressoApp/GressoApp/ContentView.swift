@@ -15,11 +15,11 @@ enum ActiveTab: Int {
 
 struct ContentView : View {
     
-    @State private var destination: URL?
+    @State private var destinations: [URL] = []
     
     @State private var showingAR = false
     
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var s3Service = S3ServiceHandler()
     
     @State private var activeTab: ActiveTab = .glass
     
@@ -27,7 +27,9 @@ struct ContentView : View {
     @StateObject var glassModel = WebViewModel(urlString: "https://gresso.com/pages/ar")
     @StateObject var bagModel = WebViewModel(urlString: "https://gresso.com/cart")
     
-    @State private var doGlassesHaveModel = false
+    @State private var doGlassesHaveModelHomeTab = false
+    @State private var doGlassesHaveModelGlassTab = false
+    @State private var doGlassesHaveModelBagTab = false
     @State private var isModelLoading = false
     
     var body: some View {
@@ -58,7 +60,7 @@ struct ContentView : View {
                     
                     Spacer()
                     
-                    if doGlassesHaveModel {
+                    if doGlassesHaveModelHomeTab {
                         Button {
                             showingAR = true
                         } label: {
@@ -90,7 +92,22 @@ struct ContentView : View {
                     }
                     .padding()
                     .disabled(!glassModel.canGoBack)
+                    
                     Spacer()
+                    
+                    if doGlassesHaveModelGlassTab {
+                        Button {
+                            showingAR = true
+                        } label: {
+                            Image("virtualTryOnIcon")
+                                .renderingMode(.template)
+                                .frame(maxHeight: 16)
+                        }
+                        .padding()
+                    } else if isModelLoading {
+                        ProgressView()
+                            .padding()
+                    }
                 }
                 glassView
             }
@@ -110,7 +127,22 @@ struct ContentView : View {
                     }
                     .padding()
                     .disabled(!bagModel.canGoBack)
+                    
                     Spacer()
+                    
+                    if doGlassesHaveModelBagTab {
+                        Button {
+                            showingAR = true
+                        } label: {
+                            Image("virtualTryOnIcon")
+                                .renderingMode(.template)
+                                .frame(maxHeight: 16)
+                        }
+                        .padding()
+                    } else if isModelLoading {
+                        ProgressView()
+                            .padding()
+                    }
                 }
                 bagView
                     .onAppear {
@@ -126,32 +158,52 @@ struct ContentView : View {
             .tag(ActiveTab.bag)
         }
         .sheet(isPresented: $showingAR) {
-            if let destination {
-                ARViewContainer(destination: destination)
+            if !destinations.isEmpty {
+                ARFittingRoomView(destinations: destinations)
                     .edgesIgnoringSafeArea(.all)
             }
         }
         .onChange(of: homeModel.urlChanges) { url in
             guard let url else { return }
-            
-            var query: String
-            if #available(iOS 16.0, *) {
-                query = url.query() ?? ""
-            } else {
-                query = url.query ?? ""
-            }
             isModelLoading = true
-            viewModel.downloadGlasses(with: url.lastPathComponent, query, completion: { url in
-                DispatchQueue.main.async {
-                    if let url {
-                        destination = url
-                        doGlassesHaveModel = true
-                    } else {
-                        doGlassesHaveModel = false
-                    }
-                    isModelLoading = false
+            
+            s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
+                if !urls.isEmpty {
+                    destinations = urls
+                    doGlassesHaveModelHomeTab = true
+                } else {
+                    doGlassesHaveModelHomeTab = false
                 }
-            })
+                isModelLoading = false
+            }
+        }
+        .onChange(of: glassModel.urlChanges) { url in
+            guard let url else { return }
+            isModelLoading = true
+            
+            s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
+                if !urls.isEmpty {
+                    destinations = urls
+                    doGlassesHaveModelGlassTab = true
+                } else {
+                    doGlassesHaveModelGlassTab = false
+                }
+                isModelLoading = false
+            }
+        }
+        .onChange(of: bagModel.urlChanges) { url in
+            guard let url else { return }
+            isModelLoading = true
+            
+            s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
+                if !urls.isEmpty {
+                    destinations = urls
+                    doGlassesHaveModelBagTab = true
+                } else {
+                    doGlassesHaveModelBagTab = false
+                }
+                isModelLoading = false
+            }
         }
     }
 }
@@ -160,17 +212,4 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
     }
-}
-
-import Factory
-
-final class ViewModel: ObservableObject {
-    
-    @Injected(\.loadGlassesService) private var loadGlassesService
-    
-    func downloadGlasses(with modelName: String, _ colorName: String, completion: @escaping (URL?) -> Void) {
-        loadGlassesService.loadModel(with: modelName, colorName, completion: completion)
-//        loadGlassesService.loadModels(with: modelName, completion: completion)
-    }
-    
 }
