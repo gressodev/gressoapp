@@ -18,8 +18,6 @@ struct ARFittingRoomView: View {
     
     var body: some View {
         let arView = ARViewContainer(
-            destinations: destinations,
-            currentIndex: $tabIndex,
             currentDestination: Binding(
                 get: {
                     destinations[tabIndex]

@@ -11,8 +11,6 @@ import ARKit
 
 struct ARViewContainer: UIViewRepresentable {
     
-    let destinations: [URL]
-    @Binding var currentIndex: Int
     @Binding var currentDestination: URL?
     
     func makeUIView(context: Context) -> ARView {
