@@ -15,6 +15,17 @@ enum ActiveTab: Int {
 
 struct ContentView : View {
     
+    private enum LocalConstants {
+        static let navBarHeight: CGFloat = 50
+        
+        enum VirtualTryOnButton {
+            static let height: CGFloat = 40
+            static let cornerRadius: CGFloat = 20
+            static let bottomPadding: CGFloat = 80
+            static let backgroundOpacity: Double = 0.1
+        }
+    }
+    
     @State private var destinations: [URL] = []
     
     @State private var showingAR = false
@@ -38,120 +49,174 @@ struct ContentView : View {
         let bagView = WebView(webView: bagModel.webView)
         
         TabView(selection: $activeTab) {
-            VStack {
-                HStack {
-                    Button {
-                        homeModel.openMenu()
-                    } label: {
-                        Image("menuButtonIcon")
-                            .renderingMode(.template)
-                    }
-                    .padding()
-                    
-                    if homeModel.canGoBack {
+            ZStack {
+                VStack {
+                    HStack {
                         Button {
-                            homeModel.goBack()
+                            homeModel.openMenu()
                         } label: {
-                            Image(systemName: "chevron.backward")
+                            Image(Assets.Images.menuButtonIcon)
                                 .renderingMode(.template)
                         }
                         .padding()
+                        
+                        if homeModel.canGoBack {
+                            Button {
+                                homeModel.goBack()
+                            } label: {
+                                Image(systemName: Assets.Images.chevronBackward)
+                                    .renderingMode(.template)
+                            }
+                            .padding()
+                        }
+                        
+                        Spacer()
+                        
+                        if isModelLoading {
+                            ProgressView()
+                                .padding()
+                        }
                     }
+                    .frame(height: LocalConstants.navBarHeight)
                     
+                    homeView
+                }
+                
+                VStack {
                     Spacer()
                     
-                    if doGlassesHaveModelHomeTab {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            Image("virtualTryOnIcon")
-                                .renderingMode(.template)
-                                .frame(maxHeight: 16)
+                    HStack {
+                        Spacer()
+                        if doGlassesHaveModelHomeTab {
+                            Button {
+                                showingAR = true
+                            } label: {
+                                Image(Assets.Images.virtualTryOnIcon)
+                                    .renderingMode(.original)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: LocalConstants.VirtualTryOnButton.height)
+                            }
+                            .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                            .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                            .padding(.bottom, LocalConstants.VirtualTryOnButton.bottomPadding)
                         }
-                        .padding()
-                    } else if isModelLoading {
-                        ProgressView()
-                            .padding()
+                        Spacer()
                     }
                 }
-                homeView
             }
             .tabItem {
-                Image("tabItem.home")
+                Image(Assets.Images.TabBar.tabItemHome)
                     .renderingMode(.template)
             }
             .tag(ActiveTab.home)
             
-            VStack {
-                HStack {
-                    Button {
-                        glassModel.goBack()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .renderingMode(.template)
-                    }
-                    .padding()
-                    .disabled(!glassModel.canGoBack)
-                    
-                    Spacer()
-                    
-                    if doGlassesHaveModelGlassTab {
+            ZStack {
+                VStack {
+                    HStack {
                         Button {
-                            showingAR = true
+                            glassModel.goBack()
                         } label: {
-                            Image("virtualTryOnIcon")
+                            Image(systemName: Assets.Images.chevronBackward)
                                 .renderingMode(.template)
-                                .frame(maxHeight: 16)
                         }
                         .padding()
-                    } else if isModelLoading {
-                        ProgressView()
-                            .padding()
+                        .disabled(!glassModel.canGoBack)
+                        
+                        Spacer()
+                        
+                        if isModelLoading {
+                            ProgressView()
+                                .padding()
+                        }
+                    }
+                    .frame(height: LocalConstants.navBarHeight)
+                    
+                    glassView
+                }
+                
+                VStack {
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        if doGlassesHaveModelGlassTab {
+                            Button {
+                                showingAR = true
+                            } label: {
+                                Image(Assets.Images.virtualTryOnIcon)
+                                    .renderingMode(.original)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: LocalConstants.VirtualTryOnButton.height)
+                            }
+                            .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                            .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                            .padding(.bottom, LocalConstants.VirtualTryOnButton.bottomPadding)
+                        }
+                        Spacer()
                     }
                 }
-                glassView
             }
             .tabItem {
-                Image("tabItem.glasses")
+                Image(Assets.Images.TabBar.tabItemGlasses)
                     .renderingMode(.template)
             }
             .tag(ActiveTab.glass)
             
-            VStack {
-                HStack {
-                    Button {
-                        bagModel.goBack()
-                    } label: {
-                        Image(systemName: "chevron.backward")
-                            .renderingMode(.template)
-                    }
-                    .padding()
-                    .disabled(!bagModel.canGoBack)
-                    
-                    Spacer()
-                    
-                    if doGlassesHaveModelBagTab {
+            ZStack {
+                VStack {
+                    HStack {
                         Button {
-                            showingAR = true
+                            bagModel.goBack()
                         } label: {
-                            Image("virtualTryOnIcon")
+                            Image(systemName: Assets.Images.chevronBackward)
                                 .renderingMode(.template)
-                                .frame(maxHeight: 16)
                         }
                         .padding()
-                    } else if isModelLoading {
-                        ProgressView()
-                            .padding()
+                        .disabled(!bagModel.canGoBack)
+                        
+                        Spacer()
+                        
+                        if isModelLoading {
+                            ProgressView()
+                                .padding()
+                        }
+                    }
+                    .frame(height: LocalConstants.navBarHeight)
+                    
+                    bagView
+                        .onAppear {
+                            bagModel.reload()
+                        }
+                }
+                
+                VStack {
+                    Spacer()
+                    
+                    HStack {
+                        Spacer()
+                        if doGlassesHaveModelBagTab {
+                            Button {
+                                showingAR = true
+                            } label: {
+                                Image(Assets.Images.virtualTryOnIcon)
+                                    .renderingMode(.original)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: LocalConstants.VirtualTryOnButton.height)
+                            }
+                            .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                            .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                            .padding(.bottom, LocalConstants.VirtualTryOnButton.bottomPadding)
+                        }
+                        Spacer()
                     }
                 }
-                bagView
-                    .onAppear {
-                        bagModel.reload()
-                    }
             }
             .tabItem {
                 VStack {
-                    Image("tabItem.bag")
+                    Image(Assets.Images.TabBar.tabItemBag)
                         .renderingMode(.template)
                 }
             }
@@ -170,9 +235,13 @@ struct ContentView : View {
             s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
                 if !urls.isEmpty {
                     destinations = urls
-                    doGlassesHaveModelHomeTab = true
+                    withAnimation {
+                        doGlassesHaveModelHomeTab = true
+                    }
                 } else {
-                    doGlassesHaveModelHomeTab = false
+                    withAnimation {
+                        doGlassesHaveModelHomeTab = false
+                    }
                 }
                 isModelLoading = false
             }
@@ -184,9 +253,13 @@ struct ContentView : View {
             s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
                 if !urls.isEmpty {
                     destinations = urls
-                    doGlassesHaveModelGlassTab = true
+                    withAnimation {
+                        doGlassesHaveModelGlassTab = true
+                    }
                 } else {
-                    doGlassesHaveModelGlassTab = false
+                    withAnimation {
+                        doGlassesHaveModelGlassTab = false
+                    }
                 }
                 isModelLoading = false
             }
@@ -198,9 +271,13 @@ struct ContentView : View {
             s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
                 if !urls.isEmpty {
                     destinations = urls
-                    doGlassesHaveModelBagTab = true
+                    withAnimation {
+                        doGlassesHaveModelBagTab = true
+                    }
                 } else {
-                    doGlassesHaveModelBagTab = false
+                    withAnimation {
+                        doGlassesHaveModelBagTab = false
+                    }
                 }
                 isModelLoading = false
             }
