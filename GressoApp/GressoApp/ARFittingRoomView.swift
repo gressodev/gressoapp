@@ -6,30 +6,39 @@
 //
 
 import SwiftUI
-
-class ModelEntityProvider: ObservableObject {
-    
-    @Published var modelDestination: URL? = nil
-    
-    func changeDestination(destination: URL) {
-        modelDestination = destination
-    }
-}
-
+import RealityKit
+ 
 struct ARFittingRoomView: View {
+    @Environment(\.dismiss) var dismiss
     
     let destinations: [URL]
     
     @State private var tabIndex: Int = .zero
+    @State private var currentDestination: URL?
     
     var body: some View {
-        let arView = ARViewContainer(destinations: destinations, currentIndex: $tabIndex)
+        let arView = ARViewContainer(
+            destinations: destinations,
+            currentIndex: $tabIndex,
+            currentDestination: Binding(
+                get: {
+                    destinations[tabIndex]
+                }, set: { _ in }
+            )
+        )
+        
         ZStack {
             arView
-            
+            VStack {
+                Button("dismiss") {
+                    dismiss()
+                }
+                .padding()
+                Spacer()
+            }
             VStack {
                 Spacer()
-                
+
                 TabView(selection: $tabIndex) {
                     ForEach(Array(zip(destinations.indices, destinations)), id: \.0) { index, destination in
                         Text(destination.lastPathComponent)
@@ -42,11 +51,5 @@ struct ARFittingRoomView: View {
             }
         }
         .ignoresSafeArea(.all)
-    }
-}
-
-struct ARFittingRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        ARFittingRoomView(destinations: [])
     }
 }
