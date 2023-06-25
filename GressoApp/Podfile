@@ -9,5 +9,6 @@ target 'GressoApp' do
   
   pod 'AWSCore'
   pod 'AWSS3'
+  pod 'SnapKit'
 
 end

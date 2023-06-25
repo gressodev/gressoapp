@@ -222,7 +222,7 @@ struct ContentView : View {
             }
             .tag(ActiveTab.bag)
         }
-        .sheet(isPresented: $showingAR) {
+        .fullScreenCover(isPresented: $showingAR) {
             if !destinations.isEmpty {
                 ARFittingRoomView(destinations: destinations)
                     .edgesIgnoringSafeArea(.all)

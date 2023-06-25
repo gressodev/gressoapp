@@ -19,5 +19,7 @@ enum Assets {
         static let menuButtonIcon: String = "menuButtonIcon"
         static let chevronBackward: String = "chevron.backward"
         static let virtualTryOnIcon: String = "virtualTryOnIcon"
+        static let xmarkCircleFill: String = "xmark.circle.fill"
+        static let photoСircle: String = "photo.circle"
     }
 }

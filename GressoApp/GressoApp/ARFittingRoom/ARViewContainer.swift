@@ -12,9 +12,9 @@ import ARKit
 struct ARViewContainer: UIViewRepresentable {
     
     @Binding var currentDestination: URL?
+    let arView = ARView(frame: .zero)
     
     func makeUIView(context: Context) -> ARView {
-        let arView = ARView(frame: .zero)
         arView.renderOptions = [.disablePersonOcclusion]
         
         let faceTrackingConfig = ARFaceTrackingConfiguration()
@@ -35,6 +35,14 @@ struct ARViewContainer: UIViewRepresentable {
             } catch {
                 print("Fail loading entity.", error.localizedDescription)
             }
+        }
+    }
+    
+    func saveSnapshot(saveToHDR: Bool) {
+        arView.snapshot(saveToHDR: saveToHDR) { image in
+            guard let cgImage = image?.cgImage else { return }
+            let uiImage = UIImage(cgImage: cgImage)
+            UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
         }
     }
     
