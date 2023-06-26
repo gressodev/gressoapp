@@ -127,17 +127,17 @@ struct ARFittingRoomView: View {
         }
         .sheet(isPresented: $showingShareScreen) {
             if let modelLink {
-                ActivityView(link: modelLink)
+                ActivityView(items: [modelLink])
             }
         }
     }
 }
 
 struct ActivityView: UIViewControllerRepresentable {
-    let link: URL
+    let items: [Any]
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityView>) -> UIActivityViewController {
-        return UIActivityViewController(activityItems: [link], applicationActivities: nil)
+        return UIActivityViewController(activityItems: items, applicationActivities: nil)
     }
 
     func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityView>) {}

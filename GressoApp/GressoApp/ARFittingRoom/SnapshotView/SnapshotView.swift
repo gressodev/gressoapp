@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SnapshotView: View {
     @Environment(\.dismiss) var dismiss
+    @State private var showingShareScreen = false
     
     let snapshot: UIImage
     
@@ -56,15 +57,34 @@ struct SnapshotView: View {
                     .padding()
                     .padding(.bottom, 40)
                     
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "arrowshape.turn.up.right.fill")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .shadow(radius: 5)
-                            .foregroundColor(.white)
+                    VStack {
+                        if #available(iOS 16.0, *) {
+                            ShareLink(
+                                item: Image(uiImage: snapshot),
+                                preview: SharePreview(
+                                    "Gresso",
+                                    image: Image(uiImage: snapshot)
+                                )
+                            ) {
+                                Image(systemName: "arrowshape.turn.up.right.fill")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .shadow(radius: 5)
+                                    .foregroundColor(.white)
+                            }
+                        } else {
+                            Button {
+                                showingShareScreen = true
+                            } label: {
+                                Image(systemName: "arrowshape.turn.up.right.fill")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .shadow(radius: 5)
+                                    .foregroundColor(.white)
+                            }
+                        }
                     }
                     .padding()
                     .padding(.bottom, 40)
@@ -73,6 +93,9 @@ struct SnapshotView: View {
             }
         }
         .ignoresSafeArea(.all)
+        .sheet(isPresented: $showingShareScreen) {
+            ActivityView(items: [snapshot])
+        }
     }
 }
 
