@@ -223,8 +223,18 @@ struct ContentView : View {
             .tag(ActiveTab.bag)
         }
         .fullScreenCover(isPresented: $showingAR) {
+            var modelLink: URL? {
+                switch activeTab {
+                case .home:
+                    return homeModel.urlChanges
+                case .glass:
+                    return glassModel.urlChanges
+                case .bag:
+                    return bagModel.urlChanges
+                }
+            }
             if !destinations.isEmpty {
-                ARFittingRoomView(destinations: destinations)
+                ARFittingRoomView(destinations: destinations, modelLink: modelLink)
                     .edgesIgnoringSafeArea(.all)
             }
         }

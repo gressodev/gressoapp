@@ -9,12 +9,15 @@ import SwiftUI
 import RealityKit
 import ARKit
 
+@MainActor
 struct ARViewContainer: UIViewRepresentable {
     
     @Binding var currentDestination: URL?
-    let arView = ARView(frame: .zero)
+    @Binding var needToTakeSnapshot: Bool
+    var didTakeSnapshot: (UIImage) -> Void
     
     func makeUIView(context: Context) -> ARView {
+        let arView = ARView(frame: .zero)
         arView.renderOptions = [.disablePersonOcclusion]
         
         let faceTrackingConfig = ARFaceTrackingConfiguration()
@@ -36,13 +39,13 @@ struct ARViewContainer: UIViewRepresentable {
                 print("Fail loading entity.", error.localizedDescription)
             }
         }
-    }
-    
-    func saveSnapshot(saveToHDR: Bool) {
-        arView.snapshot(saveToHDR: saveToHDR) { image in
-            guard let cgImage = image?.cgImage else { return }
-            let uiImage = UIImage(cgImage: cgImage)
-            UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+        if needToTakeSnapshot {
+            uiView.snapshot(saveToHDR: false) { image in
+                guard let cgImage = image?.cgImage else { return }
+                let uiImage = UIImage(cgImage: cgImage)
+                didTakeSnapshot(uiImage)
+                needToTakeSnapshot = false
+            }
         }
     }
     

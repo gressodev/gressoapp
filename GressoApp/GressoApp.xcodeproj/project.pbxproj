@@ -13,6 +13,7 @@
 		F53758832A48425700EF0139 /* ColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53758822A48425700EF0139 /* ColorsView.swift */; };
 		F53758852A48426C00EF0139 /* PagingColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53758842A48426C00EF0139 /* PagingColorsView.swift */; };
 		F53758882A48428900EF0139 /* ColorCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53758872A48428900EF0139 /* ColorCollectionCell.swift */; };
+		F53758A52A49F63C00EF0139 /* SnapshotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53758A42A49F63C00EF0139 /* SnapshotView.swift */; };
 		F5396D672A30E6E50059E331 /* GressoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5396D662A30E6E50059E331 /* GressoAppApp.swift */; };
 		F5396D692A30E6E50059E331 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5396D682A30E6E50059E331 /* ContentView.swift */; };
 		F5396D6B2A30E6E90059E331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5396D6A2A30E6E90059E331 /* Assets.xcassets */; };
@@ -32,6 +33,7 @@
 		F53758822A48425700EF0139 /* ColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsView.swift; sourceTree = "<group>"; };
 		F53758842A48426C00EF0139 /* PagingColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagingColorsView.swift; sourceTree = "<group>"; };
 		F53758872A48428900EF0139 /* ColorCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionCell.swift; sourceTree = "<group>"; };
+		F53758A42A49F63C00EF0139 /* SnapshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotView.swift; sourceTree = "<group>"; };
 		F5396D632A30E6E50059E331 /* GressoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GressoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5396D662A30E6E50059E331 /* GressoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GressoAppApp.swift; sourceTree = "<group>"; };
 		F5396D682A30E6E50059E331 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		F53758802A48422900EF0139 /* ARFittingRoom */ = {
 			isa = PBXGroup;
 			children = (
+				F53758A32A49F5B300EF0139 /* SnapshotView */,
 				F53758812A48425000EF0139 /* ColorsView */,
 				F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */,
 				F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */,
@@ -116,6 +119,14 @@
 				F53758872A48428900EF0139 /* ColorCollectionCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		F53758A32A49F5B300EF0139 /* SnapshotView */ = {
+			isa = PBXGroup;
+			children = (
+				F53758A42A49F63C00EF0139 /* SnapshotView.swift */,
+			);
+			path = SnapshotView;
 			sourceTree = "<group>";
 		};
 		F5396D5A2A30E6E50059E331 = {
@@ -288,6 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F53758A52A49F63C00EF0139 /* SnapshotView.swift in Sources */,
 				F53758832A48425700EF0139 /* ColorsView.swift in Sources */,
 				F537587F2A48420200EF0139 /* ClassIdentifiable.swift in Sources */,
 				F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */,

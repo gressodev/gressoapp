@@ -7,48 +7,86 @@
 
 import SwiftUI
 import RealityKit
- 
+
+@MainActor
 struct ARFittingRoomView: View {
     @Environment(\.dismiss) var dismiss
     
+    @State private var showingSnapshot = false
+    @State private var needToTakeSnapshot = false
+    @State private var snapshotImage: UIImage?
+    
+    @State private var showingShareScreen = false
+    
     let destinations: [URL]
+    private var modelLink: URL?
     @State private var currentDestination: URL?
+    
+    init(destinations: [URL], modelLink: URL?) {
+        self.destinations = destinations
+        self.modelLink = modelLink
+        currentDestination = destinations.first
+    }
     
     var body: some View {
         let arView = ARViewContainer(
-            currentDestination: $currentDestination
+            currentDestination: $currentDestination,
+            needToTakeSnapshot: $needToTakeSnapshot,
+            didTakeSnapshot: { image in
+                snapshotImage = image
+            }
         )
         
         ZStack {
             arView
+            
             VStack {
                 HStack {
-                    Button {
-                        dismiss()
-                    } label: {
-                        Image(systemName: Assets.Images.xmarkCircleFill)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 30, height: 30)
-                            .shadow(radius: 5)
-                            .foregroundColor(.white)
+                    VStack {
+                        Button {
+                            dismiss()
+                        } label: {
+                            Image(systemName: Assets.Images.xmarkCircleFill)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 30, height: 30)
+                                .shadow(radius: 5)
+                                .foregroundColor(.white)
+                        }
+                        .padding(.top, 70)
+                        .padding(.leading, 30)
+                        
+                        Spacer()
                     }
-                    .padding(.top, 70)
-                    .padding(.leading, 30)
                     
                     Spacer()
                     
-                    Button {
-                        arView.saveSnapshot(saveToHDR: false)
-                    } label: {
-                        Image(systemName: Assets.Images.photoСircle)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .shadow(radius: 5)
-                            .foregroundColor(.white)
+                    VStack {
+                        if #available(iOS 16.0, *) {
+                            if let modelLink {
+                                ShareLink(item: modelLink) {
+                                    Image(systemName: "arrowshape.turn.up.right.fill")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 40, height: 40)
+                                        .shadow(radius: 5)
+                                        .foregroundColor(.white)
+                                }
+                            }
+                        } else {
+                            Button {
+                                showingShareScreen = true
+                            } label: {
+                                Image(systemName: "arrowshape.turn.up.right.fill")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 40, height: 40)
+                                    .shadow(radius: 5)
+                                    .foregroundColor(.white)
+                            }
+                        }
                     }
-                    .padding(.top, 70)
+                    .padding(.top, 30)
                     .padding(.trailing, 30)
                 }
                 Spacer()
@@ -65,9 +103,13 @@ struct ARFittingRoomView: View {
                     HStack {
                         Spacer()
                         
-                        Circle()
-                            .strokeBorder(.white, lineWidth: 8)
-                            .frame(width: 80, height: 80)
+                        Button {
+                            needToTakeSnapshot = true
+                        } label: {
+                            Circle()
+                                .strokeBorder(.white, lineWidth: 8)
+                                .frame(width: 80, height: 80)
+                        }
                         
                         Spacer()
                     }
@@ -75,5 +117,28 @@ struct ARFittingRoomView: View {
             }
         }
         .ignoresSafeArea(.all)
+        .onChange(of: snapshotImage) { _ in
+            showingSnapshot = true
+        }
+        .sheet(isPresented: $showingSnapshot) {
+            if let snapshotImage {
+                SnapshotView(snapshot: snapshotImage)
+            }
+        }
+        .sheet(isPresented: $showingShareScreen) {
+            if let modelLink {
+                ActivityView(link: modelLink)
+            }
+        }
     }
+}
+
+struct ActivityView: UIViewControllerRepresentable {
+    let link: URL
+
+    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityView>) -> UIActivityViewController {
+        return UIActivityViewController(activityItems: [link], applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityView>) {}
 }
