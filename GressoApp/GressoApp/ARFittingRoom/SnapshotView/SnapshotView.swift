@@ -47,7 +47,7 @@ struct SnapshotView: View {
                         UIImageWriteToSavedPhotosAlbum(snapshot, nil, nil, nil)
                         dismiss()
                     } label: {
-                        Image(systemName: "square.and.arrow.down")
+                        Image(systemName: Assets.Images.downloadImage)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 40, height: 40)
@@ -66,7 +66,7 @@ struct SnapshotView: View {
                                     image: Image(uiImage: snapshot)
                                 )
                             ) {
-                                Image(systemName: "arrowshape.turn.up.right.fill")
+                                Image(systemName: Assets.Images.shareImage)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
@@ -77,7 +77,7 @@ struct SnapshotView: View {
                             Button {
                                 showingShareScreen = true
                             } label: {
-                                Image(systemName: "arrowshape.turn.up.right.fill")
+                                Image(systemName: Assets.Images.shareImage)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)

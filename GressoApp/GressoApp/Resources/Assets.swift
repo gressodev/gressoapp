@@ -21,5 +21,7 @@ enum Assets {
         static let virtualTryOnIcon: String = "virtualTryOnIcon"
         static let xmarkCircleFill: String = "xmark.circle.fill"
         static let photoСircle: String = "photo.circle"
+        static let shareImage: String = "arrowshape.turn.up.right.fill"
+        static let downloadImage: String = "square.and.arrow.down"
     }
 }

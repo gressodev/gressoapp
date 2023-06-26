@@ -65,7 +65,7 @@ struct ARFittingRoomView: View {
                         if #available(iOS 16.0, *) {
                             if let modelLink {
                                 ShareLink(item: modelLink) {
-                                    Image(systemName: "arrowshape.turn.up.right.fill")
+                                    Image(systemName: Assets.Images.shareImage)
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 40, height: 40)
@@ -77,7 +77,7 @@ struct ARFittingRoomView: View {
                             Button {
                                 showingShareScreen = true
                             } label: {
-                                Image(systemName: "arrowshape.turn.up.right.fill")
+                                Image(systemName: Assets.Images.shareImage)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
@@ -131,14 +131,4 @@ struct ARFittingRoomView: View {
             }
         }
     }
-}
-
-struct ActivityView: UIViewControllerRepresentable {
-    let items: [Any]
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityView>) -> UIActivityViewController {
-        return UIActivityViewController(activityItems: items, applicationActivities: nil)
-    }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: UIViewControllerRepresentableContext<ActivityView>) {}
 }
