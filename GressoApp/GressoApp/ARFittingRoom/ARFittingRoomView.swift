@@ -42,41 +42,22 @@ struct ARFittingRoomView: View {
             
             VStack {
                 HStack {
-                    VStack {
-                        Button {
-                            dismiss()
-                        } label: {
-                            Image(systemName: Assets.Images.xmarkCircleFill)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 30, height: 30)
-                                .shadow(radius: 5)
-                                .foregroundColor(.white)
-                        }
-                        .padding(.top, 70)
-                        .padding(.leading, 30)
-                        
-                        Spacer()
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: Assets.Images.xmarkCircleFill)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 30, height: 30)
+                            .shadow(radius: 5)
+                            .foregroundColor(.white)
                     }
                     
                     Spacer()
                     
-                    VStack {
-                        if #available(iOS 16.0, *) {
-                            if let modelLink {
-                                ShareLink(item: modelLink) {
-                                    Image(systemName: Assets.Images.shareImage)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 40, height: 40)
-                                        .shadow(radius: 5)
-                                        .foregroundColor(.white)
-                                }
-                            }
-                        } else {
-                            Button {
-                                showingShareScreen = true
-                            } label: {
+                    if #available(iOS 16.0, *) {
+                        if let modelLink {
+                            ShareLink(item: modelLink) {
                                 Image(systemName: Assets.Images.shareImage)
                                     .resizable()
                                     .scaledToFill()
@@ -85,10 +66,22 @@ struct ARFittingRoomView: View {
                                     .foregroundColor(.white)
                             }
                         }
+                    } else {
+                        Button {
+                            showingShareScreen = true
+                        } label: {
+                            Image(systemName: Assets.Images.shareImage)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 40, height: 40)
+                                .shadow(radius: 5)
+                                .foregroundColor(.white)
+                        }
                     }
-                    .padding(.top, 30)
-                    .padding(.trailing, 30)
                 }
+                .padding(.top, 70)
+                .padding(.leading, 30)
+                .padding(.trailing, 30)
                 Spacer()
             }
             VStack {

@@ -21,7 +21,7 @@ struct ContentView : View {
         enum VirtualTryOnButton {
             static let height: CGFloat = 40
             static let cornerRadius: CGFloat = 20
-            static let bottomPadding: CGFloat = 80
+            static let topBottomPadding: CGFloat = 3
             static let backgroundOpacity: Double = 0.1
         }
     }
@@ -32,7 +32,7 @@ struct ContentView : View {
     
     @StateObject private var s3Service = S3ServiceHandler()
     
-    @State private var activeTab: ActiveTab = .glass
+    @State private var activeTab: ActiveTab = .home
     
     @StateObject var homeModel = WebViewModel(urlString: "https://gresso.com")
     @StateObject var glassModel = WebViewModel(urlString: "https://gresso.com/pages/ar")
@@ -49,9 +49,17 @@ struct ContentView : View {
         let bagView = WebView(webView: bagModel.webView)
         
         TabView(selection: $activeTab) {
-            ZStack {
-                VStack {
-                    HStack {
+            VStack {
+                HStack {
+                    if homeModel.canGoBack {
+                        Button {
+                            homeModel.goBack()
+                        } label: {
+                            Image(systemName: Assets.Images.chevronBackward)
+                                .renderingMode(.template)
+                        }
+                        .padding()
+                    } else {
                         Button {
                             homeModel.openMenu()
                         } label: {
@@ -59,49 +67,34 @@ struct ContentView : View {
                                 .renderingMode(.template)
                         }
                         .padding()
-                        
-                        if homeModel.canGoBack {
-                            Button {
-                                homeModel.goBack()
-                            } label: {
-                                Image(systemName: Assets.Images.chevronBackward)
-                                    .renderingMode(.template)
-                            }
-                            .padding()
-                        }
-                        
-                        Spacer()
-                        
-                        if isModelLoading {
-                            ProgressView()
-                                .padding()
-                        }
                     }
-                    .frame(height: LocalConstants.navBarHeight)
                     
-                    homeView
-                }
-                
-                VStack {
                     Spacer()
                     
+                    if isModelLoading {
+                        ProgressView()
+                            .padding()
+                    }
+                }
+                .frame(height: LocalConstants.navBarHeight)
+                
+                homeView
+                
+                if doGlassesHaveModelHomeTab {
                     HStack {
-                        Spacer()
-                        if doGlassesHaveModelHomeTab {
-                            Button {
-                                showingAR = true
-                            } label: {
-                                Image(Assets.Images.virtualTryOnIcon)
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: LocalConstants.VirtualTryOnButton.height)
-                            }
-                            .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                            .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                            .padding(.bottom, LocalConstants.VirtualTryOnButton.bottomPadding)
+                        Button {
+                            showingAR = true
+                        } label: {
+                            Image(Assets.Images.virtualTryOnIcon)
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: LocalConstants.VirtualTryOnButton.height)
                         }
-                        Spacer()
+                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
+                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
@@ -111,50 +104,43 @@ struct ContentView : View {
             }
             .tag(ActiveTab.home)
             
-            ZStack {
-                VStack {
-                    HStack {
-                        Button {
-                            glassModel.goBack()
-                        } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
-                                .renderingMode(.template)
-                        }
-                        .padding()
-                        .disabled(!glassModel.canGoBack)
-                        
-                        Spacer()
-                        
-                        if isModelLoading {
-                            ProgressView()
-                                .padding()
-                        }
+            VStack {
+                HStack {
+                    Button {
+                        glassModel.goBack()
+                    } label: {
+                        Image(systemName: Assets.Images.chevronBackward)
+                            .renderingMode(.template)
                     }
-                    .frame(height: LocalConstants.navBarHeight)
+                    .padding()
+                    .disabled(!glassModel.canGoBack)
                     
-                    glassView
-                }
-                
-                VStack {
                     Spacer()
                     
+                    if isModelLoading {
+                        ProgressView()
+                            .padding()
+                    }
+                }
+                .frame(height: LocalConstants.navBarHeight)
+                
+                glassView
+                
+                if doGlassesHaveModelGlassTab {
                     HStack {
-                        Spacer()
-                        if doGlassesHaveModelGlassTab {
-                            Button {
-                                showingAR = true
-                            } label: {
-                                Image(Assets.Images.virtualTryOnIcon)
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: LocalConstants.VirtualTryOnButton.height)
-                            }
-                            .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                            .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                            .padding(.bottom, LocalConstants.VirtualTryOnButton.bottomPadding)
+                        Button {
+                            showingAR = true
+                        } label: {
+                            Image(Assets.Images.virtualTryOnIcon)
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: LocalConstants.VirtualTryOnButton.height)
                         }
-                        Spacer()
+                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
+                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
@@ -164,53 +150,46 @@ struct ContentView : View {
             }
             .tag(ActiveTab.glass)
             
-            ZStack {
-                VStack {
-                    HStack {
-                        Button {
-                            bagModel.goBack()
-                        } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
-                                .renderingMode(.template)
-                        }
-                        .padding()
-                        .disabled(!bagModel.canGoBack)
-                        
-                        Spacer()
-                        
-                        if isModelLoading {
-                            ProgressView()
-                                .padding()
-                        }
+            VStack {
+                HStack {
+                    Button {
+                        bagModel.goBack()
+                    } label: {
+                        Image(systemName: Assets.Images.chevronBackward)
+                            .renderingMode(.template)
                     }
-                    .frame(height: LocalConstants.navBarHeight)
+                    .padding()
+                    .disabled(!bagModel.canGoBack)
                     
-                    bagView
-                        .onAppear {
-                            bagModel.reload()
-                        }
-                }
-                
-                VStack {
                     Spacer()
                     
+                    if isModelLoading {
+                        ProgressView()
+                            .padding()
+                    }
+                }
+                .frame(height: LocalConstants.navBarHeight)
+                
+                bagView
+                    .onAppear {
+                        bagModel.reload()
+                    }
+                
+                if doGlassesHaveModelBagTab {
                     HStack {
-                        Spacer()
-                        if doGlassesHaveModelBagTab {
-                            Button {
-                                showingAR = true
-                            } label: {
-                                Image(Assets.Images.virtualTryOnIcon)
-                                    .renderingMode(.original)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: LocalConstants.VirtualTryOnButton.height)
-                            }
-                            .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                            .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                            .padding(.bottom, LocalConstants.VirtualTryOnButton.bottomPadding)
+                        Button {
+                            showingAR = true
+                        } label: {
+                            Image(Assets.Images.virtualTryOnIcon)
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: LocalConstants.VirtualTryOnButton.height)
                         }
-                        Spacer()
+                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
+                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
