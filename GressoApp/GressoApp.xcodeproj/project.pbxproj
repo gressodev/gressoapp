@@ -21,6 +21,8 @@
 		F5396D6E2A30E6E90059E331 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5396D6D2A30E6E90059E331 /* Preview Assets.xcassets */; };
 		F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */; };
 		F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */; };
+		F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */; };
+		F584200A2A4E3A95004C4A27 /* LoadingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58420092A4E3A95004C4A27 /* LoadingModel.swift */; };
 		F584DFCA2A349965002517FD /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F584DFC92A349965002517FD /* WebView.swift */; };
 		F584DFCE2A34F0A7002517FD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */; };
 		F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */; };
@@ -43,6 +45,8 @@
 		F5396D6D2A30E6E90059E331 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3ServiceHandler.swift; sourceTree = "<group>"; };
 		F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFittingRoomView.swift; sourceTree = "<group>"; };
+		F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeGetter.swift"; sourceTree = "<group>"; };
+		F58420092A4E3A95004C4A27 /* LoadingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingModel.swift; sourceTree = "<group>"; };
 		F584DFC92A349965002517FD /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
@@ -160,6 +164,7 @@
 		F5396D652A30E6E50059E331 /* GressoApp */ = {
 			isa = PBXGroup;
 			children = (
+				F58420082A4E3A8E004C4A27 /* Models */,
 				F53758A62A4A16E000EF0139 /* Views */,
 				F5396D662A30E6E50059E331 /* GressoAppApp.swift */,
 				F5396D682A30E6E50059E331 /* ContentView.swift */,
@@ -168,6 +173,7 @@
 				F5A82A5C2A39F14D00B033EF /* Services */,
 				F537587A2A46D2FC00EF0139 /* Resources */,
 				F537587D2A4841FA00EF0139 /* Protocols */,
+				F58420052A4E2BCC004C4A27 /* Extensions */,
 				F5396D6A2A30E6E90059E331 /* Assets.xcassets */,
 				F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */,
 				F5396D6C2A30E6E90059E331 /* Preview Content */,
@@ -181,6 +187,22 @@
 				F5396D6D2A30E6E90059E331 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F58420052A4E2BCC004C4A27 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F58420082A4E3A8E004C4A27 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F58420092A4E3A95004C4A27 /* LoadingModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		F5A82A5C2A39F14D00B033EF /* Services */ = {
@@ -316,9 +338,11 @@
 				F537587F2A48420200EF0139 /* ClassIdentifiable.swift in Sources */,
 				F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */,
 				F537587C2A46D31800EF0139 /* Assets.swift in Sources */,
+				F584200A2A4E3A95004C4A27 /* LoadingModel.swift in Sources */,
 				F53758852A48426C00EF0139 /* PagingColorsView.swift in Sources */,
 				F584DFCA2A349965002517FD /* WebView.swift in Sources */,
 				F5396D692A30E6E50059E331 /* ContentView.swift in Sources */,
+				F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */,
 				F53758882A48428900EF0139 /* ColorCollectionCell.swift in Sources */,
 				F5396D672A30E6E50059E331 /* GressoAppApp.swift in Sources */,
 				F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */,

@@ -26,7 +26,8 @@ struct ContentView : View {
         }
     }
     
-    @State private var destinations: [URL] = []
+    @State private var loadingModels: [LoadingModel] = []
+    @State private var modelsCount: Int = .zero
     
     @State private var showingAR = false
     
@@ -41,7 +42,7 @@ struct ContentView : View {
     @State private var doGlassesHaveModelHomeTab = false
     @State private var doGlassesHaveModelGlassTab = false
     @State private var doGlassesHaveModelBagTab = false
-    @State private var isModelLoading = false
+    @State private var isPageLoading = false
     
     var body: some View {
         let homeView = WebView(webView: homeModel.webView)
@@ -71,7 +72,7 @@ struct ContentView : View {
                     
                     Spacer()
                     
-                    if isModelLoading {
+                    if isPageLoading {
                         ProgressView()
                             .padding()
                     }
@@ -117,7 +118,7 @@ struct ContentView : View {
                     
                     Spacer()
                     
-                    if isModelLoading {
+                    if isPageLoading {
                         ProgressView()
                             .padding()
                     }
@@ -163,7 +164,7 @@ struct ContentView : View {
                     
                     Spacer()
                     
-                    if isModelLoading {
+                    if isPageLoading {
                         ProgressView()
                             .padding()
                     }
@@ -212,63 +213,97 @@ struct ContentView : View {
                     return bagModel.urlChanges
                 }
             }
-            if !destinations.isEmpty {
-                ARFittingRoomView(destinations: destinations, modelLink: modelLink)
-                    .edgesIgnoringSafeArea(.all)
-            }
+            ARFittingRoomView(
+                loadingModels: $loadingModels,
+                modelLink: modelLink
+            )
+            .edgesIgnoringSafeArea(.all)
         }
         .onChange(of: homeModel.urlChanges) { url in
             guard let url else { return }
-            isModelLoading = true
+            isPageLoading = true
             
-            s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
-                if !urls.isEmpty {
-                    destinations = urls
+            s3Service.filesCount(folderName: url.lastPathComponent) { count in
+                loadingModels = []
+                for index in 0..<count {
+                    let model = LoadingModel(id: index, url: nil, isLoading: true)
+                    loadingModels.append(model)
+                }
+                modelsCount = count
+                if count != .zero {
+                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url in
+                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
+                        loadingModels[index].url = url
+                        loadingModels[index].isLoading = false
+                    }
                     withAnimation {
                         doGlassesHaveModelHomeTab = true
+                        isPageLoading = false
                     }
                 } else {
                     withAnimation {
                         doGlassesHaveModelHomeTab = false
+                        isPageLoading = false
                     }
                 }
-                isModelLoading = false
             }
         }
         .onChange(of: glassModel.urlChanges) { url in
             guard let url else { return }
-            isModelLoading = true
+            isPageLoading = true
             
-            s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
-                if !urls.isEmpty {
-                    destinations = urls
+            s3Service.filesCount(folderName: url.lastPathComponent) { count in
+                loadingModels = []
+                for index in 0..<count {
+                    let model = LoadingModel(id: index, url: nil, isLoading: true)
+                    loadingModels.append(model)
+                }
+                modelsCount = count
+                if count != .zero {
+                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url in
+                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
+                        loadingModels[index].url = url
+                        loadingModels[index].isLoading = false
+                    }
                     withAnimation {
                         doGlassesHaveModelGlassTab = true
+                        isPageLoading = false
                     }
                 } else {
                     withAnimation {
                         doGlassesHaveModelGlassTab = false
+                        isPageLoading = false
                     }
                 }
-                isModelLoading = false
             }
         }
         .onChange(of: bagModel.urlChanges) { url in
             guard let url else { return }
-            isModelLoading = true
+            isPageLoading = true
             
-            s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { urls in
-                if !urls.isEmpty {
-                    destinations = urls
+            s3Service.filesCount(folderName: url.lastPathComponent) { count in
+                loadingModels = []
+                for index in 0..<count {
+                    let model = LoadingModel(id: index, url: nil, isLoading: true)
+                    loadingModels.append(model)
+                }
+                modelsCount = count
+                if count != .zero {
+                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url in
+                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
+                        loadingModels[index].url = url
+                        loadingModels[index].isLoading = false
+                    }
                     withAnimation {
                         doGlassesHaveModelBagTab = true
+                        isPageLoading = false
                     }
                 } else {
                     withAnimation {
                         doGlassesHaveModelBagTab = false
+                        isPageLoading = false
                     }
                 }
-                isModelLoading = false
             }
         }
     }

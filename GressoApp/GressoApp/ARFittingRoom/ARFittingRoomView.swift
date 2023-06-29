@@ -15,17 +15,18 @@ struct ARFittingRoomView: View {
     @State private var showingSnapshot = false
     @State private var needToTakeSnapshot = false
     @State private var snapshotImage: UIImage?
+    @State private var isModelLoading = true
+    @State private var currentIndex: Int = .zero
     
     @State private var showingShareScreen = false
     
-    let destinations: [URL]
+    @Binding var loadingModels: [LoadingModel]
     private var modelLink: URL?
     @State private var currentDestination: URL?
     
-    init(destinations: [URL], modelLink: URL?) {
-        self.destinations = destinations
+    init(loadingModels: Binding<[LoadingModel]>, modelLink: URL?) {
+        self._loadingModels = loadingModels
         self.modelLink = modelLink
-        currentDestination = destinations.first
     }
     
     var body: some View {
@@ -88,8 +89,11 @@ struct ARFittingRoomView: View {
                 Spacer()
                 
                 ZStack {
-                    ColorsView(dataSource: destinations.map { $0.lastPathComponent }) { index in
-                        currentDestination = destinations[index]
+                    ColorsView(modelsCount: loadingModels.count) { index in
+                        currentIndex = index
+                        isModelLoading = loadingModels[index].isLoading
+                        guard let url = loadingModels.item(at: index)?.url else { return }
+                        currentDestination = url
                     }
                     .frame(height: 150)
                     
@@ -108,10 +112,21 @@ struct ARFittingRoomView: View {
                     }
                 }
             }
+            
+            if isModelLoading {
+                ProgressView()
+                    .controlSize(.large)
+            }
         }
         .ignoresSafeArea(.all)
         .onChange(of: snapshotImage) { _ in
             showingSnapshot = true
+        }
+        .onChange(of: loadingModels) { models in
+            guard let model = models.first(where: { $0.id == currentIndex }) else { return }
+            isModelLoading = model.isLoading
+            guard let url = model.url else { return }
+            currentDestination = url
         }
         .sheet(isPresented: $showingSnapshot) {
             if let snapshotImage {

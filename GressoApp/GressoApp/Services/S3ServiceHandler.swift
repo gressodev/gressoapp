@@ -12,9 +12,28 @@ final class S3ServiceHandler: ObservableObject {
     
     private let bucketName = "gressotest"
     private let s3 = AWSS3.default()
+    
+    func filesCount(folderName: String, completion: @escaping (Int) -> Void) {
+        guard let listObjectsRequest = AWSS3ListObjectsRequest() else { completion(.zero); return }
+        listObjectsRequest.bucket = bucketName
+        listObjectsRequest.prefix = folderName
+        
+        s3.listObjects(listObjectsRequest).continueOnSuccessWith { (task) -> Any? in
+            if let error = task.error {
+                print("Error occurred: \(error)")
+                completion(.zero)
+                return nil
+            }
+            guard let listObjectsOutput = task.result else { completion(.zero); return }
+            guard let contents = listObjectsOutput.contents?.dropFirst() else { completion(.zero); return }
+            completion(contents.count)
+            
+            return nil
+        }
+    }
 
-    func downloadFilesInFolder(folderName: String, completion: @escaping ([URL]) -> Void) {
-        guard let listObjectsRequest = AWSS3ListObjectsRequest() else { completion([]); return }
+    func downloadFilesInFolder(folderName: String, completion: @escaping (URL?) -> Void) {
+        guard let listObjectsRequest = AWSS3ListObjectsRequest() else { completion(nil); return }
         listObjectsRequest.bucket = bucketName
         listObjectsRequest.prefix = folderName
         
@@ -22,20 +41,17 @@ final class S3ServiceHandler: ObservableObject {
             guard let self else { return }
             if let error = task.error {
                 print("Error occurred: \(error)")
-                completion([])
+                completion(nil)
                 return nil
             }
-            var urls: [URL] = []
-            guard let listObjectsOutput = task.result else { completion([]); return }
-            guard let contents = listObjectsOutput.contents?.dropFirst() else { completion([]); return }
+
+            guard let listObjectsOutput = task.result else { completion(nil); return }
+            guard let contents = listObjectsOutput.contents?.dropFirst() else { completion(nil); return }
             for object in contents {
-                guard let key = object.key?.replacingOccurrences(of: folderName + "/", with: "") else { completion([]); return }
+                guard let key = object.key?.replacingOccurrences(of: folderName + "/", with: "") else { completion(nil); return }
                 self.loadModel(with: folderName, key, completion: { url in
-                    guard let url else { completion([]); return }
-                    urls.append(url)
-                    if urls.count == contents.count {
-                        completion(urls)
-                    }
+                    guard let url else { completion(nil); return }
+                    completion(url)
                 })
             }
             

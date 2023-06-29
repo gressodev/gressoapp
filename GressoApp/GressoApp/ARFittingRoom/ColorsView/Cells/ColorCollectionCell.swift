@@ -60,9 +60,8 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     
     // MARK: - Configure
     
-    func configure(text: String) {
-        label.text = text
-        colorImageView.backgroundColor = .green
+    func configure() {
+        colorImageView.backgroundColor = [.green, .red, .yellow].randomElement()
     }
 
 }

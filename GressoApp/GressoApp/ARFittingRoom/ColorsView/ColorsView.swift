@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ColorsView: UIViewRepresentable {
     
-    let dataSource: [String]
+    let modelsCount: Int
     var completion: (Int) -> Void
     
     func makeUIView(context: Context) -> PagingColorsView {
-        PagingColorsView(items: dataSource) { index in
+        PagingColorsView(modelsCount: modelsCount) { index in
             completion(index)
         }
     }

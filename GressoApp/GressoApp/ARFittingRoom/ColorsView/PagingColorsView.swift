@@ -13,11 +13,11 @@ final class PagingColorsView: UICollectionView {
         static let cellSize: CGSize = CGSize(width: 80, height: 80)
     }
     
-    private var items: [String]
+    private var modelsCount: Int
     private var completion: (Int) -> Void
     
-    init(items: [String], completion: @escaping (Int) -> Void) {
-        self.items = items
+    init(modelsCount: Int, completion: @escaping (Int) -> Void) {
+        self.modelsCount = modelsCount
         self.completion = completion
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -33,7 +33,7 @@ final class PagingColorsView: UICollectionView {
         dataSource = self
         delegate = self
         
-        if items.count != .zero {
+        if modelsCount != .zero {
             DispatchQueue.main.async {
                 completion(.zero)
             }
@@ -55,18 +55,16 @@ extension PagingColorsView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        items.count
+        modelsCount
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = items[indexPath.row]
-        
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {        
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ColorCollectionCell.reuseId,
             for: indexPath
         ) as? ColorCollectionCell else { return UICollectionViewCell() }
         
-        cell.configure(text: item)
+        cell.configure()
         return cell
     }
     
