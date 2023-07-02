@@ -95,7 +95,6 @@ struct ARFittingRoomView: View {
                         guard let url = loadingModels.item(at: index)?.url else { return }
                         currentDestination = url
                     }
-                    .frame(height: 150)
                     
                     HStack {
                         Spacer()
@@ -111,6 +110,7 @@ struct ARFittingRoomView: View {
                         Spacer()
                     }
                 }
+                .frame(height: 150)
             }
             
             if isModelLoading {

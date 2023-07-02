@@ -87,6 +87,7 @@ final class S3ServiceHandler: ObservableObject {
                 completion(destination)
             } catch {
                 completion(nil)
+                print("###, download error:", error)
             }
         })
         downloadTask.resume()

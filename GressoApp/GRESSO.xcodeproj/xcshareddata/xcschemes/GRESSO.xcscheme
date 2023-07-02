@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "F5396D622A30E6E50059E331"
-               BuildableName = "GressoApp.app"
-               BlueprintName = "GressoApp"
-               ReferencedContainer = "container:GressoApp.xcodeproj">
+               BuildableName = "GRESSO.app"
+               BlueprintName = "GRESSO"
+               ReferencedContainer = "container:GRESSO.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5396D622A30E6E50059E331"
-            BuildableName = "GressoApp.app"
-            BlueprintName = "GressoApp"
-            ReferencedContainer = "container:GressoApp.xcodeproj">
+            BuildableName = "GRESSO.app"
+            BlueprintName = "GRESSO"
+            ReferencedContainer = "container:GRESSO.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "F5396D622A30E6E50059E331"
-            BuildableName = "GressoApp.app"
-            BlueprintName = "GressoApp"
-            ReferencedContainer = "container:GressoApp.xcodeproj">
+            BuildableName = "GRESSO.app"
+            BlueprintName = "GRESSO"
+            ReferencedContainer = "container:GRESSO.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

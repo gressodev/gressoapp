@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ARKit
 
 enum ActiveTab: Int {
     case home = 0
@@ -25,6 +26,8 @@ struct ContentView : View {
             static let backgroundOpacity: Double = 0.1
         }
     }
+    
+    private let isARFaceTrackingConfigurationSupported = ARFaceTrackingConfiguration.isSupported
     
     @State private var loadingModels: [LoadingModel] = []
     @State private var modelsCount: Int = .zero
@@ -220,7 +223,7 @@ struct ContentView : View {
             .edgesIgnoringSafeArea(.all)
         }
         .onChange(of: homeModel.urlChanges) { url in
-            guard let url else { return }
+            guard let url, isARFaceTrackingConfigurationSupported else { return }
             isPageLoading = true
             
             s3Service.filesCount(folderName: url.lastPathComponent) { count in
@@ -249,7 +252,7 @@ struct ContentView : View {
             }
         }
         .onChange(of: glassModel.urlChanges) { url in
-            guard let url else { return }
+            guard let url, isARFaceTrackingConfigurationSupported else { return }
             isPageLoading = true
             
             s3Service.filesCount(folderName: url.lastPathComponent) { count in
@@ -278,7 +281,7 @@ struct ContentView : View {
             }
         }
         .onChange(of: bagModel.urlChanges) { url in
-            guard let url else { return }
+            guard let url, isARFaceTrackingConfigurationSupported else { return }
             isPageLoading = true
             
             s3Service.filesCount(folderName: url.lastPathComponent) { count in

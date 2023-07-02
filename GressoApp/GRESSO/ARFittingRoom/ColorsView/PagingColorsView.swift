@@ -9,8 +9,11 @@ import UIKit
 
 final class PagingColorsView: UICollectionView {
     
+    private var currentPage: CGFloat = .zero
+    
     private enum LocalConstants {
         static let cellSize: CGSize = CGSize(width: 80, height: 80)
+        static let minimumInteritemSpacing: CGFloat = 30
     }
     
     private var modelsCount: Int
@@ -21,15 +24,14 @@ final class PagingColorsView: UICollectionView {
         self.completion = completion
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 30
-        layout.sectionInset = .zero
+        layout.minimumLineSpacing = LocalConstants.minimumInteritemSpacing
+        layout.minimumInteritemSpacing = .zero
         super.init(frame: .zero, collectionViewLayout: layout)
         
         backgroundColor = .clear
         register(ColorCollectionCell.self, forCellWithReuseIdentifier: ColorCollectionCell.reuseId)
         alwaysBounceHorizontal = true
         showsHorizontalScrollIndicator = false
-        isPagingEnabled = true
         dataSource = self
         delegate = self
         
@@ -76,10 +78,11 @@ extension PagingColorsView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         LocalConstants.cellSize
+//        CGSize(width: collectionView.bounds.width, height: LocalConstants.cellSize.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let inset = collectionView.bounds.width / 2 - LocalConstants.cellSize.width / 2
+        let inset = (collectionView.bounds.width - LocalConstants.cellSize.width) / 2
         return UIEdgeInsets(top: .zero, left: inset, bottom: .zero, right: inset)
     }
     
@@ -91,6 +94,29 @@ extension PagingColorsView: UICollectionViewDelegateFlowLayout {
         
         guard let indexPath = indexPathForItem(at: visiblePoint) else { return }
         completion(indexPath.row)
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let pageWidth = LocalConstants.cellSize.width + LocalConstants.minimumInteritemSpacing
+        let targetXContentOffset = CGFloat(targetContentOffset.pointee.x)
+        let contentWidth = CGFloat(contentSize.width)
+        var newPage = currentPage
+        
+        if velocity.x == 0 {
+            newPage = floor((targetXContentOffset - pageWidth / 2) / pageWidth) + 1.0
+        } else {
+            newPage = velocity.x > 0 ? currentPage + 1 : currentPage - 1
+            if newPage < 0 {
+                newPage = 0
+            }
+            if (newPage > contentWidth / pageWidth) {
+                newPage = ceil(contentWidth / pageWidth) - 1.0
+            }
+        }
+        
+        currentPage = newPage
+        let point = CGPoint (x: CGFloat(newPage * pageWidth), y: targetContentOffset.pointee.y)
+        targetContentOffset.pointee = point
     }
     
 }

@@ -19,12 +19,6 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         view.layer.cornerRadius = 40
         return view
     }()
-
-    private lazy var label: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = .zero
-        return label
-    }()
     
     // MARK: - Lifecycle
 
@@ -42,7 +36,6 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
 
     private func setupSubviews() {
         contentView.addSubview(colorImageView)
-        colorImageView.addSubview(label)
         
         configureConstraints()
     }
@@ -51,9 +44,6 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         colorImageView.snp.makeConstraints {
             $0.width.equalToSuperview()
             $0.height.equalTo(colorImageView.snp.width)
-            $0.center.equalToSuperview()
-        }
-        label.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
     }

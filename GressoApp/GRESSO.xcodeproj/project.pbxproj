@@ -38,7 +38,7 @@
 		F53758872A48428900EF0139 /* ColorCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCollectionCell.swift; sourceTree = "<group>"; };
 		F53758A42A49F63C00EF0139 /* SnapshotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnapshotView.swift; sourceTree = "<group>"; };
 		F53758A72A4A16E800EF0139 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
-		F5396D632A30E6E50059E331 /* GressoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GressoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5396D632A30E6E50059E331 /* GRESSO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GRESSO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5396D662A30E6E50059E331 /* GressoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GressoAppApp.swift; sourceTree = "<group>"; };
 		F5396D682A30E6E50059E331 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F5396D6A2A30E6E90059E331 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 		F5396D5A2A30E6E50059E331 = {
 			isa = PBXGroup;
 			children = (
-				F5396D652A30E6E50059E331 /* GressoApp */,
+				F5396D652A30E6E50059E331 /* GRESSO */,
 				F5396D642A30E6E50059E331 /* Products */,
 				DDE9DD00B7232C2E1ED8E8B9 /* Pods */,
 				B801C65EDFB2183C112CC6AE /* Frameworks */,
@@ -156,12 +156,12 @@
 		F5396D642A30E6E50059E331 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F5396D632A30E6E50059E331 /* GressoApp.app */,
+				F5396D632A30E6E50059E331 /* GRESSO.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F5396D652A30E6E50059E331 /* GressoApp */ = {
+		F5396D652A30E6E50059E331 /* GRESSO */ = {
 			isa = PBXGroup;
 			children = (
 				F58420082A4E3A8E004C4A27 /* Models */,
@@ -178,7 +178,7 @@
 				F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */,
 				F5396D6C2A30E6E90059E331 /* Preview Content */,
 			);
-			path = GressoApp;
+			path = GRESSO;
 			sourceTree = "<group>";
 		};
 		F5396D6C2A30E6E90059E331 /* Preview Content */ = {
@@ -216,9 +216,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F5396D622A30E6E50059E331 /* GressoApp */ = {
+		F5396D622A30E6E50059E331 /* GRESSO */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F5396D712A30E6E90059E331 /* Build configuration list for PBXNativeTarget "GressoApp" */;
+			buildConfigurationList = F5396D712A30E6E90059E331 /* Build configuration list for PBXNativeTarget "GRESSO" */;
 			buildPhases = (
 				6243332DE28F603A7C11A22B /* [CP] Check Pods Manifest.lock */,
 				F5396D5F2A30E6E50059E331 /* Sources */,
@@ -230,11 +230,11 @@
 			);
 			dependencies = (
 			);
-			name = GressoApp;
+			name = GRESSO;
 			packageProductDependencies = (
 			);
 			productName = GressoApp;
-			productReference = F5396D632A30E6E50059E331 /* GressoApp.app */;
+			productReference = F5396D632A30E6E50059E331 /* GRESSO.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -252,7 +252,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F5396D5E2A30E6E50059E331 /* Build configuration list for PBXProject "GressoApp" */;
+			buildConfigurationList = F5396D5E2A30E6E50059E331 /* Build configuration list for PBXProject "GRESSO" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -267,7 +267,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F5396D622A30E6E50059E331 /* GressoApp */,
+				F5396D622A30E6E50059E331 /* GRESSO */,
 			);
 		};
 /* End PBXProject section */
@@ -477,12 +477,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_ASSET_PATHS = "\"GressoApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = GressoApp;
+				INFOPLIST_KEY_CFBundleDisplayName = GRESSO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -520,12 +520,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 5;
-				DEVELOPMENT_ASSET_PATHS = "\"GressoApp/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = GressoApp;
+				INFOPLIST_KEY_CFBundleDisplayName = GRESSO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -556,7 +556,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F5396D5E2A30E6E50059E331 /* Build configuration list for PBXProject "GressoApp" */ = {
+		F5396D5E2A30E6E50059E331 /* Build configuration list for PBXProject "GRESSO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5396D6F2A30E6E90059E331 /* Debug */,
@@ -565,7 +565,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F5396D712A30E6E90059E331 /* Build configuration list for PBXNativeTarget "GressoApp" */ = {
+		F5396D712A30E6E90059E331 /* Build configuration list for PBXNativeTarget "GRESSO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F5396D722A30E6E90059E331 /* Debug */,
