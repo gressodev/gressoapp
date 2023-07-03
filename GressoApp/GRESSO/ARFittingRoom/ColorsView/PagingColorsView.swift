@@ -16,11 +16,11 @@ final class PagingColorsView: UICollectionView {
         static let minimumInteritemSpacing: CGFloat = 30
     }
     
-    private var modelsCount: Int
+    var models: [LoadingModel]
     private var completion: (Int) -> Void
     
-    init(modelsCount: Int, completion: @escaping (Int) -> Void) {
-        self.modelsCount = modelsCount
+    init(models: [LoadingModel], completion: @escaping (Int) -> Void) {
+        self.models = models
         self.completion = completion
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -35,7 +35,7 @@ final class PagingColorsView: UICollectionView {
         dataSource = self
         delegate = self
         
-        if modelsCount != .zero {
+        if models.count != .zero {
             DispatchQueue.main.async {
                 completion(.zero)
             }
@@ -57,7 +57,7 @@ extension PagingColorsView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        modelsCount
+        models.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {        
@@ -66,7 +66,9 @@ extension PagingColorsView: UICollectionViewDataSource {
             for: indexPath
         ) as? ColorCollectionCell else { return UICollectionViewCell() }
         
-        cell.configure()
+        let model = models[indexPath.item]
+        cell.configure(isLoading: model.isLoading, colorImage: model.colorImage)
+        
         return cell
     }
     
@@ -78,7 +80,6 @@ extension PagingColorsView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         LocalConstants.cellSize
-//        CGSize(width: collectionView.bounds.width, height: LocalConstants.cellSize.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

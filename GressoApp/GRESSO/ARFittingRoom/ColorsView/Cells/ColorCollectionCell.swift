@@ -11,6 +11,8 @@ import SnapKit
 final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
 
     // MARK: - UI Elements
+    
+    private lazy var activityIndicatorView = UIActivityIndicatorView(style: .medium)
 
     private lazy var colorImageView: UIImageView = {
         let view = UIImageView()
@@ -36,6 +38,7 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
 
     private func setupSubviews() {
         contentView.addSubview(colorImageView)
+        colorImageView.addSubview(activityIndicatorView)
         
         configureConstraints()
     }
@@ -46,12 +49,17 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
             $0.height.equalTo(colorImageView.snp.width)
             $0.center.equalToSuperview()
         }
+        activityIndicatorView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
     }
     
     // MARK: - Configure
     
-    func configure() {
-        colorImageView.backgroundColor = [.green, .red, .yellow].randomElement()
+    func configure(isLoading: Bool, colorImage: UIImage?) {
+        isLoading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
+        activityIndicatorView.isHidden = !isLoading
+        colorImageView.image = colorImage
     }
 
 }

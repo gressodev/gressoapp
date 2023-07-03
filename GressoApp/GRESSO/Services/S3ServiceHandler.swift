@@ -31,9 +31,57 @@ final class S3ServiceHandler: ObservableObject {
             return nil
         }
     }
+    
+//    func downloadColors(completion: @escaping (UIImage) -> Void) {
+//        guard let listObjectsRequest = AWSS3ListObjectsRequest() else { return }
+//        listObjectsRequest.bucket = bucketName
+//        listObjectsRequest.prefix = "colors"
+//
+//        s3.listObjects(listObjectsRequest).continueOnSuccessWith { [weak self] (task) -> Any? in
+//            guard let self else { return }
+//            if let error = task.error {
+//                print("Error occurred: \(error)")
+//                return nil
+//            }
+//
+//            guard let listObjectsOutput = task.result else { return }
+//            guard let contents = listObjectsOutput.contents?.dropFirst() else { return }
+//            for object in contents {
+//                guard let key = object.key else { return }
+//                let fixedKey = key.components(separatedBy: "-")[0]
+//                downloadImage(withKeyName: fixedKey) { image in
+//                    completion(image)
+//                }
+//            }
+//
+//            return nil
+//        }
+//    }
+    
+    private func downloadImage(from url: URL, completion: @escaping (UIImage) -> Void) {
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("### Error downloading image: \(error)")
+                return
+            }
+            
+            guard let data = data else {
+                print("### No data returned from the server.")
+                return
+            }
+            
+            if let image = UIImage(data: data) {
+                completion(image)
+            }
+        }
+        
+        task.resume()
+    }
 
-    func downloadFilesInFolder(folderName: String, completion: @escaping (URL?) -> Void) {
-        guard let listObjectsRequest = AWSS3ListObjectsRequest() else { completion(nil); return }
+
+
+    func downloadFilesInFolder(folderName: String, completion: @escaping (URL?, UIImage?) -> Void) {
+        guard let listObjectsRequest = AWSS3ListObjectsRequest() else { completion(nil, nil); return }
         listObjectsRequest.bucket = bucketName
         listObjectsRequest.prefix = folderName
         
@@ -41,18 +89,27 @@ final class S3ServiceHandler: ObservableObject {
             guard let self else { return }
             if let error = task.error {
                 print("Error occurred: \(error)")
-                completion(nil)
+                completion(nil, nil)
                 return nil
             }
 
-            guard let listObjectsOutput = task.result else { completion(nil); return }
-            guard let contents = listObjectsOutput.contents?.dropFirst() else { completion(nil); return }
+            guard let listObjectsOutput = task.result else { completion(nil, nil); return }
+            guard let contents = listObjectsOutput.contents?.dropFirst() else { completion(nil, nil); return }
             for object in contents {
-                guard let key = object.key?.replacingOccurrences(of: folderName + "/", with: "") else { completion(nil); return }
-                self.loadModel(with: folderName, key, completion: { url in
-                    guard let url else { completion(nil); return }
-                    completion(url)
-                })
+                guard let key = object.key?.replacingOccurrences(of: folderName + "/", with: "") else { completion(nil, nil); return }
+                
+                let fixedKey = key.replacingOccurrences(of: ".reality", with: "").components(separatedBy: "-")[0]
+                if let imageUrl = URL(string: "https://gressotest.s3.us-east-2.amazonaws.com/colors/\(fixedKey).jpeg") {
+                    self.downloadImage(from: imageUrl) { [weak self] image in
+                        guard let self else { return }
+                        self.loadModel(with: folderName, key, completion: { url in
+                            guard let url else { completion(nil, nil); return }
+                            DispatchQueue.main.async {
+                                completion(url, image)
+                            }
+                        })
+                    }
+                }
             }
             
             return nil

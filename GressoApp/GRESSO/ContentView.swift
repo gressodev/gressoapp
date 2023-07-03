@@ -234,10 +234,11 @@ struct ContentView : View {
                 }
                 modelsCount = count
                 if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url in
+                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
                         guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
                         loadingModels[index].url = url
                         loadingModels[index].isLoading = false
+                        loadingModels[index].colorImage = image
                     }
                     withAnimation {
                         doGlassesHaveModelHomeTab = true
@@ -263,10 +264,11 @@ struct ContentView : View {
                 }
                 modelsCount = count
                 if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url in
+                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
                         guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
                         loadingModels[index].url = url
                         loadingModels[index].isLoading = false
+                        loadingModels[index].colorImage = image
                     }
                     withAnimation {
                         doGlassesHaveModelGlassTab = true
@@ -292,10 +294,11 @@ struct ContentView : View {
                 }
                 modelsCount = count
                 if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url in
+                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
                         guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
                         loadingModels[index].url = url
                         loadingModels[index].isLoading = false
+                        loadingModels[index].colorImage = image
                     }
                     withAnimation {
                         doGlassesHaveModelBagTab = true

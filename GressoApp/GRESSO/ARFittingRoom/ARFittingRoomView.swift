@@ -89,7 +89,7 @@ struct ARFittingRoomView: View {
                 Spacer()
                 
                 ZStack {
-                    ColorsView(modelsCount: loadingModels.count) { index in
+                    ColorsView(models: $loadingModels) { index in
                         currentIndex = index
                         isModelLoading = loadingModels[index].isLoading
                         guard let url = loadingModels.item(at: index)?.url else { return }

@@ -9,14 +9,17 @@ import SwiftUI
 
 struct ColorsView: UIViewRepresentable {
     
-    let modelsCount: Int
+    @Binding var models: [LoadingModel]
     var completion: (Int) -> Void
     
     func makeUIView(context: Context) -> PagingColorsView {
-        PagingColorsView(modelsCount: modelsCount) { index in
+        PagingColorsView(models: models) { index in
             completion(index)
         }
     }
     
-    func updateUIView(_ uiView: PagingColorsView, context: Context) { }
+    func updateUIView(_ uiView: PagingColorsView, context: Context) {
+        uiView.models = models
+        uiView.reloadData()
+    }
 }
