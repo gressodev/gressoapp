@@ -23,5 +23,6 @@ enum Assets {
         static let photoСircle: String = "photo.circle"
         static let shareImage: String = "arrowshape.turn.up.right.fill"
         static let downloadImage: String = "square.and.arrow.down"
+        static let heart: String = "heart"
     }
 }

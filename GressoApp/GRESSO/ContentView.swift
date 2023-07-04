@@ -11,7 +11,8 @@ import ARKit
 enum ActiveTab: Int {
     case home = 0
     case glass = 1
-    case bag = 2
+    case wishlist = 2
+    case bag = 3
 }
 
 struct ContentView : View {
@@ -36,48 +37,60 @@ struct ContentView : View {
     
     @StateObject private var s3Service = S3ServiceHandler()
     
-    @State private var activeTab: ActiveTab = .home
+    @State private var activeTab: ActiveTab = .glass
     
     @StateObject var homeModel = WebViewModel(urlString: "https://gresso.com")
     @StateObject var glassModel = WebViewModel(urlString: "https://gresso.com/pages/ar")
+    @StateObject var wishlistModel = WebViewModel(urlString: "https://gresso.com/apps/wishlist")
     @StateObject var bagModel = WebViewModel(urlString: "https://gresso.com/cart")
     
     @State private var doGlassesHaveModelHomeTab = false
     @State private var doGlassesHaveModelGlassTab = false
+    @State private var doGlassesHaveModelWishlistTab = false
     @State private var doGlassesHaveModelBagTab = false
     @State private var isPageLoading = false
     
     var body: some View {
         let homeView = WebView(webView: homeModel.webView)
         let glassView = WebView(webView: glassModel.webView)
+        let wishlistView = WebView(webView: wishlistModel.webView)
         let bagView = WebView(webView: bagModel.webView)
         
         TabView(selection: $activeTab) {
             VStack {
-                HStack {
-                    if homeModel.canGoBack {
-                        Button {
-                            homeModel.goBack()
-                        } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
-                                .renderingMode(.template)
-                        }
-                        .padding()
-                    } else {
-                        Button {
-                            homeModel.openMenu()
-                        } label: {
-                            Image(Assets.Images.menuButtonIcon)
-                                .renderingMode(.template)
-                        }
-                        .padding()
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text("GRESSO")
+                            .font(.system(size: 30, weight: .bold))
+                        Spacer()
                     }
                     
-                    Spacer()
-                    
-                    if isPageLoading {
-                        ProgressView()
+                    HStack {
+                        if homeModel.canGoBack {
+                            Button {
+                                homeModel.goBack()
+                            } label: {
+                                Image(systemName: Assets.Images.chevronBackward)
+                                    .renderingMode(.template)
+                            }
                             .padding()
+                        } else {
+                            Button {
+                                homeModel.openMenu()
+                            } label: {
+                                Image(Assets.Images.menuButtonIcon)
+                                    .renderingMode(.template)
+                            }
+                            .padding()
+                        }
+                        
+                        Spacer()
+                        
+                        if isPageLoading {
+                            ProgressView()
+                                .padding()
+                        }
                     }
                 }
                 .frame(height: LocalConstants.navBarHeight)
@@ -109,21 +122,30 @@ struct ContentView : View {
             .tag(ActiveTab.home)
             
             VStack {
-                HStack {
-                    Button {
-                        glassModel.goBack()
-                    } label: {
-                        Image(systemName: Assets.Images.chevronBackward)
-                            .renderingMode(.template)
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text("GRESSO")
+                            .font(.system(size: 30, weight: .bold))
+                        Spacer()
                     }
-                    .padding()
-                    .disabled(!glassModel.canGoBack)
                     
-                    Spacer()
-                    
-                    if isPageLoading {
-                        ProgressView()
-                            .padding()
+                    HStack {
+                        Button {
+                            glassModel.goBack()
+                        } label: {
+                            Image(systemName: Assets.Images.chevronBackward)
+                                .renderingMode(.template)
+                        }
+                        .padding()
+                        .disabled(!glassModel.canGoBack)
+                        
+                        Spacer()
+                        
+                        if isPageLoading {
+                            ProgressView()
+                                .padding()
+                        }
                     }
                 }
                 .frame(height: LocalConstants.navBarHeight)
@@ -149,27 +171,94 @@ struct ContentView : View {
                 }
             }
             .tabItem {
-                Image(Assets.Images.TabBar.tabItemGlasses)
+                Image(Assets.Images.menuButtonIcon)
                     .renderingMode(.template)
             }
             .tag(ActiveTab.glass)
             
             VStack {
-                HStack {
-                    Button {
-                        bagModel.goBack()
-                    } label: {
-                        Image(systemName: Assets.Images.chevronBackward)
-                            .renderingMode(.template)
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text("GRESSO")
+                            .font(.system(size: 30, weight: .bold))
+                        Spacer()
                     }
-                    .padding()
-                    .disabled(!bagModel.canGoBack)
                     
-                    Spacer()
+                    HStack {
+                        Button {
+                            wishlistModel.goBack()
+                        } label: {
+                            Image(systemName: Assets.Images.chevronBackward)
+                                .renderingMode(.template)
+                        }
+                        .padding()
+                        .disabled(!wishlistModel.canGoBack)
+                        
+                        Spacer()
+                        
+                        if isPageLoading {
+                            ProgressView()
+                                .padding()
+                        }
+                    }
+                }
+                .frame(height: LocalConstants.navBarHeight)
+                
+                wishlistView
+                    .onAppear {
+                        wishlistModel.reload()
+                    }
+                
+                if doGlassesHaveModelWishlistTab {
+                    HStack {
+                        Button {
+                            showingAR = true
+                        } label: {
+                            Image(Assets.Images.virtualTryOnIcon)
+                                .renderingMode(.template)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: LocalConstants.VirtualTryOnButton.height)
+                        }
+                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
+                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
+                    }
+                }
+            }
+            .tabItem {
+                Image(systemName: Assets.Images.heart)
+                    .renderingMode(.template)
+            }
+            .tag(ActiveTab.wishlist)
+            
+            VStack {
+                ZStack {
+                    HStack {
+                        Spacer()
+                        Text("GRESSO")
+                            .font(.system(size: 30, weight: .bold))
+                        Spacer()
+                    }
                     
-                    if isPageLoading {
-                        ProgressView()
-                            .padding()
+                    HStack {
+                        Button {
+                            bagModel.goBack()
+                        } label: {
+                            Image(systemName: Assets.Images.chevronBackward)
+                                .renderingMode(.template)
+                        }
+                        .padding()
+                        .disabled(!bagModel.canGoBack)
+                        
+                        Spacer()
+                        
+                        if isPageLoading {
+                            ProgressView()
+                                .padding()
+                        }
                     }
                 }
                 .frame(height: LocalConstants.navBarHeight)
@@ -212,6 +301,8 @@ struct ContentView : View {
                     return homeModel.urlChanges
                 case .glass:
                     return glassModel.urlChanges
+                case .wishlist:
+                    return wishlistModel.urlChanges
                 case .bag:
                     return bagModel.urlChanges
                 }
@@ -277,6 +368,36 @@ struct ContentView : View {
                 } else {
                     withAnimation {
                         doGlassesHaveModelGlassTab = false
+                        isPageLoading = false
+                    }
+                }
+            }
+        }
+        .onChange(of: wishlistModel.urlChanges) { url in
+            guard let url, isARFaceTrackingConfigurationSupported else { return }
+            isPageLoading = true
+            
+            s3Service.filesCount(folderName: url.lastPathComponent) { count in
+                loadingModels = []
+                for index in 0..<count {
+                    let model = LoadingModel(id: index, url: nil, isLoading: true)
+                    loadingModels.append(model)
+                }
+                modelsCount = count
+                if count != .zero {
+                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
+                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
+                        loadingModels[index].url = url
+                        loadingModels[index].isLoading = false
+                        loadingModels[index].colorImage = image
+                    }
+                    withAnimation {
+                        doGlassesHaveModelWishlistTab = true
+                        isPageLoading = false
+                    }
+                } else {
+                    withAnimation {
+                        doGlassesHaveModelWishlistTab = false
                         isPageLoading = false
                     }
                 }
