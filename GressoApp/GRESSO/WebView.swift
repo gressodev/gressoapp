@@ -70,6 +70,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
         webView.openMenu()
     }
     
+    @MainActor
     func reload() {
         webView.reload()
     }
@@ -107,7 +108,7 @@ final class BaseWebView: WKWebView {
         }
     }
     
-    func removeHeaderFooter() {
+    private func removeHeaderFooter() {
         let script =
 """
 var css = '.header,.footer,.announcement-bar {display: none !important;}',
