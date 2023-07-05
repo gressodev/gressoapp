@@ -13,6 +13,19 @@ enum ActiveTab: Int {
     case glass = 1
     case wishlist = 2
     case bag = 3
+    
+    var url: URL {
+        switch self {
+        case .home:
+            return URL(string: "https://gresso.com/")!
+        case .glass:
+            return URL(string: "https://gresso.com/pages/ar/")!
+        case .wishlist:
+            return URL(string: "https://gresso.com/apps/wishlist/")!
+        case .bag:
+            return URL(string: "https://gresso.com/cart/")!
+        }
+    }
 }
 
 struct ContentView : View {
@@ -39,371 +52,146 @@ struct ContentView : View {
     
     @State private var activeTab: ActiveTab = .glass
     
-    @StateObject var homeModel = WebViewModel(urlString: "https://gresso.com")
-    @StateObject var glassModel = WebViewModel(urlString: "https://gresso.com/pages/ar")
-    @StateObject var wishlistModel = WebViewModel(urlString: "https://gresso.com/apps/wishlist")
-    @StateObject var bagModel = WebViewModel(urlString: "https://gresso.com/cart")
+    @StateObject var webViewModel = WebViewModel(urlString: "https://gresso.com/pages/ar")
     
-    @State private var doGlassesHaveModelHomeTab = false
-    @State private var doGlassesHaveModelGlassTab = false
-    @State private var doGlassesHaveModelWishlistTab = false
-    @State private var doGlassesHaveModelBagTab = false
+    @State private var doGlassesHaveModel = false
     @State private var isPageLoading = false
+    @State private var showMenuButton = false
     
     var body: some View {
-        let homeView = WebView(webView: homeModel.webView)
-        let glassView = WebView(webView: glassModel.webView)
-        let wishlistView = WebView(webView: wishlistModel.webView)
-        let bagView = WebView(webView: bagModel.webView)
+        let webView = WebView(webView: webViewModel.webView)
         
-        TabView(selection: $activeTab) {
-            VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
-                        Spacer()
+        VStack {
+            ZStack {
+                HStack {
+                    Spacer()
+                    Text("GRESSO")
+                        .font(.system(size: 30, weight: .bold))
+                    Spacer()
+                }
+                
+                HStack {
+                    if showMenuButton {
+                        Button {
+                            webViewModel.openMenu()
+                        } label: {
+                            Image(Assets.Images.menuButtonIcon)
+                                .renderingMode(.template)
+                        }
+                        .padding()
+                    } else {
+                        Button {
+                            webViewModel.goBack()
+                        } label: {
+                            Image(systemName: Assets.Images.chevronBackward)
+                                .renderingMode(.template)
+                        }
+                        .disabled(!webViewModel.canGoBack)
+                        .padding()
                     }
                     
-                    HStack {
-                        if homeModel.canGoBack {
-                            Button {
-                                homeModel.goBack()
-                            } label: {
-                                Image(systemName: Assets.Images.chevronBackward)
-                                    .renderingMode(.template)
-                            }
+                    Spacer()
+                    
+                    if isPageLoading {
+                        ProgressView()
                             .padding()
-                        } else {
-                            Button {
-                                homeModel.openMenu()
-                            } label: {
-                                Image(Assets.Images.menuButtonIcon)
-                                    .renderingMode(.template)
-                            }
-                            .padding()
-                        }
-                        
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
-                        }
-                    }
-                }
-                .frame(height: LocalConstants.navBarHeight)
-                
-                homeView
-                
-                if doGlassesHaveModelHomeTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
-                        }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
-            .tabItem {
-                Image(Assets.Images.TabBar.tabItemHome)
-                    .renderingMode(.template)
-            }
-            .tag(ActiveTab.home)
+            .frame(height: LocalConstants.navBarHeight)
             
-            VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Button {
-                            glassModel.goBack()
-                        } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
-                                .renderingMode(.template)
-                        }
-                        .padding()
-                        .disabled(!glassModel.canGoBack)
-                        
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
-                        }
-                    }
-                }
-                .frame(height: LocalConstants.navBarHeight)
-                
-                glassView
-                
-                if doGlassesHaveModelGlassTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
-                        }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                    }
-                }
-            }
-            .tabItem {
-                Image(Assets.Images.menuButtonIcon)
-                    .renderingMode(.template)
-            }
-            .tag(ActiveTab.glass)
+            webView
             
-            VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
-                        Spacer()
+            if doGlassesHaveModel {
+                HStack {
+                    Button {
+                        showingAR = true
+                    } label: {
+                        Image(Assets.Images.virtualTryOnIcon)
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: LocalConstants.VirtualTryOnButton.height)
                     }
-                    
-                    HStack {
-                        Button {
-                            wishlistModel.goBack()
-                        } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
-                                .renderingMode(.template)
-                        }
-                        .padding()
-                        .disabled(!wishlistModel.canGoBack)
-                        
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
-                        }
-                    }
-                }
-                .frame(height: LocalConstants.navBarHeight)
-                
-                wishlistView
-                    .onAppear {
-                        wishlistModel.reload()
-                    }
-                
-                if doGlassesHaveModelWishlistTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
-                        }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                    }
+                    .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
+                    .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
+                    .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
+                    .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                 }
             }
-            .tabItem {
-                Image(systemName: Assets.Images.heart)
-                    .renderingMode(.template)
-            }
-            .tag(ActiveTab.wishlist)
-            
-            VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Button {
-                            bagModel.goBack()
-                        } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
-                                .renderingMode(.template)
-                        }
-                        .padding()
-                        .disabled(!bagModel.canGoBack)
-                        
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
-                        }
-                    }
-                }
-                .frame(height: LocalConstants.navBarHeight)
-                
-                bagView
-                    .onAppear {
-                        bagModel.reload()
-                    }
-                
-                if doGlassesHaveModelBagTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
-                        }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                    }
-                }
-            }
-            .tabItem {
-                VStack {
-                    Image(Assets.Images.TabBar.tabItemBag)
+            HStack {
+                Spacer()
+                Button {
+                    activeTab = .home
+                    webViewModel.loadUrl(activeTab.url)
+                } label: {
+                    Image(Assets.Images.TabBar.tabItemHome)
+                        .resizable()
                         .renderingMode(.template)
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(activeTab == .home ? .accentColor : .gray)
                 }
+                Spacer()
+                Button {
+                    activeTab = .glass
+                    webViewModel.loadUrl(activeTab.url)
+                } label: {
+                    Image(Assets.Images.menuButtonIcon)
+                        .resizable()
+                        .renderingMode(.template)
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(activeTab == .glass ? .accentColor : .gray)
+                }
+                Spacer()
+                Button {
+                    activeTab = .wishlist
+                    webViewModel.loadUrl(activeTab.url)
+                } label: {
+                    Image(systemName: Assets.Images.heart)
+                        .resizable()
+                        .renderingMode(.template)
+                        .scaledToFit()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(activeTab == .wishlist ? .accentColor : .gray)
+                }
+                Spacer()
+                Button {
+                    activeTab = .bag
+                    webViewModel.loadUrl(activeTab.url)
+                } label: {
+                    Image(Assets.Images.TabBar.tabItemBag)
+                        .resizable()
+                        .renderingMode(.template)
+                        .scaledToFit()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(activeTab == .bag ? .accentColor : .gray)
+                }
+                Spacer()
             }
-            .tag(ActiveTab.bag)
         }
         .fullScreenCover(isPresented: $showingAR) {
-            var modelLink: URL? {
-                switch activeTab {
-                case .home:
-                    return homeModel.urlChanges
-                case .glass:
-                    return glassModel.urlChanges
-                case .wishlist:
-                    return wishlistModel.urlChanges
-                case .bag:
-                    return bagModel.urlChanges
-                }
-            }
             ARFittingRoomView(
                 loadingModels: $loadingModels,
-                modelLink: modelLink
+                modelLink: webViewModel.urlChanges
             )
             .edgesIgnoringSafeArea(.all)
         }
-        .onChange(of: homeModel.urlChanges) { url in
-            guard let url, isARFaceTrackingConfigurationSupported else { return }
-            isPageLoading = true
-            
-            s3Service.filesCount(folderName: url.lastPathComponent) { count in
-                loadingModels = []
-                for index in 0..<count {
-                    let model = LoadingModel(id: index, url: nil, isLoading: true)
-                    loadingModels.append(model)
-                }
-                modelsCount = count
-                if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
-                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
-                        loadingModels[index].url = url
-                        loadingModels[index].isLoading = false
-                        loadingModels[index].colorImage = image
-                    }
-                    withAnimation {
-                        doGlassesHaveModelHomeTab = true
-                        isPageLoading = false
-                    }
-                } else {
-                    withAnimation {
-                        doGlassesHaveModelHomeTab = false
-                        isPageLoading = false
-                    }
-                }
+        .onChange(of: webViewModel.urlChanges) { url in
+            if url == ActiveTab.home.url {
+                activeTab = .home
             }
-        }
-        .onChange(of: glassModel.urlChanges) { url in
-            guard let url, isARFaceTrackingConfigurationSupported else { return }
-            isPageLoading = true
-            
-            s3Service.filesCount(folderName: url.lastPathComponent) { count in
-                loadingModels = []
-                for index in 0..<count {
-                    let model = LoadingModel(id: index, url: nil, isLoading: true)
-                    loadingModels.append(model)
-                }
-                modelsCount = count
-                if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
-                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
-                        loadingModels[index].url = url
-                        loadingModels[index].isLoading = false
-                        loadingModels[index].colorImage = image
-                    }
-                    withAnimation {
-                        doGlassesHaveModelGlassTab = true
-                        isPageLoading = false
-                    }
-                } else {
-                    withAnimation {
-                        doGlassesHaveModelGlassTab = false
-                        isPageLoading = false
-                    }
-                }
+            if url == ActiveTab.glass.url {
+                activeTab = .glass
             }
-        }
-        .onChange(of: wishlistModel.urlChanges) { url in
-            guard let url, isARFaceTrackingConfigurationSupported else { return }
-            isPageLoading = true
-            
-            s3Service.filesCount(folderName: url.lastPathComponent) { count in
-                loadingModels = []
-                for index in 0..<count {
-                    let model = LoadingModel(id: index, url: nil, isLoading: true)
-                    loadingModels.append(model)
-                }
-                modelsCount = count
-                if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
-                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
-                        loadingModels[index].url = url
-                        loadingModels[index].isLoading = false
-                        loadingModels[index].colorImage = image
-                    }
-                    withAnimation {
-                        doGlassesHaveModelWishlistTab = true
-                        isPageLoading = false
-                    }
-                } else {
-                    withAnimation {
-                        doGlassesHaveModelWishlistTab = false
-                        isPageLoading = false
-                    }
-                }
+            if url == ActiveTab.wishlist.url {
+                activeTab = .wishlist
             }
-        }
-        .onChange(of: bagModel.urlChanges) { url in
+            if url == ActiveTab.bag.url {
+                activeTab = .bag
+            }
+            showMenuButton = activeTab == .home && activeTab.url == url
             guard let url, isARFaceTrackingConfigurationSupported else { return }
             isPageLoading = true
             
@@ -422,12 +210,12 @@ struct ContentView : View {
                         loadingModels[index].colorImage = image
                     }
                     withAnimation {
-                        doGlassesHaveModelBagTab = true
+                        doGlassesHaveModel = true
                         isPageLoading = false
                     }
                 } else {
                     withAnimation {
-                        doGlassesHaveModelBagTab = false
+                        doGlassesHaveModel = false
                         isPageLoading = false
                     }
                 }

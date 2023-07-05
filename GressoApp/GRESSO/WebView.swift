@@ -56,6 +56,11 @@ final class WebViewModel: ObservableObject {
     func reload() {
         webView.reload()
     }
+    
+    func loadUrl(_ url: URL) {
+        let request = URLRequest(url: url)
+        webView.load(request)
+    }
 }
 
 final class BaseWebView: WKWebView {
