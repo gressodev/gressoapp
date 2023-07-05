@@ -21,15 +21,32 @@ struct WebView: UIViewRepresentable {
     func updateUIView(_ uiView: BaseWebView, context: Context) { }
 }
 
-final class WebViewModel: ObservableObject {
+final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
     
     @Published var canGoBack: Bool = false
     @Published var urlChanges: URL? = nil
     
-    let webView: BaseWebView
+    var webView: BaseWebView
+    
+    var reloadWishlistCompletion: (() -> Void)?
     
     init(urlString: String) {
         webView = BaseWebView(frame: .zero)
+        super.init()
+        
+        let contentController = WKUserContentController()
+        let userScript = WKUserScript(
+            source: "document.getElementById('shopify-block-f9861e7b-1a59-4ba8-ba3c-cae7c1b2f9ae').addEventListener('click', function(){ window.webkit.messageHandlers.buttonClicked.postMessage('Button clicked') });",
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: true
+        )
+        contentController.addUserScript(userScript)
+        contentController.add(self, name: "buttonClicked")
+        
+        let config = WKWebViewConfiguration()
+        config.userContentController = contentController
+        
+        webView = BaseWebView(frame: .zero, configuration: config)
         
         guard let url = URL(string: urlString) else { return }
         webView.load(URLRequest(url: url))
@@ -55,6 +72,12 @@ final class WebViewModel: ObservableObject {
     
     func reload() {
         webView.reload()
+    }
+    
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        if message.name == "buttonClicked" {
+            reloadWishlistCompletion?()
+        }
     }
 }
 

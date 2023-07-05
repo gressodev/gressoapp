@@ -206,9 +206,6 @@ struct ContentView : View {
                 .frame(height: LocalConstants.navBarHeight)
                 
                 wishlistView
-                    .onAppear {
-                        wishlistModel.reload()
-                    }
                 
                 if doGlassesHaveModelWishlistTab {
                     HStack {
@@ -293,6 +290,17 @@ struct ContentView : View {
                 }
             }
             .tag(ActiveTab.bag)
+        }
+        .onAppear {
+            homeModel.reloadWishlistCompletion = {
+                wishlistModel.reload()
+            }
+            glassModel.reloadWishlistCompletion = {
+                wishlistModel.reload()
+            }
+            bagModel.reloadWishlistCompletion = {
+                wishlistModel.reload()
+            }
         }
         .fullScreenCover(isPresented: $showingAR) {
             var modelLink: URL? {
