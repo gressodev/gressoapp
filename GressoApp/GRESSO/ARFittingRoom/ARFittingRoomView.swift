@@ -10,15 +10,29 @@ import RealityKit
 
 @MainActor
 struct ARFittingRoomView: View {
+    
+    private enum LocalConstants {
+        static let sliderMaxValue: Double = 20
+    }
+    
     @Environment(\.dismiss) var dismiss
+    
+    private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
     
     @State private var showingSnapshot = false
     @State private var needToTakeSnapshot = false
+    @State private var needToDarkenLenses = false
+    @State private var needToLightenLenses = false
     @State private var snapshotImage: UIImage?
     @State private var isModelLoading = true
     @State private var currentIndex: Int = .zero
     
+    @State private var lensDarkness: Double = LocalConstants.sliderMaxValue
+    @State private var isSliderGoingDown = true
+    
     @State private var showingShareScreen = false
+    
+    @State private var isPhotochromic = false
     
     @Binding var loadingModels: [LoadingModel]
     private var modelLink: URL?
@@ -30,16 +44,16 @@ struct ARFittingRoomView: View {
     }
     
     var body: some View {
-        let arView = ARViewContainer(
-            currentDestination: $currentDestination,
-            needToTakeSnapshot: $needToTakeSnapshot,
-            didTakeSnapshot: { image in
-                snapshotImage = image
-            }
-        )
-        
         ZStack {
-            arView
+            ARViewContainer(
+                currentDestination: $currentDestination,
+                needToTakeSnapshot: $needToTakeSnapshot,
+                needToDarkenLenses: $needToDarkenLenses,
+                needToLightenLenses: $needToLightenLenses,
+                didTakeSnapshot: { image in
+                    snapshotImage = image
+                }
+            )
             
             VStack {
                 HStack {
@@ -88,12 +102,29 @@ struct ARFittingRoomView: View {
             VStack {
                 Spacer()
                 
+                if isPhotochromic {
+                    HStack {
+                        Spacer()
+                        Slider(value: $lensDarkness, in: 0...LocalConstants.sliderMaxValue)
+                            .rotationEffect(.degrees(-90.0), anchor: .trailing)
+                            .disabled(true)
+                            .frame(width: 250)
+                            .padding(.trailing, 40)
+                            .padding(.bottom, 200)
+                    }
+                    
+                    Spacer()
+                }
+                
                 ZStack {
                     ColorsView(models: $loadingModels) { index in
+                        lensDarkness = LocalConstants.sliderMaxValue
+                        isSliderGoingDown = true
                         currentIndex = index
                         isModelLoading = loadingModels[index].isLoading
                         guard let url = loadingModels.item(at: index)?.url else { return }
                         currentDestination = url
+                        isPhotochromic = url.absoluteString.contains("purple")
                     }
                     
                     HStack {
@@ -123,10 +154,37 @@ struct ARFittingRoomView: View {
             showingSnapshot = true
         }
         .onChange(of: loadingModels) { models in
+            lensDarkness = LocalConstants.sliderMaxValue
             guard let model = models.first(where: { $0.id == currentIndex }) else { return }
             isModelLoading = model.isLoading
             guard let url = model.url else { return }
             currentDestination = url
+            isPhotochromic = url.absoluteString.contains("purple")
+            isSliderGoingDown = true
+        }
+        .onChange(of: isSliderGoingDown) { isGoingDown in
+            needToLightenLenses = !isGoingDown
+            needToDarkenLenses = isGoingDown
+        }
+        .onReceive(timer) { _ in
+            guard isPhotochromic else { return }
+            withAnimation {
+                if isSliderGoingDown && lensDarkness != .zero {
+                    lensDarkness -= 1
+                    if lensDarkness == .zero {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            isSliderGoingDown = false
+                        }
+                    }
+                } else if !isSliderGoingDown && lensDarkness != LocalConstants.sliderMaxValue {
+                    lensDarkness += 1
+                    if lensDarkness == LocalConstants.sliderMaxValue {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                            isSliderGoingDown = true
+                        }
+                    }
+                }
+            }
         }
         .sheet(isPresented: $showingSnapshot) {
             if let snapshotImage {
@@ -138,5 +196,11 @@ struct ARFittingRoomView: View {
                 ActivityView(items: [modelLink])
             }
         }
+    }
+}
+
+struct ARFittingRoomView_Previews: PreviewProvider {
+    static var previews: some View {
+        ARFittingRoomView(loadingModels: .constant([]), modelLink: nil)
     }
 }
