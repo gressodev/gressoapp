@@ -19,6 +19,8 @@
 		F5396D692A30E6E50059E331 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5396D682A30E6E50059E331 /* ContentView.swift */; };
 		F5396D6B2A30E6E90059E331 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5396D6A2A30E6E90059E331 /* Assets.xcassets */; };
 		F5396D6E2A30E6E90059E331 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5396D6D2A30E6E90059E331 /* Preview Assets.xcassets */; };
+		F53A669B2A5C49DB00786FB8 /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A669A2A5C49DB00786FB8 /* SliderView.swift */; };
+		F53A669D2A5C4D6E00786FB8 /* RCProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A669C2A5C4D6E00786FB8 /* RCProject.swift */; };
 		F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */; };
 		F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */; };
 		F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */; };
@@ -43,6 +45,8 @@
 		F5396D682A30E6E50059E331 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F5396D6A2A30E6E90059E331 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F5396D6D2A30E6E90059E331 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F53A669A2A5C49DB00786FB8 /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
+		F53A669C2A5C4D6E00786FB8 /* RCProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCProject.swift; sourceTree = "<group>"; };
 		F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3ServiceHandler.swift; sourceTree = "<group>"; };
 		F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFittingRoomView.swift; sourceTree = "<group>"; };
 		F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeGetter.swift"; sourceTree = "<group>"; };
@@ -139,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				F53758A72A4A16E800EF0139 /* ActivityView.swift */,
+				F53A669A2A5C49DB00786FB8 /* SliderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				F58420092A4E3A95004C4A27 /* LoadingModel.swift */,
+				F53A669C2A5C4D6E00786FB8 /* RCProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -341,7 +347,9 @@
 				F584200A2A4E3A95004C4A27 /* LoadingModel.swift in Sources */,
 				F53758852A48426C00EF0139 /* PagingColorsView.swift in Sources */,
 				F584DFCA2A349965002517FD /* WebView.swift in Sources */,
+				F53A669B2A5C49DB00786FB8 /* SliderView.swift in Sources */,
 				F5396D692A30E6E50059E331 /* ContentView.swift in Sources */,
+				F53A669D2A5C4D6E00786FB8 /* RCProject.swift in Sources */,
 				F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */,
 				F53758882A48428900EF0139 /* ColorCollectionCell.swift in Sources */,
 				F5396D672A30E6E50059E331 /* GressoAppApp.swift in Sources */,

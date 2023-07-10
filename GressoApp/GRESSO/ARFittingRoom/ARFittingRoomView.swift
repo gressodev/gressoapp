@@ -16,19 +16,15 @@ struct ARFittingRoomView: View {
     }
     
     @Environment(\.dismiss) var dismiss
-    
-    private let timer = Timer.publish(every: 0.1, on: .main, in: .common).autoconnect()
-    
+        
     @State private var showingSnapshot = false
     @State private var needToTakeSnapshot = false
-    @State private var needToDarkenLenses = false
-    @State private var needToLightenLenses = false
     @State private var snapshotImage: UIImage?
     @State private var isModelLoading = true
     @State private var currentIndex: Int = .zero
     
     @State private var lensDarkness: Double = LocalConstants.sliderMaxValue
-    @State private var isSliderGoingDown = true
+    @State private var isSliderGoingDown = false
     
     @State private var showingShareScreen = false
     
@@ -44,12 +40,13 @@ struct ARFittingRoomView: View {
     }
     
     var body: some View {
+        let slider = SliderView(isSliderGoingDown: $isSliderGoingDown)
+        
         ZStack {
             ARViewContainer(
                 currentDestination: $currentDestination,
                 needToTakeSnapshot: $needToTakeSnapshot,
-                needToDarkenLenses: $needToDarkenLenses,
-                needToLightenLenses: $needToLightenLenses,
+                isSliderGoingDown: $isSliderGoingDown,
                 didTakeSnapshot: { image in
                     snapshotImage = image
                 }
@@ -105,7 +102,7 @@ struct ARFittingRoomView: View {
                 if isPhotochromic {
                     HStack {
                         Spacer()
-                        Slider(value: $lensDarkness, in: 0...LocalConstants.sliderMaxValue)
+                        slider
                             .rotationEffect(.degrees(-90.0), anchor: .trailing)
                             .disabled(true)
                             .frame(width: 250)
@@ -118,13 +115,11 @@ struct ARFittingRoomView: View {
                 
                 ZStack {
                     ColorsView(models: $loadingModels) { index in
-                        lensDarkness = LocalConstants.sliderMaxValue
-                        isSliderGoingDown = true
                         currentIndex = index
                         isModelLoading = loadingModels[index].isLoading
                         guard let url = loadingModels.item(at: index)?.url else { return }
                         currentDestination = url
-                        isPhotochromic = url.absoluteString.contains("purple")
+                        isPhotochromic = url.absoluteString.contains("blue")
                     }
                     
                     HStack {
@@ -154,37 +149,11 @@ struct ARFittingRoomView: View {
             showingSnapshot = true
         }
         .onChange(of: loadingModels) { models in
-            lensDarkness = LocalConstants.sliderMaxValue
             guard let model = models.first(where: { $0.id == currentIndex }) else { return }
             isModelLoading = model.isLoading
             guard let url = model.url else { return }
             currentDestination = url
-            isPhotochromic = url.absoluteString.contains("purple")
-            isSliderGoingDown = true
-        }
-        .onChange(of: isSliderGoingDown) { isGoingDown in
-            needToLightenLenses = !isGoingDown
-            needToDarkenLenses = isGoingDown
-        }
-        .onReceive(timer) { _ in
-            guard isPhotochromic else { return }
-            withAnimation {
-                if isSliderGoingDown && lensDarkness != .zero {
-                    lensDarkness -= 1
-                    if lensDarkness == .zero {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            isSliderGoingDown = false
-                        }
-                    }
-                } else if !isSliderGoingDown && lensDarkness != LocalConstants.sliderMaxValue {
-                    lensDarkness += 1
-                    if lensDarkness == LocalConstants.sliderMaxValue {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            isSliderGoingDown = true
-                        }
-                    }
-                }
-            }
+            isPhotochromic = url.absoluteString.contains("blue")
         }
         .sheet(isPresented: $showingSnapshot) {
             if let snapshotImage {
