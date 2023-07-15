@@ -8,6 +8,9 @@
 import SwiftUI
 import AWSCore
 
+let Font = R.font
+let RImage = R.image
+
 @main
 struct GressoAppApp: App {
     

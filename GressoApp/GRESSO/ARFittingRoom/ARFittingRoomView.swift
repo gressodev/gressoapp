@@ -23,8 +23,7 @@ struct ARFittingRoomView: View {
     @State private var isModelLoading = true
     @State private var currentIndex: Int = .zero
     
-    @State private var lensDarkness: Double = LocalConstants.sliderMaxValue
-    @State private var isSliderGoingDown = false
+    @State private var needToDarken = true
     
     @State private var showingShareScreen = false
     
@@ -40,13 +39,11 @@ struct ARFittingRoomView: View {
     }
     
     var body: some View {
-        let slider = SliderView(isSliderGoingDown: $isSliderGoingDown)
-        
         ZStack {
             ARViewContainer(
                 currentDestination: $currentDestination,
                 needToTakeSnapshot: $needToTakeSnapshot,
-                isSliderGoingDown: $isSliderGoingDown,
+                needToDarken: $needToDarken,
                 didTakeSnapshot: { image in
                     snapshotImage = image
                 }
@@ -99,44 +96,41 @@ struct ARFittingRoomView: View {
             VStack {
                 Spacer()
                 
-                if isPhotochromic {
-                    HStack {
-                        Spacer()
-                        slider
-                            .rotationEffect(.degrees(-90.0), anchor: .trailing)
-                            .disabled(true)
-                            .frame(width: 250)
-                            .padding(.trailing, 40)
-                            .padding(.bottom, 200)
-                    }
-                    
+                VStack {
                     Spacer()
-                }
-                
-                ZStack {
-                    ColorsView(models: $loadingModels) { index in
-                        currentIndex = index
-                        isModelLoading = loadingModels[index].isLoading
-                        guard let url = loadingModels.item(at: index)?.url else { return }
-                        currentDestination = url
-                        isPhotochromic = url.absoluteString.contains("blue")
+                    
+                    if isPhotochromic {
+                        SegmentedControl(needToDarken: $needToDarken)
+                            .frame(height: 52)
+                            .padding(.leading, 12)
+                            .padding(.trailing, 12)
                     }
                     
-                    HStack {
-                        Spacer()
-                        
-                        Button {
-                            needToTakeSnapshot = true
-                        } label: {
-                            Circle()
-                                .strokeBorder(.white, lineWidth: 8)
-                                .frame(width: 80, height: 80)
+                    ZStack {
+                        ColorsView(models: $loadingModels) { index in
+                            currentIndex = index
+                            isModelLoading = loadingModels[index].isLoading
+                            guard let url = loadingModels.item(at: index)?.url else { return }
+                            currentDestination = url
+                            isPhotochromic = url.absoluteString.contains("blue")
                         }
-                        
-                        Spacer()
+
+                        HStack {
+                            Spacer()
+
+                            Button {
+                                needToTakeSnapshot = true
+                            } label: {
+                                Circle()
+                                    .strokeBorder(.white, lineWidth: 8)
+                                    .frame(width: 80, height: 80)
+                            }
+
+                            Spacer()
+                        }
                     }
+                    .frame(height: 150)
                 }
-                .frame(height: 150)
             }
             
             if isModelLoading {

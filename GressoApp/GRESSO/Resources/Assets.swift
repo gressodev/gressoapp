@@ -5,7 +5,7 @@
 //  Created by Dmitry Koshelev on 24.06.2023.
 //
 
-import Foundation
+import UIKit
 
 enum Assets {
     enum Images {
@@ -24,5 +24,8 @@ enum Assets {
         static let shareImage: String = "arrowshape.turn.up.right.fill"
         static let downloadImage: String = "square.and.arrow.down"
         static let heart: String = "heart"
+        
+        static let sun = RImage.sun() ?? UIImage()
+        static let home = RImage.home() ?? UIImage()
     }
 }

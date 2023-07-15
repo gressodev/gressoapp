@@ -11,6 +11,34 @@ import Combine
 
 @available(iOS 13.0, macOS 10.15, *)
 public enum RCProject {
+    
+    public class NotificationTrigger {
+
+        public let identifier: Swift.String
+
+        private weak var root: RealityKit.Entity?
+
+        fileprivate init(identifier: Swift.String, root: RealityKit.Entity?) {
+            self.identifier = identifier
+            self.root = root
+        }
+
+        public func post(overrides: [Swift.String: RealityKit.Entity]? = nil) {
+            guard let scene = root?.scene else {
+                print("Unable to post notification trigger with identifier \"\(self.identifier)\" because the root is not part of a scene")
+                return
+            }
+
+            var userInfo: [Swift.String: Any] = [
+                "RealityKit.NotificationTrigger.Scene": scene,
+                "RealityKit.NotificationTrigger.Identifier": self.identifier
+            ]
+            userInfo["RealityKit.NotificationTrigger.Overrides"] = overrides
+
+            Foundation.NotificationCenter.default.post(name: Foundation.NSNotification.Name(rawValue: "RealityKit.NotificationTrigger"), object: self, userInfo: userInfo)
+        }
+
+    }
 
     public class NotifyAction {
 
@@ -79,6 +107,23 @@ public enum RCProject {
     public class Scene: RealityKit.Entity, RealityKit.HasAnchoring {
 
         public private(set) lazy var actions = RCProject.Scene.Actions(root: self)
+        
+        public private(set) lazy var notifications = RCProject.Scene.Notifications(root: self)
+
+        public class Notifications {
+
+            fileprivate init(root: RealityKit.Entity) {
+                self.root = root
+            }
+
+            private weak var root: RealityKit.Entity?
+
+            public private(set) lazy var darkenLenses = RCProject.NotificationTrigger(identifier: "darkenLenses", root: root)
+            public private(set) lazy var lightenLenses = RCProject.NotificationTrigger(identifier: "lightenLenses", root: root)
+
+            public private(set) lazy var allNotifications = [ lightenLenses, darkenLenses ]
+
+        }
 
         public class Actions {
 

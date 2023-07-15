@@ -2,24 +2,28 @@ PODS:
   - AWSCore (2.33.0)
   - AWSS3 (2.33.0):
     - AWSCore (= 2.33.0)
+  - R.swift (7.3.2)
   - SnapKit (5.6.0)
 
 DEPENDENCIES:
   - AWSCore
   - AWSS3
+  - R.swift
   - SnapKit
 
 SPEC REPOS:
   trunk:
     - AWSCore
     - AWSS3
+    - R.swift
     - SnapKit
 
 SPEC CHECKSUMS:
   AWSCore: ff962198e35c750cb1d59cd459c51f1990e3ec68
   AWSS3: 910b5a6ec6c6b749f6a0657483118cae54f83a11
+  R.swift: 0af0d882f49f03711415cb4e5215daa977d8a480
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 44d699c476056351e4475a03a2bb588f46d2be98
+PODFILE CHECKSUM: 45c4f1032ed764e332769a03c64ba49e350f7b3e
 
 COCOAPODS: 1.12.1

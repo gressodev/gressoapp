@@ -139,7 +139,8 @@ final class S3ServiceHandler: ObservableObject {
                 try? fileManager.removeItem(atPath: destination.path)
             }
             do {
-                try fileManager.moveItem(atPath: location!.path,
+                guard let location else { completion(nil); return }
+                try fileManager.moveItem(atPath: location.path,
                                          toPath: destination.path)
                 completion(destination)
             } catch {

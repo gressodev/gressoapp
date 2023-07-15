@@ -14,7 +14,7 @@ struct ARViewContainer: UIViewRepresentable {
     
     @Binding var currentDestination: URL?
     @Binding var needToTakeSnapshot: Bool
-    @Binding var isSliderGoingDown: Bool
+    @Binding var needToDarken: Bool
     
     var didTakeSnapshot: (UIImage) -> Void
     
@@ -25,13 +25,6 @@ struct ARViewContainer: UIViewRepresentable {
         let faceTrackingConfig = ARFaceTrackingConfiguration()
         arView.session.run(faceTrackingConfig, options: [.resetTracking, .removeExistingAnchors])
         
-        arView.needToDarkenLenses = {
-            isSliderGoingDown = false
-        }
-        arView.needToLightenLenses = {
-            isSliderGoingDown = true
-        }
-        
         return arView
     }
     
@@ -40,7 +33,8 @@ struct ARViewContainer: UIViewRepresentable {
         
         if let currentDestination {
             uiView.changeModel(
-                currentDestination: currentDestination
+                currentDestination: currentDestination,
+                needToDarken: needToDarken
             )
         }
         if needToTakeSnapshot {
@@ -57,27 +51,19 @@ struct ARViewContainer: UIViewRepresentable {
 
 final class ARFaceTrackingView: ARView {
     
-    var needToDarkenLenses: (() -> Void)?
-    var needToLightenLenses: (() -> Void)?
-    
-    func changeModel(currentDestination: URL) {
+    func changeModel(currentDestination: URL, needToDarken: Bool) {
         do {
             let model = try RCProject.loadScene(realityFileSceneURL: currentDestination)
             scene.addAnchor(model)
             
-            model.actions.darkenLensesStart.onAction = darkenNotificationID
-            model.actions.lightenLensesStart.onAction = lightenNotificationID
+            if needToDarken {
+                model.notifications.darkenLenses.post()
+            } else {
+                model.notifications.lightenLenses.post()
+            }
         } catch {
             print("Fail loading entity.", error.localizedDescription)
         }
-    }
-    
-    fileprivate func darkenNotificationID(_ entity: Entity?) {
-        needToDarkenLenses?()
-    }
-    
-    fileprivate func lightenNotificationID(_ entity: Entity?) {
-        needToLightenLenses?()
     }
     
 }
