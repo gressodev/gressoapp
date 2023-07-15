@@ -19,13 +19,6 @@ struct ContentView : View {
     
     private enum LocalConstants {
         static let navBarHeight: CGFloat = 50
-        
-        enum VirtualTryOnButton {
-            static let height: CGFloat = 40
-            static let cornerRadius: CGFloat = 20
-            static let topBottomPadding: CGFloat = 3
-            static let backgroundOpacity: Double = 0.1
-        }
     }
     
     private let isARFaceTrackingConfigurationSupported = ARFaceTrackingConfiguration.isSupported
@@ -71,7 +64,7 @@ struct ContentView : View {
                             Button {
                                 homeModel.goBack()
                             } label: {
-                                Image(systemName: Assets.Images.chevronBackward)
+                                Image(systemName: Images.chevronBackward)
                                     .renderingMode(.template)
                             }
                             .padding()
@@ -79,7 +72,7 @@ struct ContentView : View {
                             Button {
                                 homeModel.openMenu()
                             } label: {
-                                Image(Assets.Images.menuButtonIcon)
+                                Image(Images.menuButtonIcon)
                                     .renderingMode(.template)
                             }
                             .padding()
@@ -102,22 +95,17 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
+                            TryOnButton()
                         }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
             .tabItem {
-                Image(Assets.Images.TabBar.tabItemHome)
+                Image(uiImage: Images.home)
+                    .resizable()
                     .renderingMode(.template)
+                    .frame(width: 24, height: 24)
+                    .padding(.top, 14)
             }
             .tag(ActiveTab.home)
             
@@ -134,7 +122,7 @@ struct ContentView : View {
                         Button {
                             glassModel.goBack()
                         } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
+                            Image(systemName: Images.chevronBackward)
                                 .renderingMode(.template)
                         }
                         .padding()
@@ -157,22 +145,17 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
+                            TryOnButton()
                         }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
             .tabItem {
-                Image(Assets.Images.menuButtonIcon)
+                Image(uiImage: Images.squares)
+                    .resizable()
                     .renderingMode(.template)
+                    .frame(width: 24, height: 24)
+                    .padding(.top, 14)
             }
             .tag(ActiveTab.glass)
             
@@ -189,7 +172,7 @@ struct ContentView : View {
                         Button {
                             wishlistModel.goBack()
                         } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
+                            Image(systemName: Images.chevronBackward)
                                 .renderingMode(.template)
                         }
                         .padding()
@@ -212,22 +195,17 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
+                            TryOnButton()
                         }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
             .tabItem {
-                Image(systemName: Assets.Images.heart)
+                Image(uiImage: Images.favorites)
+                    .resizable()
                     .renderingMode(.template)
+                    .frame(width: 24, height: 24)
+                    .padding(.top, 14)
             }
             .tag(ActiveTab.wishlist)
             
@@ -244,7 +222,7 @@ struct ContentView : View {
                         Button {
                             bagModel.goBack()
                         } label: {
-                            Image(systemName: Assets.Images.chevronBackward)
+                            Image(systemName: Images.chevronBackward)
                                 .renderingMode(.template)
                         }
                         .padding()
@@ -270,27 +248,22 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            Image(Assets.Images.virtualTryOnIcon)
-                                .renderingMode(.template)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(height: LocalConstants.VirtualTryOnButton.height)
+                            TryOnButton()
                         }
-                        .background(.black.opacity(LocalConstants.VirtualTryOnButton.backgroundOpacity))
-                        .cornerRadius(LocalConstants.VirtualTryOnButton.cornerRadius)
-                        .padding(.top, LocalConstants.VirtualTryOnButton.topBottomPadding)
-                        .padding(.bottom, LocalConstants.VirtualTryOnButton.topBottomPadding)
                     }
                 }
             }
             .tabItem {
-                VStack {
-                    Image(Assets.Images.TabBar.tabItemBag)
-                        .renderingMode(.template)
-                }
+                Image(uiImage: Images.bag)
+                    .resizable()
+                    .renderingMode(.template)
+                    .frame(width: 24, height: 24)
+                    .padding(.top, 14)
             }
             .tag(ActiveTab.bag)
         }
+        .preferredColorScheme(ColorScheme.dark)
+        .tint(.white)
         .onAppear {
             homeModel.reloadWishlistCompletion = {
                 wishlistModel.reload()
@@ -322,122 +295,53 @@ struct ContentView : View {
             .edgesIgnoringSafeArea(.all)
         }
         .onChange(of: homeModel.urlChanges) { url in
-            guard let url, isARFaceTrackingConfigurationSupported else { return }
-            isPageLoading = true
-            
-            s3Service.filesCount(folderName: url.lastPathComponent) { count in
-                loadingModels = []
-                for index in 0..<count {
-                    let model = LoadingModel(id: index, url: nil, isLoading: true)
-                    loadingModels.append(model)
-                }
-                modelsCount = count
-                if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
-                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
-                        loadingModels[index].url = url
-                        loadingModels[index].isLoading = false
-                        loadingModels[index].colorImage = image
-                    }
-                    withAnimation {
-                        doGlassesHaveModelHomeTab = true
-                        isPageLoading = false
-                    }
-                } else {
-                    withAnimation {
-                        doGlassesHaveModelHomeTab = false
-                        isPageLoading = false
-                    }
-                }
+            loadGlasses(url: url) { have in
+                doGlassesHaveModelHomeTab = have
             }
         }
         .onChange(of: glassModel.urlChanges) { url in
-            guard let url, isARFaceTrackingConfigurationSupported else { return }
-            isPageLoading = true
-            
-            s3Service.filesCount(folderName: url.lastPathComponent) { count in
-                loadingModels = []
-                for index in 0..<count {
-                    let model = LoadingModel(id: index, url: nil, isLoading: true)
-                    loadingModels.append(model)
-                }
-                modelsCount = count
-                if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
-                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
-                        loadingModels[index].url = url
-                        loadingModels[index].isLoading = false
-                        loadingModels[index].colorImage = image
-                    }
-                    withAnimation {
-                        doGlassesHaveModelGlassTab = true
-                        isPageLoading = false
-                    }
-                } else {
-                    withAnimation {
-                        doGlassesHaveModelGlassTab = false
-                        isPageLoading = false
-                    }
-                }
+            loadGlasses(url: url) { have in
+                doGlassesHaveModelGlassTab = have
             }
         }
         .onChange(of: wishlistModel.urlChanges) { url in
-            guard let url, isARFaceTrackingConfigurationSupported else { return }
-            isPageLoading = true
-            
-            s3Service.filesCount(folderName: url.lastPathComponent) { count in
-                loadingModels = []
-                for index in 0..<count {
-                    let model = LoadingModel(id: index, url: nil, isLoading: true)
-                    loadingModels.append(model)
-                }
-                modelsCount = count
-                if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
-                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
-                        loadingModels[index].url = url
-                        loadingModels[index].isLoading = false
-                        loadingModels[index].colorImage = image
-                    }
-                    withAnimation {
-                        doGlassesHaveModelWishlistTab = true
-                        isPageLoading = false
-                    }
-                } else {
-                    withAnimation {
-                        doGlassesHaveModelWishlistTab = false
-                        isPageLoading = false
-                    }
-                }
+            loadGlasses(url: url) { have in
+                doGlassesHaveModelWishlistTab = have
             }
         }
         .onChange(of: bagModel.urlChanges) { url in
-            guard let url, isARFaceTrackingConfigurationSupported else { return }
-            isPageLoading = true
-            
-            s3Service.filesCount(folderName: url.lastPathComponent) { count in
-                loadingModels = []
-                for index in 0..<count {
-                    let model = LoadingModel(id: index, url: nil, isLoading: true)
-                    loadingModels.append(model)
+            loadGlasses(url: url) { have in
+                doGlassesHaveModelBagTab = have
+            }
+        }
+    }
+    
+    private func loadGlasses(url: URL?, completion: @escaping (Bool) -> Void) {
+        guard let url, isARFaceTrackingConfigurationSupported else { return }
+        isPageLoading = true
+        
+        s3Service.filesCount(folderName: url.lastPathComponent) { count in
+            loadingModels = []
+            for index in 0..<count {
+                let model = LoadingModel(id: index, url: nil, isLoading: true)
+                loadingModels.append(model)
+            }
+            modelsCount = count
+            if count != .zero {
+                s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
+                    guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
+                    loadingModels[index].url = url
+                    loadingModels[index].isLoading = false
+                    loadingModels[index].colorImage = image
                 }
-                modelsCount = count
-                if count != .zero {
-                    s3Service.downloadFilesInFolder(folderName: url.lastPathComponent) { url, image in
-                        guard let index = loadingModels.firstIndex(where: { $0.isLoading }) else { return }
-                        loadingModels[index].url = url
-                        loadingModels[index].isLoading = false
-                        loadingModels[index].colorImage = image
-                    }
-                    withAnimation {
-                        doGlassesHaveModelBagTab = true
-                        isPageLoading = false
-                    }
-                } else {
-                    withAnimation {
-                        doGlassesHaveModelBagTab = false
-                        isPageLoading = false
-                    }
+                withAnimation {
+                    completion(true)
+                    isPageLoading = false
+                }
+            } else {
+                withAnimation {
+                    completion(false)
+                    isPageLoading = false
                 }
             }
         }

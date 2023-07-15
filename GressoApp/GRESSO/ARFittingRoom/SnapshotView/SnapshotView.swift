@@ -27,7 +27,7 @@ struct SnapshotView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: Assets.Images.xmarkCircleFill)
+                        Image(systemName: Images.xmarkCircleFill)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 30, height: 30)
@@ -47,7 +47,7 @@ struct SnapshotView: View {
                         UIImageWriteToSavedPhotosAlbum(snapshot, nil, nil, nil)
                         dismiss()
                     } label: {
-                        Image(systemName: Assets.Images.downloadImage)
+                        Image(systemName: Images.downloadImage)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 40, height: 40)
@@ -66,7 +66,7 @@ struct SnapshotView: View {
                                     image: Image(uiImage: snapshot)
                                 )
                             ) {
-                                Image(systemName: Assets.Images.shareImage)
+                                Image(systemName: Images.shareImage)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
@@ -77,7 +77,7 @@ struct SnapshotView: View {
                             Button {
                                 showingShareScreen = true
                             } label: {
-                                Image(systemName: Assets.Images.shareImage)
+                                Image(systemName: Images.shareImage)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
@@ -101,6 +101,6 @@ struct SnapshotView: View {
 
 struct SnapshotView_Previews: PreviewProvider {
     static var previews: some View {
-        SnapshotView(snapshot: UIImage(named: Assets.Images.menuButtonIcon)!)
+        SnapshotView(snapshot: UIImage(named: Images.menuButtonIcon)!)
     }
 }

@@ -12,12 +12,22 @@ let R = _R(bundle: Bundle(for: BundleFinder.self))
 
 struct _R {
   let bundle: Foundation.Bundle
+  var string: string { .init(bundle: bundle, preferredLanguages: nil, locale: nil) }
   var color: color { .init(bundle: bundle) }
   var image: image { .init(bundle: bundle) }
   var font: font { .init(bundle: bundle) }
   var file: file { .init(bundle: bundle) }
   var storyboard: storyboard { .init(bundle: bundle) }
 
+  func string(bundle: Foundation.Bundle) -> string {
+    .init(bundle: bundle, preferredLanguages: nil, locale: nil)
+  }
+  func string(locale: Foundation.Locale) -> string {
+    .init(bundle: bundle, preferredLanguages: nil, locale: locale)
+  }
+  func string(preferredLanguages: [String], locale: Locale? = nil) -> string {
+    .init(bundle: bundle, preferredLanguages: preferredLanguages, locale: locale)
+  }
   func color(bundle: Foundation.Bundle) -> color {
     .init(bundle: bundle)
   }
@@ -42,6 +52,31 @@ struct _R {
     let developmentRegion = "en"
   }
 
+  /// This `_R.string` struct is generated, and contains static references to 1 localization tables.
+  struct string {
+    let bundle: Foundation.Bundle
+    let preferredLanguages: [String]?
+    let locale: Locale?
+    var localizable: localizable { .init(source: .init(bundle: bundle, tableName: "Localizable", preferredLanguages: preferredLanguages, locale: locale)) }
+
+    func localizable(preferredLanguages: [String]) -> localizable {
+      .init(source: .init(bundle: bundle, tableName: "Localizable", preferredLanguages: preferredLanguages, locale: locale))
+    }
+
+
+    /// This `_R.string.localizable` struct is generated, and contains static references to 1 localization keys.
+    struct localizable {
+      let source: RswiftResources.StringResource.Source
+
+      /// en translation: TRY-ON
+      ///
+      /// Key: try-on
+      ///
+      /// Locales: en, ru, es-419
+      var tryOn: RswiftResources.StringResource { .init(key: "try-on", tableName: "Localizable", source: source, developmentValue: "TRY-ON", comment: nil) }
+    }
+  }
+
   /// This `_R.color` struct is generated, and contains static references to 1 colors.
   struct color {
     let bundle: Foundation.Bundle
@@ -50,9 +85,15 @@ struct _R {
     var accentColor: RswiftResources.ColorResource { .init(name: "AccentColor", path: [], bundle: bundle) }
   }
 
-  /// This `_R.image` struct is generated, and contains static references to 7 images.
+  /// This `_R.image` struct is generated, and contains static references to 8 images.
   struct image {
     let bundle: Foundation.Bundle
+
+    /// Image `bag`.
+    var bag: RswiftResources.ImageResource { .init(name: "bag", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `favorites`.
+    var favorites: RswiftResources.ImageResource { .init(name: "favorites", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
     /// Image `home`.
     var home: RswiftResources.ImageResource { .init(name: "home", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
@@ -60,17 +101,14 @@ struct _R {
     /// Image `menuButtonIcon`.
     var menuButtonIcon: RswiftResources.ImageResource { .init(name: "menuButtonIcon", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
+    /// Image `squares`.
+    var squares: RswiftResources.ImageResource { .init(name: "squares", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `stars`.
+    var stars: RswiftResources.ImageResource { .init(name: "stars", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
     /// Image `sun`.
     var sun: RswiftResources.ImageResource { .init(name: "sun", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
-
-    /// Image `tabBar.bag`.
-    var tabBarBag: RswiftResources.ImageResource { .init(name: "tabBar.bag", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
-
-    /// Image `tabBar.glasses`.
-    var tabBarGlasses: RswiftResources.ImageResource { .init(name: "tabBar.glasses", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
-
-    /// Image `tabBar.home`.
-    var tabBarHome: RswiftResources.ImageResource { .init(name: "tabBar.home", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
     /// Image `virtualTryOnIcon`.
     var virtualTryOnIcon: RswiftResources.ImageResource { .init(name: "virtualTryOnIcon", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }

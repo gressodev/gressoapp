@@ -54,7 +54,7 @@ struct ARFittingRoomView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: Assets.Images.xmarkCircleFill)
+                        Image(systemName: Images.xmarkCircleFill)
                             .resizable()
                             .scaledToFill()
                             .frame(width: 30, height: 30)
@@ -67,7 +67,7 @@ struct ARFittingRoomView: View {
                     if #available(iOS 16.0, *) {
                         if let modelLink {
                             ShareLink(item: modelLink) {
-                                Image(systemName: Assets.Images.shareImage)
+                                Image(systemName: Images.shareImage)
                                     .resizable()
                                     .scaledToFill()
                                     .frame(width: 40, height: 40)
@@ -79,7 +79,7 @@ struct ARFittingRoomView: View {
                         Button {
                             showingShareScreen = true
                         } label: {
-                            Image(systemName: Assets.Images.shareImage)
+                            Image(systemName: Images.shareImage)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 40, height: 40)

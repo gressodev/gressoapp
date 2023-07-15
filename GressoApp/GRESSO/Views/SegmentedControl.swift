@@ -23,9 +23,9 @@ enum GlassesState: CaseIterable {
     var image: UIImage {
         switch self {
         case .street:
-            return Assets.Images.sun
+            return Images.sun
         case .inside:
-            return Assets.Images.home
+            return Images.home
         }
     }
 }
@@ -52,7 +52,7 @@ final class GlassesStateControl: UIView {
     
     private lazy var segmentedControl: UISegmentedControl = {
         let view = UISegmentedControl(items: GlassesState.allCases.map {
-            UIImage.textEmbeded(image: $0.image, string: $0.title, isImageBeforeText: true, segFont: Font.jostRegular(size: 16))
+            UIImage.textEmbeded(image: $0.image, string: $0.title, isImageBeforeText: true, segFont: Fonts.jostRegular16ui)
         })
         view.selectedSegmentIndex = .zero
         view.selectedSegmentTintColor = .black
