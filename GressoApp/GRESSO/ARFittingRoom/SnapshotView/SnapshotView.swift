@@ -27,36 +27,34 @@ struct SnapshotView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: Images.xmarkCircleFill)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 30, height: 30)
-                            .shadow(radius: 5)
-                            .foregroundColor(.white)
+                        HStack {
+                            Image(uiImage: Images.cross)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding(10)
+                        }
+                        .background(.black)
+                        .cornerRadius(4)
                     }
-                    .padding(.top, 70)
-                    .padding(.leading, 30)
+                    .padding(.top, 54)
+                    .padding(.leading, 16)
                     
                     Spacer()
                 }
                 
                 Spacer()
                 
-                HStack {
+                HStack(alignment: .center, spacing: 10) {
                     Button {
                         UIImageWriteToSavedPhotosAlbum(snapshot, nil, nil, nil)
                         dismiss()
                     } label: {
-                        Image(systemName: Images.downloadImage)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 40, height: 40)
-                            .shadow(radius: 5)
-                            .foregroundColor(.white)
+                        GressoStyiledButton(
+                            image: Images.download,
+                            verticalPadding: .zero,
+                            horizontalPadding: .zero
+                        )
                     }
-                    .padding()
-                    .padding(.bottom, 40)
-                    
                     VStack {
                         if #available(iOS 16.0, *) {
                             ShareLink(
@@ -66,30 +64,30 @@ struct SnapshotView: View {
                                     image: Image(uiImage: snapshot)
                                 )
                             ) {
-                                Image(systemName: Images.shareImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .shadow(radius: 5)
-                                    .foregroundColor(.white)
+                                GressoStyiledButton(
+                                    image: Images.share,
+                                    verticalPadding: .zero,
+                                    horizontalPadding: .zero
+                                )
                             }
                         } else {
                             Button {
                                 showingShareScreen = true
                             } label: {
-                                Image(systemName: Images.shareImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .shadow(radius: 5)
-                                    .foregroundColor(.white)
+                                GressoStyiledButton(
+                                    image: Images.share,
+                                    verticalPadding: .zero,
+                                    horizontalPadding: .zero
+                                )
                             }
                         }
                     }
-                    .padding()
-                    .padding(.bottom, 40)
-                    
-                }.padding()
+                }
+                .padding(.top, 8)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 34)
+                .tint(.white)
+                .background(.black)
             }
         }
         .ignoresSafeArea(.all)

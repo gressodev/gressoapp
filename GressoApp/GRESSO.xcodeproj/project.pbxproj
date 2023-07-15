@@ -25,6 +25,7 @@
 		F53A8E002A62A85100825578 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8DFF2A62A85100825578 /* R.generated.swift */; };
 		F53A8E122A62AF0400825578 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F53A8E142A62AF0400825578 /* Localizable.strings */; };
 		F53A8E182A62BB8B00825578 /* TryOnButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E172A62BB8B00825578 /* TryOnButton.swift */; };
+		F53A8E1A2A62C13200825578 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E192A62C13200825578 /* UIView+Screenshot.swift */; };
 		F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */; };
 		F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */; };
 		F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */; };
@@ -78,6 +79,7 @@
 		F53A8E152A62AF0700825578 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		F53A8E162A62AF0800825578 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		F53A8E172A62BB8B00825578 /* TryOnButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryOnButton.swift; sourceTree = "<group>"; };
+		F53A8E192A62C13200825578 /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
 		F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3ServiceHandler.swift; sourceTree = "<group>"; };
 		F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFittingRoomView.swift; sourceTree = "<group>"; };
 		F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeGetter.swift"; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 				F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */,
 				F59E79052A6065F800309218 /* UIImage+textEmbeded.swift */,
 				F53A8DFB2A62982100825578 /* UIColor+image.swift */,
+				F53A8E192A62C13200825578 /* UIView+Screenshot.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 			files = (
 				F53A8DFC2A62982100825578 /* UIColor+image.swift in Sources */,
 				F53758A52A49F63C00EF0139 /* SnapshotView.swift in Sources */,
+				F53A8E1A2A62C13200825578 /* UIView+Screenshot.swift in Sources */,
 				F53758832A48425700EF0139 /* ColorsView.swift in Sources */,
 				F53758A82A4A16E800EF0139 /* ActivityView.swift in Sources */,
 				F537587F2A48420200EF0139 /* ClassIdentifiable.swift in Sources */,

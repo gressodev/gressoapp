@@ -38,10 +38,9 @@ struct ARViewContainer: UIViewRepresentable {
             )
         }
         if needToTakeSnapshot {
-            uiView.snapshot(saveToHDR: false) { image in
-                guard let cgImage = image?.cgImage else { return }
-                let uiImage = UIImage(cgImage: cgImage)
-                didTakeSnapshot(uiImage)
+            guard let image = uiView.takeScreenshot() else { return }
+            DispatchQueue.main.async {
+                didTakeSnapshot(image)
                 needToTakeSnapshot = false
             }
         }

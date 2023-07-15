@@ -95,7 +95,10 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            TryOnButton()
+                            GressoStyiledButton(
+                                image: Images.stars,
+                                text: Localizable.tryOn()
+                            )
                         }
                     }
                 }
@@ -145,7 +148,10 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            TryOnButton()
+                            GressoStyiledButton(
+                                image: Images.stars,
+                                text: Localizable.tryOn()
+                            )
                         }
                     }
                 }
@@ -195,7 +201,10 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            TryOnButton()
+                            GressoStyiledButton(
+                                image: Images.stars,
+                                text: Localizable.tryOn()
+                            )
                         }
                     }
                 }
@@ -248,7 +257,10 @@ struct ContentView : View {
                         Button {
                             showingAR = true
                         } label: {
-                            TryOnButton()
+                            GressoStyiledButton(
+                                image: Images.stars,
+                                text: Localizable.tryOn()
+                            )
                         }
                     }
                 }

@@ -23,6 +23,9 @@ enum Images {
     static let favorites = RImage.favorites() ?? UIImage()
     static let bag = RImage.bag() ?? UIImage()
     static let stars = RImage.stars() ?? UIImage()
+    static let cross = RImage.cross() ?? UIImage()
+    static let download = RImage.download() ?? UIImage()
+    static let share = RImage.share() ?? UIImage()
 }
 
 enum Fonts {

@@ -149,7 +149,7 @@ struct ARFittingRoomView: View {
             currentDestination = url
             isPhotochromic = url.absoluteString.contains("blue")
         }
-        .sheet(isPresented: $showingSnapshot) {
+        .fullScreenCover(isPresented: $showingSnapshot) {
             if let snapshotImage {
                 SnapshotView(snapshot: snapshotImage)
             }
