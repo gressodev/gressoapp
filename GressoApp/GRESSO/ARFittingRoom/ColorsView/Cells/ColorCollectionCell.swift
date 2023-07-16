@@ -13,12 +13,22 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     // MARK: - UI Elements
     
     private lazy var activityIndicatorView = UIActivityIndicatorView(style: .medium)
+    
+    private lazy var borderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 22
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.black.cgColor
+        return view
+    }()
 
     private lazy var colorImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 40
+        view.layer.cornerRadius = 18
         return view
     }()
     
@@ -37,6 +47,7 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     // MARK: - Layout
 
     private func setupSubviews() {
+        contentView.addSubview(borderView)
         contentView.addSubview(colorImageView)
         colorImageView.addSubview(activityIndicatorView)
         
@@ -44,9 +55,12 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     }
 
     private func configureConstraints() {
+        borderView.snp.makeConstraints {
+            $0.size.equalTo(44)
+            $0.center.equalToSuperview()
+        }
         colorImageView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.height.equalTo(colorImageView.snp.width)
+            $0.size.equalTo(36)
             $0.center.equalToSuperview()
         }
         activityIndicatorView.snp.makeConstraints {
@@ -60,6 +74,24 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         isLoading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
         activityIndicatorView.isHidden = !isLoading
         colorImageView.image = colorImage
+    }
+    
+    func transformToLarge() {
+        UIView.animate(withDuration: 0.2) {
+            self.transform = CGAffineTransform(scaleX: 1.78, y: 1.78)
+        }
+        
+        self.borderView.layer.borderWidth = 8
+        self.borderView.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
+    }
+    
+    func transformToStandart() {
+        UIView.animate(withDuration: 0.2) {
+            self.transform = CGAffineTransform.identity
+        }
+        
+        self.borderView.layer.borderWidth = 2
+        self.borderView.layer.borderColor = UIColor.black.cgColor
     }
 
 }

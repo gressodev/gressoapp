@@ -9,12 +9,14 @@ import UIKit
 
 final class PagingColorsView: UICollectionView {
     
+    private enum LocalConstants {
+        static let cellSize: CGSize = CGSize(width: 44, height: 96)
+        static let minimumLineSpacing: CGFloat = 30
+    }
+    
     private var currentPage: CGFloat = .zero
     
-    private enum LocalConstants {
-        static let cellSize: CGSize = CGSize(width: 80, height: 80)
-        static let minimumInteritemSpacing: CGFloat = 30
-    }
+    private var centerCell: ColorCollectionCell?
     
     var models: [LoadingModel]
     private var completion: (Int) -> Void
@@ -22,10 +24,12 @@ final class PagingColorsView: UICollectionView {
     init(models: [LoadingModel], completion: @escaping (Int) -> Void) {
         self.models = models
         self.completion = completion
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = LocalConstants.minimumInteritemSpacing
+        layout.minimumLineSpacing = LocalConstants.minimumLineSpacing
         layout.minimumInteritemSpacing = .zero
+        layout.itemSize = LocalConstants.cellSize
         super.init(frame: .zero, collectionViewLayout: layout)
         
         backgroundColor = .clear
@@ -68,6 +72,13 @@ extension PagingColorsView: UICollectionViewDataSource {
         
         let model = models[indexPath.item]
         cell.configure(isLoading: model.isLoading, colorImage: model.colorImage)
+        if Int(currentPage) == indexPath.row {
+            centerCell = cell
+            centerCell?.transformToLarge()
+        } else {
+            cell.transformToStandart()
+            centerCell = nil
+        }
         
         return cell
     }
@@ -78,13 +89,26 @@ extension PagingColorsView: UICollectionViewDataSource {
 
 extension PagingColorsView: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        LocalConstants.cellSize
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let inset = (collectionView.bounds.width - LocalConstants.cellSize.width) / 2
         return UIEdgeInsets(top: .zero, left: inset, bottom: .zero, right: inset)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let centeredPoint = CGPoint(x: frame.width / 2 + scrollView.contentOffset.x,
+                                    y: frame.height / 2 + scrollView.contentOffset.y)
+        guard let indexPath = indexPathForItem(at: centeredPoint) else { return }
+        centerCell = cellForItem(at: indexPath) as? ColorCollectionCell
+        centerCell?.transformToLarge()
+        
+        if let cell = centerCell {
+            let offsetX = centeredPoint.x - cell.center.x
+            let limit: CGFloat = 10
+            if offsetX < -limit || offsetX > limit {
+                cell.transformToStandart()
+                centerCell = nil
+            }
+        }
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
@@ -98,7 +122,7 @@ extension PagingColorsView: UICollectionViewDelegateFlowLayout {
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let pageWidth = LocalConstants.cellSize.width + LocalConstants.minimumInteritemSpacing
+        let pageWidth = LocalConstants.cellSize.width + LocalConstants.minimumLineSpacing
         let targetXContentOffset = CGFloat(targetContentOffset.pointee.x)
         let contentWidth = CGFloat(contentSize.width)
         var newPage = currentPage

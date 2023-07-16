@@ -122,14 +122,15 @@ struct ARFittingRoomView: View {
                                 needToTakeSnapshot = true
                             } label: {
                                 Circle()
-                                    .strokeBorder(.white, lineWidth: 8)
+                                    .strokeBorder(.clear, lineWidth: .zero)
                                     .frame(width: 80, height: 80)
                             }
 
                             Spacer()
                         }
                     }
-                    .frame(height: 150)
+                    .frame(height: 96)
+                    .padding(.bottom, 50)
                 }
             }
             
