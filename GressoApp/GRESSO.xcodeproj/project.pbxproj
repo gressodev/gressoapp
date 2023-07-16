@@ -80,6 +80,7 @@
 		F53A8E162A62AF0800825578 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		F53A8E172A62BB8B00825578 /* TryOnButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryOnButton.swift; sourceTree = "<group>"; };
 		F53A8E192A62C13200825578 /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
+		F53A8E1B2A6490DA00825578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3ServiceHandler.swift; sourceTree = "<group>"; };
 		F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFittingRoomView.swift; sourceTree = "<group>"; };
 		F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeGetter.swift"; sourceTree = "<group>"; };
@@ -226,6 +227,7 @@
 		F5396D652A30E6E50059E331 /* GRESSO */ = {
 			isa = PBXGroup;
 			children = (
+				F53A8E1B2A6490DA00825578 /* Info.plist */,
 				F58420082A4E3A8E004C4A27 /* Models */,
 				F53758A62A4A16E000EF0139 /* Views */,
 				F5396D662A30E6E50059E331 /* GressoAppApp.swift */,
@@ -633,12 +635,13 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GRESSO/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GRESSO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";
@@ -676,12 +679,13 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GRESSO/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GRESSO;
 				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "";

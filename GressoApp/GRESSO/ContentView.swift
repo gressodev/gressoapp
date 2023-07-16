@@ -19,6 +19,7 @@ struct ContentView : View {
     
     private enum LocalConstants {
         static let navBarHeight: CGFloat = 50
+        static let gressoLabel = "GRESSO"
     }
     
     private let isARFaceTrackingConfigurationSupported = ARFaceTrackingConfiguration.isSupported
@@ -54,8 +55,8 @@ struct ContentView : View {
                 ZStack {
                     HStack {
                         Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
+                        Text(LocalConstants.gressoLabel)
+                            .font(Fonts.jostMedium30)
                         Spacer()
                     }
                     
@@ -116,8 +117,8 @@ struct ContentView : View {
                 ZStack {
                     HStack {
                         Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
+                        Text(LocalConstants.gressoLabel)
+                            .font(Fonts.jostMedium30)
                         Spacer()
                     }
                     
@@ -169,8 +170,8 @@ struct ContentView : View {
                 ZStack {
                     HStack {
                         Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
+                        Text(LocalConstants.gressoLabel)
+                            .font(Fonts.jostMedium30)
                         Spacer()
                     }
                     
@@ -222,8 +223,8 @@ struct ContentView : View {
                 ZStack {
                     HStack {
                         Spacer()
-                        Text("GRESSO")
-                            .font(.system(size: 30, weight: .bold))
+                        Text(LocalConstants.gressoLabel)
+                            .font(Fonts.jostMedium30)
                         Spacer()
                     }
                     
