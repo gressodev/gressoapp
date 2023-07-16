@@ -35,6 +35,7 @@ struct SnapshotView: View {
                         }
                         .background(.black)
                         .cornerRadius(4)
+                        .frame(width: 44, height: 44)
                     }
                     .padding(.top, 54)
                     .padding(.leading, 16)
@@ -60,7 +61,7 @@ struct SnapshotView: View {
                             ShareLink(
                                 item: Image(uiImage: snapshot),
                                 preview: SharePreview(
-                                    "Gresso",
+                                    "GRESSO",
                                     image: Image(uiImage: snapshot)
                                 )
                             ) {

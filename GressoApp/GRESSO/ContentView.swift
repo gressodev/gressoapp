@@ -300,9 +300,15 @@ struct ContentView : View {
                     return bagModel.urlChanges
                 }
             }
+            let name = modelLink?
+                .lastPathComponent
+                .replacingOccurrences(of: "-titanium", with: "")
+                .uppercased() ?? ""
+            
             ARFittingRoomView(
                 loadingModels: $loadingModels,
-                modelLink: modelLink
+                modelLink: modelLink,
+                modelName: name
             )
             .edgesIgnoringSafeArea(.all)
         }

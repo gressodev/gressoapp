@@ -11,10 +11,6 @@ import RealityKit
 @MainActor
 struct ARFittingRoomView: View {
     
-    private enum LocalConstants {
-        static let sliderMaxValue: Double = 20
-    }
-    
     @Environment(\.dismiss) var dismiss
         
     @State private var showingSnapshot = false
@@ -31,11 +27,13 @@ struct ARFittingRoomView: View {
     
     @Binding var loadingModels: [LoadingModel]
     private var modelLink: URL?
+    private let modelName: String
     @State private var currentDestination: URL?
     
-    init(loadingModels: Binding<[LoadingModel]>, modelLink: URL?) {
+    init(loadingModels: Binding<[LoadingModel]>, modelLink: URL?, modelName: String) {
         self._loadingModels = loadingModels
         self.modelLink = modelLink
+        self.modelName = modelName
     }
     
     var body: some View {
@@ -54,43 +52,63 @@ struct ARFittingRoomView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Image(systemName: Images.xmarkCircleFill)
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 30, height: 30)
-                            .shadow(radius: 5)
-                            .foregroundColor(.white)
+                        HStack {
+                            Image(uiImage: Images.cross)
+                                .resizable()
+                                .frame(width: 24, height: 24)
+                                .padding(10)
+                        }
+                        .background(.black)
+                        .cornerRadius(4)
+                        .frame(width: 44, height: 44)
                     }
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Text(modelName)
+                            .font(Fonts.jostRegular16)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 24)
+                            .frame(height: 44)
+                    }
+                    .background(.black)
+                    .cornerRadius(4)
                     
                     Spacer()
                     
                     if #available(iOS 16.0, *) {
                         if let modelLink {
                             ShareLink(item: modelLink) {
-                                Image(systemName: Images.shareImage)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 40, height: 40)
-                                    .shadow(radius: 5)
-                                    .foregroundColor(.white)
+                                HStack {
+                                    Image(uiImage: Images.share)
+                                        .resizable()
+                                        .frame(width: 24, height: 24)
+                                        .padding(10)
+                                }
+                                .background(.black)
+                                .cornerRadius(4)
+                                .frame(width: 44, height: 44)
                             }
                         }
                     } else {
                         Button {
                             showingShareScreen = true
                         } label: {
-                            Image(systemName: Images.shareImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 40, height: 40)
-                                .shadow(radius: 5)
-                                .foregroundColor(.white)
+                            HStack {
+                                Image(uiImage: Images.share)
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                                    .padding(10)
+                            }
+                            .background(.black)
+                            .cornerRadius(4)
+                            .frame(width: 44, height: 44)
                         }
                     }
                 }
-                .padding(.top, 70)
-                .padding(.leading, 30)
-                .padding(.trailing, 30)
+                .padding(.top, 54)
+                .padding(.horizontal, 16)
                 Spacer()
             }
             VStack {
@@ -165,6 +183,6 @@ struct ARFittingRoomView: View {
 
 struct ARFittingRoomView_Previews: PreviewProvider {
     static var previews: some View {
-        ARFittingRoomView(loadingModels: .constant([]), modelLink: nil)
+        ARFittingRoomView(loadingModels: .constant([]), modelLink: nil, modelName: "modelName")
     }
 }
