@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
+    
+    private var isLoading = true
 
     // MARK: - UI Elements
     
@@ -32,6 +34,14 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         return view
     }()
     
+    private lazy var cameraImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.layer.masksToBounds = true
+        view.image = Images.camera
+        return view
+    }()
+    
     // MARK: - Lifecycle
 
     override init(frame: CGRect) {
@@ -50,6 +60,7 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         contentView.addSubview(borderView)
         contentView.addSubview(colorImageView)
         colorImageView.addSubview(activityIndicatorView)
+        colorImageView.addSubview(cameraImageView)
         
         configureConstraints()
     }
@@ -66,11 +77,16 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         activityIndicatorView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        cameraImageView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(13.48)
+        }
     }
     
     // MARK: - Configure
     
     func configure(isLoading: Bool, colorImage: UIImage?) {
+        self.isLoading = isLoading
         isLoading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
         activityIndicatorView.isHidden = !isLoading
         colorImageView.image = colorImage
@@ -81,6 +97,7 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
             self.transform = CGAffineTransform(scaleX: 1.78, y: 1.78)
         }
         
+        self.cameraImageView.isHidden = isLoading
         self.borderView.layer.borderWidth = 8
         self.borderView.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
     }
@@ -90,6 +107,7 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
             self.transform = CGAffineTransform.identity
         }
         
+        self.cameraImageView.isHidden = true
         self.borderView.layer.borderWidth = 2
         self.borderView.layer.borderColor = UIColor.black.cgColor
     }

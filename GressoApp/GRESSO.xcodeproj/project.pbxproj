@@ -142,6 +142,7 @@
 		F537587A2A46D2FC00EF0139 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F5396D6A2A30E6E90059E331 /* Assets.xcassets */,
 				F59E78DC2A60652000309218 /* Fonts */,
 				F53A8DFF2A62A85100825578 /* R.generated.swift */,
 				F537587B2A46D31800EF0139 /* Assets.swift */,
@@ -238,7 +239,6 @@
 				F537587A2A46D2FC00EF0139 /* Resources */,
 				F537587D2A4841FA00EF0139 /* Protocols */,
 				F58420052A4E2BCC004C4A27 /* Extensions */,
-				F5396D6A2A30E6E90059E331 /* Assets.xcassets */,
 				F584DFCD2A34F0A7002517FD /* Launch Screen.storyboard */,
 				F5396D6C2A30E6E90059E331 /* Preview Content */,
 			);

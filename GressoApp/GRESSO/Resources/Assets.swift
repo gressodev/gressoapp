@@ -18,10 +18,17 @@ enum Images {
     static let downloadImage: String = "square.and.arrow.down"
     
     static let sun = RImage.sun() ?? UIImage()
+    static let camera = RImage.cameraIcon() ?? UIImage()
+    
+    static let homeActive = RImage.homeActive() ?? UIImage()
+    static let squaresActive = RImage.squaresActive() ?? UIImage()
+    static let favoritesActive = RImage.favoritesActive() ?? UIImage()
+    static let bagActive = RImage.bagActive() ?? UIImage()
     static let home = RImage.home() ?? UIImage()
     static let squares = RImage.squares() ?? UIImage()
     static let favorites = RImage.favorites() ?? UIImage()
     static let bag = RImage.bag() ?? UIImage()
+    
     static let stars = RImage.stars() ?? UIImage()
     static let cross = RImage.cross() ?? UIImage()
     static let download = RImage.download() ?? UIImage()
@@ -31,6 +38,9 @@ enum Images {
 enum Fonts {
     static let jostRegular16ui: UIFont = RFont.jostRegular(size: 16) ?? .systemFont(ofSize: 16)
     static let jostRegular16: Font = Font(Fonts.jostRegular16ui as CTFont)
+    
+    static let jostMedium20ui: UIFont = RFont.jostMedium(size: 20) ?? .systemFont(ofSize: 20)
+    static let jostMedium20: Font = Font(Fonts.jostMedium20ui as CTFont)
     
     static let jostMedium30ui: UIFont = RFont.jostMedium(size: 30) ?? .systemFont(ofSize: 30)
     static let jostMedium30: Font = Font(Fonts.jostMedium30ui as CTFont)

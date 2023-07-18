@@ -57,7 +57,7 @@ struct GressoStyiledButton: View {
                 cornerRadius: cornerRadius
             )
             .inset(by: 0.75)
-            .stroke(.white.opacity(0.5), lineWidth: 1.5)
+            .stroke(.white, lineWidth: 1.5)
         )
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)

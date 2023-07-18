@@ -85,12 +85,18 @@ struct _R {
     var accentColor: RswiftResources.ColorResource { .init(name: "AccentColor", path: [], bundle: bundle) }
   }
 
-  /// This `_R.image` struct is generated, and contains static references to 11 images.
+  /// This `_R.image` struct is generated, and contains static references to 17 images.
   struct image {
     let bundle: Foundation.Bundle
 
     /// Image `bag`.
     var bag: RswiftResources.ImageResource { .init(name: "bag", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `bagActive`.
+    var bagActive: RswiftResources.ImageResource { .init(name: "bagActive", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `cameraIcon`.
+    var cameraIcon: RswiftResources.ImageResource { .init(name: "cameraIcon", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
     /// Image `cross`.
     var cross: RswiftResources.ImageResource { .init(name: "cross", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
@@ -101,8 +107,17 @@ struct _R {
     /// Image `favorites`.
     var favorites: RswiftResources.ImageResource { .init(name: "favorites", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
+    /// Image `favoritesActive`.
+    var favoritesActive: RswiftResources.ImageResource { .init(name: "favoritesActive", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
     /// Image `home`.
     var home: RswiftResources.ImageResource { .init(name: "home", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `homeActive`.
+    var homeActive: RswiftResources.ImageResource { .init(name: "homeActive", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `launchScreenLabel`.
+    var launchScreenLabel: RswiftResources.ImageResource { .init(name: "launchScreenLabel", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
     /// Image `menuButtonIcon`.
     var menuButtonIcon: RswiftResources.ImageResource { .init(name: "menuButtonIcon", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
@@ -112,6 +127,9 @@ struct _R {
 
     /// Image `squares`.
     var squares: RswiftResources.ImageResource { .init(name: "squares", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `squaresActive`.
+    var squaresActive: RswiftResources.ImageResource { .init(name: "squaresActive", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
     /// Image `stars`.
     var stars: RswiftResources.ImageResource { .init(name: "stars", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
@@ -271,7 +289,7 @@ struct _R {
 
       let name = "Launch Screen"
       func validate() throws {
-
+        if UIKit.UIImage(named: "launchScreenLabel", in: bundle, compatibleWith: nil) == nil { throw RswiftResources.ValidationError("[R.swift] Image named 'launchScreenLabel' is used in storyboard 'Launch Screen', but couldn't be loaded.") }
       }
     }
   }

@@ -18,7 +18,7 @@ enum ActiveTab: Int {
 struct ContentView : View {
     
     private enum LocalConstants {
-        static let navBarHeight: CGFloat = 50
+        static let navBarHeight: CGFloat = 44
         static let gressoLabel = "GRESSO"
     }
     
@@ -52,38 +52,41 @@ struct ContentView : View {
         
         TabView(selection: $activeTab) {
             VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text(LocalConstants.gressoLabel)
-                            .font(Fonts.jostMedium30)
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        if homeModel.canGoBack {
-                            Button {
-                                homeModel.goBack()
-                            } label: {
-                                Image(systemName: Images.chevronBackward)
-                                    .renderingMode(.template)
-                            }
-                            .padding()
-                        } else {
-                            Button {
-                                homeModel.openMenu()
-                            } label: {
-                                Image(Images.menuButtonIcon)
-                                    .renderingMode(.template)
-                            }
-                            .padding()
+                VStack {
+                    Spacer()
+                    ZStack {
+                        HStack {
+                            Spacer()
+                            Text(LocalConstants.gressoLabel)
+                                .font(Fonts.jostMedium20)
+                            Spacer()
                         }
                         
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
+                        HStack {
+                            if homeModel.canGoBack {
+                                Button {
+                                    homeModel.goBack()
+                                } label: {
+                                    Image(systemName: Images.chevronBackward)
+                                        .renderingMode(.template)
+                                }
+                                .padding(.leading)
+                            } else {
+                                Button {
+                                    homeModel.openMenu()
+                                } label: {
+                                    Image(Images.menuButtonIcon)
+                                        .renderingMode(.template)
+                                }
+                                .padding(.leading)
+                            }
+                            
+                            Spacer()
+                            
+                            if isPageLoading {
+                                ProgressView()
+                                    .padding(.trailing)
+                            }
                         }
                     }
                 }
@@ -105,7 +108,8 @@ struct ContentView : View {
                 }
             }
             .tabItem {
-                Image(uiImage: Images.home)
+                let image = activeTab == .home ? Image(uiImage: Images.homeActive) : Image(uiImage: Images.home)
+                image
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24)
@@ -114,29 +118,32 @@ struct ContentView : View {
             .tag(ActiveTab.home)
             
             VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text(LocalConstants.gressoLabel)
-                            .font(Fonts.jostMedium30)
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Button {
-                            glassModel.goBack()
-                        } label: {
-                            Image(systemName: Images.chevronBackward)
-                                .renderingMode(.template)
+                VStack {
+                    Spacer()
+                    ZStack {
+                        HStack {
+                            Spacer()
+                            Text(LocalConstants.gressoLabel)
+                                .font(Fonts.jostMedium20)
+                            Spacer()
                         }
-                        .padding()
-                        .disabled(!glassModel.canGoBack)
                         
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
+                        HStack {
+                            Button {
+                                glassModel.goBack()
+                            } label: {
+                                Image(systemName: Images.chevronBackward)
+                                    .renderingMode(.template)
+                            }
+                            .padding(.leading)
+                            .disabled(!glassModel.canGoBack)
+                            
+                            Spacer()
+                            
+                            if isPageLoading {
+                                ProgressView()
+                                    .padding(.trailing)
+                            }
                         }
                     }
                 }
@@ -158,7 +165,8 @@ struct ContentView : View {
                 }
             }
             .tabItem {
-                Image(uiImage: Images.squares)
+                let image = activeTab == .glass ? Image(uiImage: Images.squaresActive) : Image(uiImage: Images.squares)
+                image
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24)
@@ -167,29 +175,32 @@ struct ContentView : View {
             .tag(ActiveTab.glass)
             
             VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text(LocalConstants.gressoLabel)
-                            .font(Fonts.jostMedium30)
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Button {
-                            wishlistModel.goBack()
-                        } label: {
-                            Image(systemName: Images.chevronBackward)
-                                .renderingMode(.template)
+                VStack {
+                    Spacer()
+                    ZStack {
+                        HStack {
+                            Spacer()
+                            Text(LocalConstants.gressoLabel)
+                                .font(Fonts.jostMedium20)
+                            Spacer()
                         }
-                        .padding()
-                        .disabled(!wishlistModel.canGoBack)
                         
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
+                        HStack {
+                            Button {
+                                wishlistModel.goBack()
+                            } label: {
+                                Image(systemName: Images.chevronBackward)
+                                    .renderingMode(.template)
+                            }
+                            .padding(.leading)
+                            .disabled(!wishlistModel.canGoBack)
+                            
+                            Spacer()
+                            
+                            if isPageLoading {
+                                ProgressView()
+                                    .padding(.trailing)
+                            }
                         }
                     }
                 }
@@ -211,38 +222,42 @@ struct ContentView : View {
                 }
             }
             .tabItem {
-                Image(uiImage: Images.favorites)
+                let image = activeTab == .wishlist ? Image(uiImage: Images.favoritesActive) : Image(uiImage: Images.favorites)
+                image
                     .resizable()
-                    .renderingMode(.template)
+                    .renderingMode(.original)
                     .frame(width: 24, height: 24)
                     .padding(.top, 14)
             }
             .tag(ActiveTab.wishlist)
             
             VStack {
-                ZStack {
-                    HStack {
-                        Spacer()
-                        Text(LocalConstants.gressoLabel)
-                            .font(Fonts.jostMedium30)
-                        Spacer()
-                    }
-                    
-                    HStack {
-                        Button {
-                            bagModel.goBack()
-                        } label: {
-                            Image(systemName: Images.chevronBackward)
-                                .renderingMode(.template)
+                VStack {
+                    Spacer()
+                    ZStack {
+                        HStack {
+                            Spacer()
+                            Text(LocalConstants.gressoLabel)
+                                .font(Fonts.jostMedium20)
+                            Spacer()
                         }
-                        .padding()
-                        .disabled(!bagModel.canGoBack)
                         
-                        Spacer()
-                        
-                        if isPageLoading {
-                            ProgressView()
-                                .padding()
+                        HStack {
+                            Button {
+                                bagModel.goBack()
+                            } label: {
+                                Image(systemName: Images.chevronBackward)
+                                    .renderingMode(.template)
+                            }
+                            .padding(.leading)
+                            .disabled(!bagModel.canGoBack)
+                            
+                            Spacer()
+                            
+                            if isPageLoading {
+                                ProgressView()
+                                    .padding(.trailing)
+                            }
                         }
                     }
                 }
@@ -267,7 +282,8 @@ struct ContentView : View {
                 }
             }
             .tabItem {
-                Image(uiImage: Images.bag)
+                let image = activeTab == .bag ? Image(uiImage: Images.bagActive) : Image(uiImage: Images.bag)
+                image
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: 24, height: 24)
