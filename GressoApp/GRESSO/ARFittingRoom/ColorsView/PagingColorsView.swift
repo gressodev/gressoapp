@@ -71,14 +71,11 @@ extension PagingColorsView: UICollectionViewDataSource {
         ) as? ColorCollectionCell else { return UICollectionViewCell() }
         
         let model = models[indexPath.item]
-        cell.configure(isLoading: model.isLoading, colorImage: model.colorImage)
-        if Int(currentPage) == indexPath.row {
-            centerCell = cell
-            centerCell?.transformToLarge()
-        } else {
-            cell.transformToStandart()
-            centerCell = nil
-        }
+        cell.configure(
+            isLoading: model.isLoading,
+            colorImage: model.colorImage,
+            isLarge: Int(currentPage) == indexPath.row
+        )
         
         return cell
     }
@@ -103,7 +100,7 @@ extension PagingColorsView: UICollectionViewDelegateFlowLayout {
         
         if let cell = centerCell {
             let offsetX = centeredPoint.x - cell.center.x
-            let limit: CGFloat = 10
+            let limit: CGFloat = 8
             if offsetX < -limit || offsetX > limit {
                 cell.transformToStandart()
                 centerCell = nil

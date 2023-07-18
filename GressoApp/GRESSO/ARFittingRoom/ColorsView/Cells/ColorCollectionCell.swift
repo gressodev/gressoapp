@@ -85,31 +85,32 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     
     // MARK: - Configure
     
-    func configure(isLoading: Bool, colorImage: UIImage?) {
+    func configure(isLoading: Bool, colorImage: UIImage?, isLarge: Bool) {
         self.isLoading = isLoading
         isLoading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
         activityIndicatorView.isHidden = !isLoading
         colorImageView.image = colorImage
+        
+        transformTo(large: isLarge)
     }
     
     func transformToLarge() {
         UIView.animate(withDuration: 0.2) {
-            self.transform = CGAffineTransform(scaleX: 1.78, y: 1.78)
+            self.transformTo(large: true)
         }
-        
-        self.cameraImageView.isHidden = isLoading
-        self.borderView.layer.borderWidth = 8
-        self.borderView.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
     }
     
     func transformToStandart() {
         UIView.animate(withDuration: 0.2) {
-            self.transform = CGAffineTransform.identity
+            self.transformTo(large: false)
         }
-        
-        self.cameraImageView.isHidden = true
-        self.borderView.layer.borderWidth = 2
-        self.borderView.layer.borderColor = UIColor.black.cgColor
+    }
+    
+    private func transformTo(large: Bool) {
+        transform = large ? CGAffineTransform(scaleX: 1.78, y: 1.78) : CGAffineTransform.identity
+        cameraImageView.isHidden = isLoading || !large
+        borderView.layer.borderWidth = large ? 8 : 2
+        borderView.layer.borderColor = large ? UIColor.black.withAlphaComponent(0.3).cgColor : UIColor.black.cgColor
     }
 
 }

@@ -130,7 +130,9 @@ struct ARFittingRoomView: View {
                             isModelLoading = loadingModels[index].isLoading
                             guard let url = loadingModels.item(at: index)?.url else { return }
                             currentDestination = url
-                            isPhotochromic = url.absoluteString.contains("blue")
+                            withAnimation {
+                                isPhotochromic = url.absoluteString.contains("blue")
+                            }
                         }
 
                         HStack {
@@ -166,7 +168,9 @@ struct ARFittingRoomView: View {
             isModelLoading = model.isLoading
             guard let url = model.url else { return }
             currentDestination = url
-            isPhotochromic = url.absoluteString.contains("blue")
+            withAnimation {
+                isPhotochromic = url.absoluteString.contains("blue")
+            }
         }
         .fullScreenCover(isPresented: $showingSnapshot) {
             if let snapshotImage {
@@ -178,11 +182,5 @@ struct ARFittingRoomView: View {
                 ActivityView(items: [modelLink])
             }
         }
-    }
-}
-
-struct ARFittingRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        ARFittingRoomView(loadingModels: .constant([]), modelLink: nil, modelName: "modelName")
     }
 }
