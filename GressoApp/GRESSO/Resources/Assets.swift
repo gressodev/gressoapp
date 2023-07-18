@@ -18,6 +18,7 @@ enum Images {
     static let downloadImage: String = "square.and.arrow.down"
     
     static let sun = RImage.sun() ?? UIImage()
+    static let officeBuilding = RImage.officeBuilding() ?? UIImage()
     static let camera = RImage.cameraIcon() ?? UIImage()
     
     static let homeActive = RImage.homeActive() ?? UIImage()
