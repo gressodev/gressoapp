@@ -44,6 +44,10 @@ struct ContentView : View {
     @State private var doGlassesHaveModelBagTab = false
     @State private var isPageLoading = false
     
+    init() {
+        UITabBar.appearance().unselectedItemTintColor = .white
+    }
+    
     var body: some View {
         let homeView = WebView(webView: homeModel.webView)
         let glassView = WebView(webView: glassModel.webView)
@@ -111,7 +115,7 @@ struct ContentView : View {
                 let image = activeTab == .home ? Image(uiImage: Images.homeActive) : Image(uiImage: Images.home)
                 image
                     .resizable()
-                    .renderingMode(.template)
+                    .renderingMode(.original)
                     .frame(width: 24, height: 24)
                     .padding(.top, 14)
             }
@@ -168,7 +172,7 @@ struct ContentView : View {
                 let image = activeTab == .glass ? Image(uiImage: Images.squaresActive) : Image(uiImage: Images.squares)
                 image
                     .resizable()
-                    .renderingMode(.template)
+                    .renderingMode(.original)
                     .frame(width: 24, height: 24)
                     .padding(.top, 14)
             }
@@ -285,7 +289,7 @@ struct ContentView : View {
                 let image = activeTab == .bag ? Image(uiImage: Images.bagActive) : Image(uiImage: Images.bag)
                 image
                     .resizable()
-                    .renderingMode(.template)
+                    .renderingMode(.original)
                     .frame(width: 24, height: 24)
                     .padding(.top, 14)
             }
