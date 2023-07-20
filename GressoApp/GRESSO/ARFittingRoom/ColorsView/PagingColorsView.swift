@@ -91,12 +91,28 @@ extension PagingColorsView: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: .zero, left: inset, bottom: .zero, right: inset)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        completion(indexPath.row)
+        currentPage = CGFloat(indexPath.row)
+        if centerCell == nil {
+            centerCell = cellForItem(at: IndexPath(row: .zero, section: .zero)) as? ColorCollectionCell
+        }
+        centerCell?.transformToStandart()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let centeredPoint = CGPoint(x: frame.width / 2 + scrollView.contentOffset.x,
                                     y: frame.height / 2 + scrollView.contentOffset.y)
         guard let indexPath = indexPathForItem(at: centeredPoint) else { return }
         centerCell = cellForItem(at: indexPath) as? ColorCollectionCell
+        
+        // TODO: - Fix transform if scroll is quick
+//        DispatchQueue.main.asyncDeduped(target: self, after: 0.05) { [weak self] in
         centerCell?.transformToLarge()
+//        }
         
         if let cell = centerCell {
             let offsetX = centeredPoint.x - cell.center.x

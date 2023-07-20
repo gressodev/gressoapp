@@ -52,6 +52,7 @@
 		F59E79012A60652000309218 /* Jost ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F59E78EF2A60652000309218 /* Jost ExtraBold.ttf */; };
 		F59E79062A6065F800309218 /* UIImage+textEmbeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59E79052A6065F800309218 /* UIImage+textEmbeded.swift */; };
 		F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */; };
+		F5DF21E62A69DF2600584B8A /* DispatchQueue+Dedupe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5DF21E52A69DF2600584B8A /* DispatchQueue+Dedupe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +107,7 @@
 		F59E78EF2A60652000309218 /* Jost ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost ExtraBold.ttf"; sourceTree = "<group>"; };
 		F59E79052A6065F800309218 /* UIImage+textEmbeded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+textEmbeded.swift"; sourceTree = "<group>"; };
 		F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		F5DF21E52A69DF2600584B8A /* DispatchQueue+Dedupe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Dedupe.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +259,7 @@
 				F59E79052A6065F800309218 /* UIImage+textEmbeded.swift */,
 				F53A8DFB2A62982100825578 /* UIColor+image.swift */,
 				F53A8E192A62C13200825578 /* UIView+Screenshot.swift */,
+				F5DF21E52A69DF2600584B8A /* DispatchQueue+Dedupe.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -486,6 +489,7 @@
 				F53A669D2A5C4D6E00786FB8 /* RCProject.swift in Sources */,
 				F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */,
 				F53758882A48428900EF0139 /* ColorCollectionCell.swift in Sources */,
+				F5DF21E62A69DF2600584B8A /* DispatchQueue+Dedupe.swift in Sources */,
 				F5396D672A30E6E50059E331 /* GressoAppApp.swift in Sources */,
 				F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */,
 				F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */,
@@ -631,7 +635,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
@@ -675,7 +679,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
