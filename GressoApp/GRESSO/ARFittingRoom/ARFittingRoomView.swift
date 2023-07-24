@@ -120,8 +120,8 @@ struct ARFittingRoomView: View {
                     if isPhotochromic {
                         SegmentedControl(needToDarken: $needToDarken)
                             .frame(height: 52)
-                            .padding(.leading, 12)
-                            .padding(.trailing, 12)
+                            .padding(.horizontal, 12)
+                            .padding(.bottom, 28)
                     }
                     
                     ZStack {
@@ -149,7 +149,7 @@ struct ARFittingRoomView: View {
                             Spacer()
                         }
                     }
-                    .frame(height: 96)
+                    .frame(height: 50)
                     .padding(.bottom, 50)
                 }
             }
