@@ -12,8 +12,6 @@ let RFont = R.font
 let RImage = R.image
 let Localizable = R.string.localizable
 
-let deviceRegion = Locale.current.localizedString(forRegionCode: Locale.current.regionCode ?? "") ?? ""
-
 @main
 struct GressoAppApp: App {
     

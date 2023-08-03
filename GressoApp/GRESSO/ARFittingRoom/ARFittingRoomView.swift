@@ -131,7 +131,7 @@ struct ARFittingRoomView: View {
                             guard let url = loadingModels.item(at: index)?.url else { return }
                             currentDestination = url
                             withAnimation {
-                                isPhotochromic = url.absoluteString.contains("blue")
+                                isPhotochromic = url.absoluteString.contains("photochromic")
                             }
                         }
 
@@ -169,7 +169,7 @@ struct ARFittingRoomView: View {
             guard let url = model.url else { return }
             currentDestination = url
             withAnimation {
-                isPhotochromic = url.absoluteString.contains("blue")
+                isPhotochromic = url.absoluteString.contains("photochromic")
             }
         }
         .fullScreenCover(isPresented: $showingSnapshot) {
