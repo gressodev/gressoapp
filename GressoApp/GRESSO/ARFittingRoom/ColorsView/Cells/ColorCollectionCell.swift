@@ -21,8 +21,8 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         view.backgroundColor = .clear
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 22
-        view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.black.cgColor
+        view.layer.borderWidth = 8
+        view.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
         return view
     }()
 
@@ -31,14 +31,6 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         view.contentMode = .scaleAspectFill
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 18
-        return view
-    }()
-    
-    private lazy var cameraImageView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFill
-        view.layer.masksToBounds = true
-        view.image = Images.camera
         return view
     }()
     
@@ -59,8 +51,7 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     private func setupSubviews() {
         contentView.addSubview(borderView)
         contentView.addSubview(colorImageView)
-        colorImageView.addSubview(activityIndicatorView)
-        colorImageView.addSubview(cameraImageView)
+        contentView.addSubview(activityIndicatorView)
         
         configureConstraints()
     }
@@ -77,10 +68,6 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
         activityIndicatorView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
-        cameraImageView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.size.equalTo(13.48)
-        }
     }
     
     // MARK: - Configure
@@ -88,6 +75,8 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     func configure(isLoading: Bool, colorImage: UIImage?, isLarge: Bool) {
         self.isLoading = isLoading
         isLoading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
+        borderView.isHidden = isLoading
+        colorImageView.isHidden = isLoading
         activityIndicatorView.isHidden = !isLoading
         colorImageView.image = colorImage
         
@@ -108,9 +97,6 @@ final class ColorCollectionCell: UICollectionViewCell, ClassIdentifiable {
     
     private func transformTo(large: Bool) {
         transform = large ? CGAffineTransform(scaleX: 1.78, y: 1.78) : CGAffineTransform.identity
-        cameraImageView.isHidden = isLoading || !large
-        borderView.layer.borderWidth = large ? 8 : 2
-        borderView.layer.borderColor = large ? UIColor.black.withAlphaComponent(0.3).cgColor : UIColor.black.cgColor
     }
 
 }
