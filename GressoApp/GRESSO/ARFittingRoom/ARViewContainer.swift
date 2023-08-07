@@ -50,6 +50,10 @@ struct ARViewContainer: UIViewRepresentable {
 
 final class ARFaceTrackingView: ARView {
     
+    deinit {
+        session.pause()
+    }
+    
     func changeModel(currentDestination: URL, needToDarken: Bool) {
         do {
             let model = try RCProject.loadScene(realityFileSceneURL: currentDestination)

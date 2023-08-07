@@ -51,6 +51,7 @@ struct ARFittingRoomView: View {
                 HStack {
                     Button {
                         dismiss()
+                        AppStoreReviewManager.requestReviewIfAppropriate()
                     } label: {
                         HStack {
                             Image(uiImage: Images.cross)

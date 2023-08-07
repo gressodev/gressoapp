@@ -52,6 +52,8 @@
 		F59E79012A60652000309218 /* Jost ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F59E78EF2A60652000309218 /* Jost ExtraBold.ttf */; };
 		F59E79062A6065F800309218 /* UIImage+textEmbeded.swift in Sources */ = {isa = PBXBuildFile; fileRef = F59E79052A6065F800309218 /* UIImage+textEmbeded.swift */; };
 		F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */; };
+		F5ECE2412A809A2800F52008 /* UserDefaults+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECE2402A809A2800F52008 /* UserDefaults+Key.swift */; };
+		F5ECE2432A809AF500F52008 /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECE2422A809AF500F52008 /* AppStoreReviewManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -106,6 +108,8 @@
 		F59E78EF2A60652000309218 /* Jost ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jost ExtraBold.ttf"; sourceTree = "<group>"; };
 		F59E79052A6065F800309218 /* UIImage+textEmbeded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+textEmbeded.swift"; sourceTree = "<group>"; };
 		F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
+		F5ECE2402A809A2800F52008 /* UserDefaults+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Key.swift"; sourceTree = "<group>"; };
+		F5ECE2422A809AF500F52008 /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +261,7 @@
 				F59E79052A6065F800309218 /* UIImage+textEmbeded.swift */,
 				F53A8DFB2A62982100825578 /* UIColor+image.swift */,
 				F53A8E192A62C13200825578 /* UIView+Screenshot.swift */,
+				F5ECE2402A809A2800F52008 /* UserDefaults+Key.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -307,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */,
+				F5ECE2422A809AF500F52008 /* AppStoreReviewManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -468,6 +474,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F53A8DFC2A62982100825578 /* UIColor+image.swift in Sources */,
+				F5ECE2412A809A2800F52008 /* UserDefaults+Key.swift in Sources */,
 				F53758A52A49F63C00EF0139 /* SnapshotView.swift in Sources */,
 				F53A8E1A2A62C13200825578 /* UIView+Screenshot.swift in Sources */,
 				F53758832A48425700EF0139 /* ColorsView.swift in Sources */,
@@ -483,6 +490,7 @@
 				F584DFCA2A349965002517FD /* WebView.swift in Sources */,
 				F59E78DB2A6064AE00309218 /* SegmentedControl.swift in Sources */,
 				F5396D692A30E6E50059E331 /* ContentView.swift in Sources */,
+				F5ECE2432A809AF500F52008 /* AppStoreReviewManager.swift in Sources */,
 				F53A669D2A5C4D6E00786FB8 /* RCProject.swift in Sources */,
 				F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */,
 				F53758882A48428900EF0139 /* ColorCollectionCell.swift in Sources */,
