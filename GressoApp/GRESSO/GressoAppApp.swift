@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AWSCore
+import Adjust
 
 let RFont = R.font
 let RImage = R.image
@@ -14,7 +15,8 @@ let Localizable = R.string.localizable
 
 @main
 struct GressoAppApp: App {
-    
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     init() {
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType: .USEast2, identityPoolId: "us-east-2:8b7fcad8-4407-4d04-a0bd-2e134d84e98d")
         let configuration = AWSServiceConfiguration(region: .USEast2, credentialsProvider: credentialsProvider)
@@ -35,4 +37,24 @@ struct GressoAppApp: App {
             ContentView()
         }
     }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+//        setupAdjust()
+        return true
+    }
+    
+    private func setupAdjust() {
+        let yourAppToken = "{YourAppToken}"
+        let environment = ADJEnvironmentSandbox
+        let adjustConfig = ADJConfig(
+            appToken: yourAppToken,
+            environment: environment)
+        adjustConfig?.logLevel = ADJLogLevelVerbose
+
+        Adjust.appDidLaunch(adjustConfig)
+    }
+    
 }

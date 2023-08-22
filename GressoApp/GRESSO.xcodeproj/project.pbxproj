@@ -25,6 +25,7 @@
 		F53A8E122A62AF0400825578 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F53A8E142A62AF0400825578 /* Localizable.strings */; };
 		F53A8E182A62BB8B00825578 /* TryOnButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E172A62BB8B00825578 /* TryOnButton.swift */; };
 		F53A8E1A2A62C13200825578 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E192A62C13200825578 /* UIView+Screenshot.swift */; };
+		F544678F2A92238F00E6D156 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = F544678E2A92238F00E6D156 /* Adjust */; };
 		F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */; };
 		F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */; };
 		F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */; };
@@ -118,6 +119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DF8456653DD26525925B71A /* Pods_GRESSO.framework in Frameworks */,
+				F544678F2A92238F00E6D156 /* Adjust in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +338,9 @@
 			dependencies = (
 			);
 			name = GRESSO;
+			packageProductDependencies = (
+				F544678E2A92238F00E6D156 /* Adjust */,
+			);
 			productName = GressoApp;
 			productReference = F5396D632A30E6E50059E331 /* GRESSO.app */;
 			productType = "com.apple.product-type.application";
@@ -365,6 +370,9 @@
 				"es-419",
 			);
 			mainGroup = F5396D5A2A30E6E50059E331;
+			packageReferences = (
+				F544678D2A92238F00E6D156 /* XCRemoteSwiftPackageReference "ios_sdk" */,
+			);
 			productRefGroup = F5396D642A30E6E50059E331 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -740,6 +748,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F544678D2A92238F00E6D156 /* XCRemoteSwiftPackageReference "ios_sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/adjust/ios_sdk";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F544678E2A92238F00E6D156 /* Adjust */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F544678D2A92238F00E6D156 /* XCRemoteSwiftPackageReference "ios_sdk" */;
+			productName = Adjust;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5396D5B2A30E6E50059E331 /* Project object */;
 }
