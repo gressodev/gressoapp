@@ -26,6 +26,8 @@
 		F53A8E182A62BB8B00825578 /* TryOnButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E172A62BB8B00825578 /* TryOnButton.swift */; };
 		F53A8E1A2A62C13200825578 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E192A62C13200825578 /* UIView+Screenshot.swift */; };
 		F544678F2A92238F00E6D156 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = F544678E2A92238F00E6D156 /* Adjust */; };
+		F54467912A94A34000E6D156 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F54467902A94A34000E6D156 /* GoogleService-Info.plist */; };
+		F54467942A94A4DA00E6D156 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F54467932A94A4DA00E6D156 /* FirebaseAnalytics */; };
 		F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */; };
 		F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */; };
 		F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */; };
@@ -82,6 +84,7 @@
 		F53A8E172A62BB8B00825578 /* TryOnButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryOnButton.swift; sourceTree = "<group>"; };
 		F53A8E192A62C13200825578 /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
 		F53A8E1B2A6490DA00825578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F54467902A94A34000E6D156 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3ServiceHandler.swift; sourceTree = "<group>"; };
 		F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFittingRoomView.swift; sourceTree = "<group>"; };
 		F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeGetter.swift"; sourceTree = "<group>"; };
@@ -120,6 +123,7 @@
 			files = (
 				9DF8456653DD26525925B71A /* Pods_GRESSO.framework in Frameworks */,
 				F544678F2A92238F00E6D156 /* Adjust in Frameworks */,
+				F54467942A94A4DA00E6D156 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +235,7 @@
 		F5396D652A30E6E50059E331 /* GRESSO */ = {
 			isa = PBXGroup;
 			children = (
+				F54467902A94A34000E6D156 /* GoogleService-Info.plist */,
 				F53A8E1B2A6490DA00825578 /* Info.plist */,
 				F58420082A4E3A8E004C4A27 /* Models */,
 				F53758A62A4A16E000EF0139 /* Views */,
@@ -340,6 +345,7 @@
 			name = GRESSO;
 			packageProductDependencies = (
 				F544678E2A92238F00E6D156 /* Adjust */,
+				F54467932A94A4DA00E6D156 /* FirebaseAnalytics */,
 			);
 			productName = GressoApp;
 			productReference = F5396D632A30E6E50059E331 /* GRESSO.app */;
@@ -372,6 +378,7 @@
 			mainGroup = F5396D5A2A30E6E50059E331;
 			packageReferences = (
 				F544678D2A92238F00E6D156 /* XCRemoteSwiftPackageReference "ios_sdk" */,
+				F54467922A94A4DA00E6D156 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = F5396D642A30E6E50059E331 /* Products */;
 			projectDirPath = "";
@@ -406,6 +413,7 @@
 				F59E78F02A60652000309218 /* Jost ExtraLightItalic.ttf in Resources */,
 				F59E78F72A60652000309218 /* Jost BoldItalic.ttf in Resources */,
 				F59E78FA2A60652000309218 /* Jost Medium.ttf in Resources */,
+				F54467912A94A34000E6D156 /* GoogleService-Info.plist in Resources */,
 				F59E78F52A60652000309218 /* Jost Black.ttf in Resources */,
 				F59E78FC2A60652000309218 /* Jost Regular.ttf in Resources */,
 				F59E78FB2A60652000309218 /* Jost SemiBold.ttf in Resources */,
@@ -758,6 +766,14 @@
 				kind = branch;
 			};
 		};
+		F54467922A94A4DA00E6D156 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -765,6 +781,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F544678D2A92238F00E6D156 /* XCRemoteSwiftPackageReference "ios_sdk" */;
 			productName = Adjust;
+		};
+		F54467932A94A4DA00E6D156 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F54467922A94A4DA00E6D156 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
