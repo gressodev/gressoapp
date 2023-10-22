@@ -365,9 +365,10 @@ struct ContentView : View {
     }
     
     private func loadGlasses(url: URL?, completion: @escaping (Bool) -> Void) {
-        guard let url, isARFaceTrackingConfigurationSupported else { return }
+        guard let url else { return }
         isPageLoading = true
         let folderName = url.lastPathComponent.replacingOccurrences(of: "-titanium", with: "")
+        guard folderName != "ar" else { return }
         
         s3Service.filesCount(folderName: folderName) { count in
             loadingModels = []

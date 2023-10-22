@@ -82,7 +82,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
     }
 }
 
-final class BaseWebView: WKWebView {
+final class BaseWebView: WKWebView, UIScrollViewDelegate {
         
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         super.init(frame: frame, configuration: configuration)
@@ -90,6 +90,8 @@ final class BaseWebView: WKWebView {
         allowsBackForwardNavigationGestures = true
         customUserAgent = "Gresso"
         addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        scrollView.delegate = self
+        scrollView.showsHorizontalScrollIndicator = false
     }
 
     required init?(coder: NSCoder) {
@@ -131,6 +133,12 @@ var css = '.header,.footer,.announcement-bar {display: none !important;}',
             if let err = err {
                 print("### error openMenu", err.localizedDescription)
             }
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.x != 0){
+            scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y)
         }
     }
 }

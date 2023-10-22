@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/firebase/firebase-ios-sdk",
       "state" : {
-        "revision" : "df2171b0c6afb9e9d4f7e07669d558c510b9f6be",
-        "version" : "10.13.0"
+        "revision" : "837d4af6ead57cec1fc38007892500d3139c7556",
+        "version" : "10.16.0"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/GoogleAppMeasurement.git",
       "state" : {
-        "revision" : "03b9beee1a61f62d32c521e172e192a1663a5e8b",
-        "version" : "10.13.0"
+        "revision" : "56f681586ff006a7982b53dc94082eea31971acf",
+        "version" : "10.16.0"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/google/grpc-binary.git",
       "state" : {
-        "revision" : "f1b366129d1125be7db83247e003fc333104b569",
-        "version" : "1.50.2"
+        "revision" : "a673bc2937fbe886dd1f99c401b01b6d977a9c98",
+        "version" : "1.49.1"
       }
     },
     {
@@ -64,12 +64,21 @@
       }
     },
     {
+      "identity" : "interop-ios-for-google-sdks",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/google/interop-ios-for-google-sdks.git",
+      "state" : {
+        "revision" : "2d12673670417654f08f5f90fdd62926dc3a2648",
+        "version" : "100.0.0"
+      }
+    },
+    {
       "identity" : "ios_sdk",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/adjust/ios_sdk",
       "state" : {
         "branch" : "master",
-        "revision" : "f129fbc84962c6bc2442c366cbdf0070ec76de2e"
+        "revision" : "20c2666082c372f9f2c0adf871d8cef195d011f7"
       }
     },
     {
@@ -104,8 +113,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf.git",
       "state" : {
-        "revision" : "ce20dc083ee485524b802669890291c0d8090170",
-        "version" : "1.22.1"
+        "revision" : "3c54ab05249f59f2c6641dd2920b8358ea9ed127",
+        "version" : "1.24.0"
       }
     }
   ],
