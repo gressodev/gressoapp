@@ -20,7 +20,7 @@ struct ContentView : View {
     private enum LocalConstants {
         static let navBarHeight: CGFloat = 44
         static let gressoLabel = "GRESSO"
-        static let gressoUrl = (Locale.current.regionCode ?? "") == "RU" ? "www.gressomiami" : "gresso"
+        static let gressoUrl = (Locale.current.regionCode ?? "") == "RU" ? "www.gresso.ru" : "gresso.com"
     }
     
     private let isARFaceTrackingConfigurationSupported = ARFaceTrackingConfiguration.isSupported
@@ -35,16 +35,16 @@ struct ContentView : View {
     @State private var activeTab: ActiveTab = .glass
     
     @StateObject var homeModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl).com"
+        urlString: "https://\(LocalConstants.gressoUrl)"
     )
     @StateObject var glassModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl).com/pages/ar"
+        urlString: "https://\(LocalConstants.gressoUrl)/pages/ar"
     )
     @StateObject var wishlistModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl).com/apps/wishlist"
+        urlString: "https://\(LocalConstants.gressoUrl)/apps/wishlist"
     )
     @StateObject var bagModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl).com/cart"
+        urlString: "https://\(LocalConstants.gressoUrl)/cart"
     )
     
     @State private var doGlassesHaveModelHomeTab = false
