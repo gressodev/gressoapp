@@ -128,6 +128,22 @@ var css = '.header,.footer,.announcement-bar {display: none !important;}',
         }
     }
     
+    private func removeChat() {
+//        It works!
+//        var child = document.getElementsByClassName('globalClass_e830')[0];
+//        child.parentNode.removeChild(child);
+        let script =
+        """
+            var child = document.getElementsByClassName('globalClass_e830')[0];
+            child.parentNode.removeChild(child);
+        """
+        evaluateJavaScript(script) { (response, error) -> Void in
+            if let error {
+                print("### error removeChat", error.localizedDescription)
+            }
+        }
+    }
+    
     func openMenu() {
         evaluateJavaScript("document.getElementsByClassName('header__icon-wrapper tap-area hidden-desk')[0].click();") { (key, err) in
             if let err = err {
