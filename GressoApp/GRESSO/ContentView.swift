@@ -20,7 +20,7 @@ struct ContentView : View {
     private enum LocalConstants {
         static let navBarHeight: CGFloat = 44
         static let gressoLabel = "GRESSO"
-        static let gressoUrl = (Locale.current.regionCode ?? "") == "RU" ? "www.gresso.ru" : "gresso.com"
+        static let gressoUrl = (Locale.current.regionCode ?? "") == "RU" ? "gresso.ru" : "gresso.com"
     }
     
     private let isARFaceTrackingConfigurationSupported = ARFaceTrackingConfiguration.isSupported
@@ -365,7 +365,7 @@ struct ContentView : View {
     }
     
     private func loadGlasses(url: URL?, completion: @escaping (Bool) -> Void) {
-        guard let url else { return }
+        guard let url, isARFaceTrackingConfigurationSupported else { return }
         isPageLoading = true
         let folderName = url.lastPathComponent.replacingOccurrences(of: "-titanium", with: "")
         guard folderName != "ar" else { return }
