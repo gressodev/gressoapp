@@ -18,12 +18,19 @@ final class PagingColorsView: UIView {
             
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            let itemWidth = itemSize.widthDimension.dimension
             item.contentInsets = NSDirectionalEdgeInsets(top: 3, leading: .zero, bottom: 3, trailing: .zero)
             
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalHeight(1), heightDimension: .fractionalHeight(1))
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
             
             let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(
+                top: .zero,
+                leading: (UIScreen.main.bounds.width - itemWidth) / 2,
+                bottom: .zero,
+                trailing: (UIScreen.main.bounds.width - itemWidth) / 2
+            )
             section.orthogonalScrollingBehavior = .groupPagingCentered
             
             section.visibleItemsInvalidationHandler = { [weak self] (visibleItems, point, environment) -> Void in
