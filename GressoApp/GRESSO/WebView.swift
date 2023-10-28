@@ -36,7 +36,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
         
         let contentController = WKUserContentController()
         let userScript = WKUserScript(
-            source: "document.getElementById('shopify-block-f9861e7b-1a59-4ba8-ba3c-cae7c1b2f9ae').addEventListener('click', function(){ window.webkit.messageHandlers.buttonClicked.postMessage('Button clicked') });",
+            source: "document.getElementsByClassName('shopify-block shopify-app-block')[0].addEventListener('click', function(){ window.webkit.messageHandlers.buttonClicked.postMessage('Button clicked') });",
             injectionTime: .atDocumentEnd,
             forMainFrameOnly: true
         )
