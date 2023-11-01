@@ -107,6 +107,7 @@ final class BaseWebView: WKWebView, UIScrollViewDelegate {
             let estimatedProgress = Float(estimatedProgress)
             guard estimatedProgress >= 0.1 else { return }
             removeHeaderFooter()
+            removeChat()
         }
     }
     
@@ -129,17 +130,17 @@ var css = '.header,.footer,.announcement-bar {display: none !important;}',
     }
     
     private func removeChat() {
-//        It works!
-//        var child = document.getElementsByClassName('globalClass_e830')[0];
-//        child.parentNode.removeChild(child);
         let script =
         """
-            var child = document.getElementsByClassName('globalClass_e830')[0];
-            child.parentNode.removeChild(child);
+            window.jivo_onLoadCallback = function (){
+                window.jivo_destroy();
+            }
         """
         evaluateJavaScript(script) { (response, error) -> Void in
             if let error {
                 print("### error removeChat", error.localizedDescription)
+            } else if let response {
+                print("### response removeChat", response)
             }
         }
     }
