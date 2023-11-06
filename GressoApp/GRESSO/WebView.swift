@@ -108,6 +108,7 @@ final class BaseWebView: WKWebView, UIScrollViewDelegate {
             guard estimatedProgress >= 0.1 else { return }
             removeHeaderFooter()
             removeChat()
+            disableCookies()
         }
     }
     
@@ -125,6 +126,14 @@ var css = '.header,.footer,.announcement-bar {display: none !important;}',
         evaluateJavaScript("setTimeout(function() {\(script)});"){ (response, error) -> Void in
             if let error {
                 print("### error removeHeaderFooter", error.localizedDescription)
+            }
+        }
+    }
+    
+    private func disableCookies() {
+        evaluateJavaScript("window.disableCookies = true;") { (response, error) -> Void in
+            if let error {
+                print("### error disableCookies", error.localizedDescription)
             }
         }
     }
