@@ -10,28 +10,28 @@ import UIKit
 import WebKit
 
 struct WebView: UIViewRepresentable {
-    typealias UIViewType = BaseWebView
+    typealias UIViewType = WKWebView
 
-    let webView: BaseWebView
+    let webView: WKWebView
     
-    func makeUIView(context: Context) -> BaseWebView {
+    func makeUIView(context: Context) -> WKWebView {
         webView
     }
     
-    func updateUIView(_ uiView: BaseWebView, context: Context) { }
+    func updateUIView(_ uiView: WKWebView, context: Context) { }
 }
 
-final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
+final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UIScrollViewDelegate {
     
     @Published var canGoBack: Bool = false
     @Published var urlChanges: URL? = nil
     
-    var webView: BaseWebView
+    var webView: WKWebView
     
     var reloadWishlistCompletion: (() -> Void)?
     
     init(urlString: String) {
-        webView = BaseWebView(frame: .zero)
+        webView = WKWebView(frame: .zero)
         super.init()
         
         let contentController = WKUserContentController()
@@ -46,12 +46,22 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
         
-        webView = BaseWebView(frame: .zero, configuration: config)
+        webView = WKWebView(frame: .zero, configuration: config)
+        
+        webView.allowsBackForwardNavigationGestures = true
+        webView.customUserAgent = "Gresso"
+        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        webView.scrollView.delegate = self
+        webView.scrollView.showsHorizontalScrollIndicator = false
         
         guard let url = URL(string: urlString) else { return }
         webView.load(URLRequest(url: url))
         
         setupBindings()
+    }
+    
+    deinit {
+        removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
     }
     
     private func setupBindings() {
@@ -67,7 +77,9 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
     }
     
     func openMenu() {
-        webView.openMenu()
+        webView.evaluateJavaScript(
+            "document.getElementsByClassName('header__icon-wrapper tap-area hidden-desk')[0].click();"
+        ) { (key, err) in }
     }
     
     @MainActor
@@ -80,31 +92,10 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler {
             reloadWishlistCompletion?()
         }
     }
-}
-
-final class BaseWebView: WKWebView, UIScrollViewDelegate {
-        
-    override init(frame: CGRect, configuration: WKWebViewConfiguration) {
-        super.init(frame: frame, configuration: configuration)
-        
-        allowsBackForwardNavigationGestures = true
-        customUserAgent = "Gresso"
-        addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        scrollView.delegate = self
-        scrollView.showsHorizontalScrollIndicator = false
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-    }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "estimatedProgress" {
-            let estimatedProgress = Float(estimatedProgress)
+            let estimatedProgress = Float(webView.estimatedProgress)
             guard estimatedProgress >= 0.1 else { return }
             removeHeaderFooter()
             removeChat()
@@ -114,16 +105,16 @@ final class BaseWebView: WKWebView, UIScrollViewDelegate {
     
     private func removeHeaderFooter() {
         let script =
-"""
-var css = '.header,.footer,.announcement-bar {display: none !important;}',
-        head = document.head || document.getElementsByTagName('head')[0],
-            style = document.createElement('style');
-        
-        style.type = 'text/css';
+            """
+            var css = '.header,.footer,.announcement-bar {display: none !important;}',
+                    head = document.head || document.getElementsByTagName('head')[0],
+                    style = document.createElement('style');
+                    
+            style.type = 'text/css';
             style.appendChild(document.createTextNode(css));
-        head.appendChild(style);
-"""
-        evaluateJavaScript("setTimeout(function() {\(script)});"){ (response, error) -> Void in
+            head.appendChild(style);
+            """
+        webView.evaluateJavaScript("setTimeout(function() {\(script)});"){ (response, error) -> Void in
             if let error {
                 print("### error removeHeaderFooter", error.localizedDescription)
             }
@@ -131,11 +122,7 @@ var css = '.header,.footer,.announcement-bar {display: none !important;}',
     }
     
     private func disableCookies() {
-        evaluateJavaScript("window.disableCookies = true;") { (response, error) -> Void in
-            if let error {
-                print("### error disableCookies", error.localizedDescription)
-            }
-        }
+        webView.evaluateJavaScript("window.disableCookies = true;") { (response, error) -> Void in }
     }
     
     private func removeChat() {
@@ -145,21 +132,7 @@ var css = '.header,.footer,.announcement-bar {display: none !important;}',
                 window.jivo_destroy();
             }
         """
-        evaluateJavaScript(script) { (response, error) -> Void in
-            if let error {
-                print("### error removeChat", error.localizedDescription)
-            } else if let response {
-                print("### response removeChat", response)
-            }
-        }
-    }
-    
-    func openMenu() {
-        evaluateJavaScript("document.getElementsByClassName('header__icon-wrapper tap-area hidden-desk')[0].click();") { (key, err) in
-            if let err = err {
-                print("### error openMenu", err.localizedDescription)
-            }
-        }
+        webView.evaluateJavaScript(script) { (response, error) -> Void in }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
