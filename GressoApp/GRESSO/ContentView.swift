@@ -51,7 +51,11 @@ struct ContentView : View {
     @State private var doGlassesHaveModelGlassTab = false
     @State private var doGlassesHaveModelWishlistTab = false
     @State private var doGlassesHaveModelBagTab = false
-    @State private var isPageLoading = false
+    
+    @State private var isPageLoadingHomeTab = false
+    @State private var isPageLoadingGlassTab = false
+    @State private var isPageLoadingWishlistTab = false
+    @State private var isPageLoadingBagTab = false
     
     init() {
         UITabBar.appearance().unselectedItemTintColor = .white
@@ -96,7 +100,7 @@ struct ContentView : View {
                             
                             Spacer()
                             
-                            if isPageLoading {
+                            if isPageLoadingHomeTab {
                                 ProgressView()
                                     .padding(.trailing)
                             }
@@ -153,7 +157,7 @@ struct ContentView : View {
                             
                             Spacer()
                             
-                            if isPageLoading {
+                            if isPageLoadingGlassTab {
                                 ProgressView()
                                     .padding(.trailing)
                             }
@@ -210,7 +214,7 @@ struct ContentView : View {
                             
                             Spacer()
                             
-                            if isPageLoading {
+                            if isPageLoadingWishlistTab {
                                 ProgressView()
                                     .padding(.trailing)
                             }
@@ -267,7 +271,7 @@ struct ContentView : View {
                             
                             Spacer()
                             
-                            if isPageLoading {
+                            if isPageLoadingBagTab {
                                 ProgressView()
                                     .padding(.trailing)
                             }
@@ -343,30 +347,37 @@ struct ContentView : View {
             .edgesIgnoringSafeArea(.all)
         }
         .onChange(of: homeModel.urlChanges) { url in
+            isPageLoadingHomeTab = true
             loadGlasses(url: url) { have in
                 doGlassesHaveModelHomeTab = have
+                isPageLoadingHomeTab = false
             }
         }
         .onChange(of: glassModel.urlChanges) { url in
+            isPageLoadingGlassTab = true
             loadGlasses(url: url) { have in
                 doGlassesHaveModelGlassTab = have
+                isPageLoadingGlassTab = false
             }
         }
         .onChange(of: wishlistModel.urlChanges) { url in
+            isPageLoadingWishlistTab = true
             loadGlasses(url: url) { have in
                 doGlassesHaveModelWishlistTab = have
+                isPageLoadingWishlistTab = false
             }
         }
         .onChange(of: bagModel.urlChanges) { url in
+            isPageLoadingBagTab = true
             loadGlasses(url: url) { have in
                 doGlassesHaveModelBagTab = have
+                isPageLoadingBagTab = false
             }
         }
     }
     
     private func loadGlasses(url: URL?, completion: @escaping (Bool) -> Void) {
         guard let url, isARFaceTrackingConfigurationSupported else { return }
-        isPageLoading = true
         let folderName = url.lastPathComponent.replacingOccurrences(of: "-titanium", with: "")
         guard folderName != "ar" else { return }
         
@@ -386,12 +397,10 @@ struct ContentView : View {
                 }
                 withAnimation {
                     completion(true)
-                    isPageLoading = false
                 }
             } else {
                 withAnimation {
                     completion(false)
-                    isPageLoading = false
                 }
             }
         }
