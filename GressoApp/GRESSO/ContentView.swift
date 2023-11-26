@@ -91,6 +91,7 @@ struct ContentView : View {
                             } else {
                                 Button {
                                     homeModel.openMenu()
+                                    AnalyticsService.shared.menuTap()
                                 } label: {
                                     Image(Images.menuButtonIcon)
                                         .renderingMode(.template)
@@ -108,19 +109,29 @@ struct ContentView : View {
                     }
                 }
                 .frame(height: LocalConstants.navBarHeight)
+                .padding(.bottom, 10)
                 
-                homeView
-                
-                if doGlassesHaveModelHomeTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            GressoStyiledButton(
-                                image: Images.stars,
-                                text: Localizable.tryOn()
-                            )
+                ZStack {
+                    homeView
+                    
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Button {
+                                showingAR = true
+                                AnalyticsService.shared.tryOnTap()
+                            } label: {
+                                GressoStyiledButton(
+                                    image: Images.stars,
+                                    text: Localizable.tryOn()
+                                )
+                                .padding(.vertical, 8)
+                                .background(Color.black)
+                            }
                         }
+                        .frame(height: doGlassesHaveModelHomeTab ? 60 : 0)
+                        .opacity(doGlassesHaveModelHomeTab ? 1 : 0)
+                        .allowsHitTesting(doGlassesHaveModelHomeTab)
                     }
                 }
             }
@@ -165,19 +176,29 @@ struct ContentView : View {
                     }
                 }
                 .frame(height: LocalConstants.navBarHeight)
+                .padding(.bottom, 10)
                 
-                glassView
-                
-                if doGlassesHaveModelGlassTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            GressoStyiledButton(
-                                image: Images.stars,
-                                text: Localizable.tryOn()
-                            )
+                ZStack {
+                    glassView
+                    
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Button {
+                                showingAR = true
+                                AnalyticsService.shared.tryOnTap()
+                            } label: {
+                                GressoStyiledButton(
+                                    image: Images.stars,
+                                    text: Localizable.tryOn()
+                                )
+                                .padding(.vertical, 8)
+                                .background(Color.black)
+                            }
                         }
+                        .frame(height: doGlassesHaveModelGlassTab ? 60 : 0)
+                        .opacity(doGlassesHaveModelGlassTab ? 1 : 0)
+                        .allowsHitTesting(doGlassesHaveModelGlassTab)
                     }
                 }
             }
@@ -222,19 +243,29 @@ struct ContentView : View {
                     }
                 }
                 .frame(height: LocalConstants.navBarHeight)
+                .padding(.bottom, 10)
                 
-                wishlistView
-                
-                if doGlassesHaveModelWishlistTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            GressoStyiledButton(
-                                image: Images.stars,
-                                text: Localizable.tryOn()
-                            )
+                ZStack {
+                    wishlistView
+                    
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Button {
+                                showingAR = true
+                                AnalyticsService.shared.tryOnTap()
+                            } label: {
+                                GressoStyiledButton(
+                                    image: Images.stars,
+                                    text: Localizable.tryOn()
+                                )
+                                .padding(.vertical, 8)
+                                .background(Color.black)
+                            }
                         }
+                        .frame(height: doGlassesHaveModelWishlistTab ? 60 : 0)
+                        .opacity(doGlassesHaveModelWishlistTab ? 1 : 0)
+                        .allowsHitTesting(doGlassesHaveModelWishlistTab)
                     }
                 }
             }
@@ -279,22 +310,32 @@ struct ContentView : View {
                     }
                 }
                 .frame(height: LocalConstants.navBarHeight)
+                .padding(.bottom, 10)
                 
-                bagView
-                    .onAppear {
-                        bagModel.reload()
-                    }
-                
-                if doGlassesHaveModelBagTab {
-                    HStack {
-                        Button {
-                            showingAR = true
-                        } label: {
-                            GressoStyiledButton(
-                                image: Images.stars,
-                                text: Localizable.tryOn()
-                            )
+                ZStack {
+                    bagView
+                        .onAppear {
+                            bagModel.reload()
                         }
+                    
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Button {
+                                showingAR = true
+                                AnalyticsService.shared.tryOnTap()
+                            } label: {
+                                GressoStyiledButton(
+                                    image: Images.stars,
+                                    text: Localizable.tryOn()
+                                )
+                                .padding(.vertical, 8)
+                                .background(Color.black)
+                            }
+                        }
+                        .frame(height: doGlassesHaveModelBagTab ? 60 : 0)
+                        .opacity(doGlassesHaveModelBagTab ? 1 : 0)
+                        .allowsHitTesting(doGlassesHaveModelBagTab)
                     }
                 }
             }

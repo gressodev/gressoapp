@@ -114,7 +114,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             style.appendChild(document.createTextNode(css));
             head.appendChild(style);
             """
-        webView.evaluateJavaScript("setTimeout(function() {\(script)});"){ (response, error) -> Void in
+        webView.evaluateJavaScript("setTimeout(function() {\(script)});") { response, error -> Void in
             if let error {
                 print("### error removeHeaderFooter", error.localizedDescription)
             }

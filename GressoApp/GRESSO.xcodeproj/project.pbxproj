@@ -25,8 +25,9 @@
 		F53A8E122A62AF0400825578 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F53A8E142A62AF0400825578 /* Localizable.strings */; };
 		F53A8E182A62BB8B00825578 /* TryOnButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E172A62BB8B00825578 /* TryOnButton.swift */; };
 		F53A8E1A2A62C13200825578 /* UIView+Screenshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A8E192A62C13200825578 /* UIView+Screenshot.swift */; };
+		F53F62D52B0A5917009163C6 /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53F62D42B0A5917009163C6 /* AnalyticsService.swift */; };
+		F53F62D72B0A64DB009163C6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F53F62D62B0A64DB009163C6 /* GoogleService-Info.plist */; };
 		F544678F2A92238F00E6D156 /* Adjust in Frameworks */ = {isa = PBXBuildFile; productRef = F544678E2A92238F00E6D156 /* Adjust */; };
-		F54467912A94A34000E6D156 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F54467902A94A34000E6D156 /* GoogleService-Info.plist */; };
 		F54467942A94A4DA00E6D156 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F54467932A94A4DA00E6D156 /* FirebaseAnalytics */; };
 		F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */; };
 		F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */; };
@@ -84,7 +85,8 @@
 		F53A8E172A62BB8B00825578 /* TryOnButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TryOnButton.swift; sourceTree = "<group>"; };
 		F53A8E192A62C13200825578 /* UIView+Screenshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Screenshot.swift"; sourceTree = "<group>"; };
 		F53A8E1B2A6490DA00825578 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F54467902A94A34000E6D156 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F53F62D42B0A5917009163C6 /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
+		F53F62D62B0A64DB009163C6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = S3ServiceHandler.swift; sourceTree = "<group>"; };
 		F56F000F2A3F26E800D66042 /* ARFittingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFittingRoomView.swift; sourceTree = "<group>"; };
 		F58420062A4E2BE1004C4A27 /* Collection+SafeGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+SafeGetter.swift"; sourceTree = "<group>"; };
@@ -235,7 +237,7 @@
 		F5396D652A30E6E50059E331 /* GRESSO */ = {
 			isa = PBXGroup;
 			children = (
-				F54467902A94A34000E6D156 /* GoogleService-Info.plist */,
+				F53F62D62B0A64DB009163C6 /* GoogleService-Info.plist */,
 				F53A8E1B2A6490DA00825578 /* Info.plist */,
 				F58420082A4E3A8E004C4A27 /* Models */,
 				F53758A62A4A16E000EF0139 /* Views */,
@@ -320,6 +322,7 @@
 			children = (
 				F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */,
 				F5ECE2422A809AF500F52008 /* AppStoreReviewManager.swift */,
+				F53F62D42B0A5917009163C6 /* AnalyticsService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -411,9 +414,9 @@
 				F59E78F22A60652000309218 /* Jost MediumItalic.ttf in Resources */,
 				F59E78F42A60652000309218 /* Jost LightItalic.ttf in Resources */,
 				F59E78F02A60652000309218 /* Jost ExtraLightItalic.ttf in Resources */,
+				F53F62D72B0A64DB009163C6 /* GoogleService-Info.plist in Resources */,
 				F59E78F72A60652000309218 /* Jost BoldItalic.ttf in Resources */,
 				F59E78FA2A60652000309218 /* Jost Medium.ttf in Resources */,
-				F54467912A94A34000E6D156 /* GoogleService-Info.plist in Resources */,
 				F59E78F52A60652000309218 /* Jost Black.ttf in Resources */,
 				F59E78FC2A60652000309218 /* Jost Regular.ttf in Resources */,
 				F59E78FB2A60652000309218 /* Jost SemiBold.ttf in Resources */,
@@ -500,6 +503,7 @@
 				F537587C2A46D31800EF0139 /* Assets.swift in Sources */,
 				F59E79062A6065F800309218 /* UIImage+textEmbeded.swift in Sources */,
 				F53A8E002A62A85100825578 /* R.generated.swift in Sources */,
+				F53F62D52B0A5917009163C6 /* AnalyticsService.swift in Sources */,
 				F584200A2A4E3A95004C4A27 /* LoadingModel.swift in Sources */,
 				F53A8E182A62BB8B00825578 /* TryOnButton.swift in Sources */,
 				F53758852A48426C00EF0139 /* PagingColorsView.swift in Sources */,
@@ -655,7 +659,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
@@ -699,7 +703,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;

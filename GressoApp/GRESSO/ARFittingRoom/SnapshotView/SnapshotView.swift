@@ -57,23 +57,25 @@ struct SnapshotView: View {
                         )
                     }
                     VStack {
-                        if #available(iOS 16.0, *) {
-                            ShareLink(
-                                item: Image(uiImage: snapshot),
-                                preview: SharePreview(
-                                    "GRESSO",
-                                    image: Image(uiImage: snapshot)
-                                )
-                            ) {
-                                GressoStyiledButton(
-                                    image: Images.share,
-                                    verticalPadding: .zero,
-                                    horizontalPadding: .zero
-                                )
-                            }
-                        } else {
+                        // Пока отключил ShareLink, так как не получается навесить событие аналитики на нажатие
+//                        if #available(iOS 16.0, *) {
+//                            ShareLink(
+//                                item: Image(uiImage: snapshot),
+//                                preview: SharePreview(
+//                                    "GRESSO",
+//                                    image: Image(uiImage: snapshot)
+//                                )
+//                            ) {
+//                                GressoStyiledButton(
+//                                    image: Images.share,
+//                                    verticalPadding: .zero,
+//                                    horizontalPadding: .zero
+//                                )
+//                            }
+//                        } else {
                             Button {
                                 showingShareScreen = true
+                                AnalyticsService.shared.sharePhotoTap()
                             } label: {
                                 GressoStyiledButton(
                                     image: Images.share,
@@ -81,7 +83,7 @@ struct SnapshotView: View {
                                     horizontalPadding: .zero
                                 )
                             }
-                        }
+//                        }
                     }
                 }
                 .padding(.top, 8)

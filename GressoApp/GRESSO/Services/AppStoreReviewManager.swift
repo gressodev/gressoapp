@@ -14,7 +14,7 @@ enum AppStoreReviewManager {
         guard let firstLaunchDate = defaults.object(forKey: UserDefaultsKey.firstLaunchDate.rawValue) as? Date else { return }
         guard let days = Calendar.current.dateComponents([.day], from: firstLaunchDate, to: Date()).day else { return }
         let appLaunchCounter = defaults.integer(forKey: UserDefaultsKey.appLaunchCounter.rawValue)
-        let shouldRequestReview = appLaunchCounter > 7 && days > 2
+        let shouldRequestReview = appLaunchCounter > 4 && days > 2
         guard shouldRequestReview else { return }
         SKStoreReviewController.requestReviewInCurrentScene()
     }

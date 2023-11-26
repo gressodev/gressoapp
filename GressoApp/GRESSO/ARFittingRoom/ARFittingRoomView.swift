@@ -78,23 +78,25 @@ struct ARFittingRoomView: View {
                     
                     Spacer()
                     
-                    if #available(iOS 16.0, *) {
-                        if let modelLink {
-                            ShareLink(item: modelLink) {
-                                HStack {
-                                    Image(uiImage: Images.share)
-                                        .resizable()
-                                        .frame(width: 24, height: 24)
-                                        .padding(10)
-                                }
-                                .background(.black)
-                                .cornerRadius(4)
-                                .frame(width: 44, height: 44)
-                            }
-                        }
-                    } else {
+                    // Пока отключил ShareLink, так как не получается навесить событие аналитики на нажатие
+//                    if #available(iOS 16.0, *) {
+//                        if let modelLink {
+//                            ShareLink(item: modelLink) {
+//                                HStack {
+//                                    Image(uiImage: Images.share)
+//                                        .resizable()
+//                                        .frame(width: 24, height: 24)
+//                                        .padding(10)
+//                                }
+//                                .background(.black)
+//                                .cornerRadius(4)
+//                                .frame(width: 44, height: 44)
+//                            }
+//                        }
+//                    } else {
                         Button {
                             showingShareScreen = true
+                            AnalyticsService.shared.shareTap()
                         } label: {
                             HStack {
                                 Image(uiImage: Images.share)
@@ -106,7 +108,7 @@ struct ARFittingRoomView: View {
                             .cornerRadius(4)
                             .frame(width: 44, height: 44)
                         }
-                    }
+//                    }
                 }
                 .padding(.top, 54)
                 .padding(.horizontal, 16)
@@ -141,6 +143,7 @@ struct ARFittingRoomView: View {
 
                             Button {
                                 needToTakeSnapshot = true
+                                AnalyticsService.shared.photoTap()
                             } label: {
                                 Circle()
                                     .strokeBorder(.clear, lineWidth: .zero)
