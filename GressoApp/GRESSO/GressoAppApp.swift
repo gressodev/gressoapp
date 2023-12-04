@@ -43,13 +43,13 @@ struct GressoAppApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//        setupAdjust()
+        setupAdjust()
         FirebaseApp.configure()
         return true
     }
     
     private func setupAdjust() {
-        let yourAppToken = "{YourAppToken}"
+        let yourAppToken = "90iu8omef5z4"
         let environment = ADJEnvironmentSandbox
         let adjustConfig = ADJConfig(
             appToken: yourAppToken,
