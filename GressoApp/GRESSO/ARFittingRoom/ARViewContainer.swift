@@ -71,38 +71,38 @@ final class ARFaceTrackingView: ARView {
     
 }
 
-final class ARFittingRoomViewTest: UIView {
-    @Binding var loadingModels: [LoadingModel]
-    private var modelLink: URL?
-    private let modelName: String
-    
-    @Binding var currentDestination: URL?
-    @Binding var needToTakeSnapshot: Bool
-    @Binding var needToDarken: Bool
-    
-    var didTakeSnapshot: (UIImage) -> Void
-    
-    init(
-        loadingModels: Binding<[LoadingModel]>,
-        modelLink: URL?,
-        modelName: String,
-        currentDestination: Binding<URL?>,
-        needToTakeSnapshot: Binding<Bool>,
-        needToDarken: Binding<Bool>,
-        didTakeSnapshot: @escaping (UIImage) -> Void
-    ) {
-        self._loadingModels = loadingModels
-        self.modelLink = modelLink
-        self.modelName = modelName
-        self._currentDestination = currentDestination
-        self._needToTakeSnapshot = needToTakeSnapshot
-        self._needToDarken = needToDarken
-        self.didTakeSnapshot = didTakeSnapshot
-        super.init()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
+//final class ARFittingRoomViewTest: UIView {
+//    @Binding var loadingModels: [LoadingModel]
+//    private var modelLink: URL?
+//    private let modelName: String
+//    
+//    @Binding var currentDestination: URL?
+//    @Binding var needToTakeSnapshot: Bool
+//    @Binding var needToDarken: Bool
+//    
+//    var didTakeSnapshot: (UIImage) -> Void
+//    
+//    init(
+//        loadingModels: Binding<[LoadingModel]>,
+//        modelLink: URL?,
+//        modelName: String,
+//        currentDestination: Binding<URL?>,
+//        needToTakeSnapshot: Binding<Bool>,
+//        needToDarken: Binding<Bool>,
+//        didTakeSnapshot: @escaping (UIImage) -> Void
+//    ) {
+//        self._loadingModels = loadingModels
+//        self.modelLink = modelLink
+//        self.modelName = modelName
+//        self._currentDestination = currentDestination
+//        self._needToTakeSnapshot = needToTakeSnapshot
+//        self._needToDarken = needToDarken
+//        self.didTakeSnapshot = didTakeSnapshot
+//        super.init()
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//}
