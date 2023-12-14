@@ -125,13 +125,12 @@ struct ContentView : View {
                                     image: Images.stars,
                                     text: Localizable.tryOn()
                                 )
-                                .padding(.vertical, 8)
-                                .background(Color.black)
                             }
                         }
                         .frame(height: doGlassesHaveModelHomeTab ? 60 : 0)
                         .opacity(doGlassesHaveModelHomeTab ? 1 : 0)
                         .allowsHitTesting(doGlassesHaveModelHomeTab)
+                        .background(Color.black)
                     }
                 }
             }
@@ -192,13 +191,12 @@ struct ContentView : View {
                                     image: Images.stars,
                                     text: Localizable.tryOn()
                                 )
-                                .padding(.vertical, 8)
-                                .background(Color.black)
                             }
                         }
                         .frame(height: doGlassesHaveModelGlassTab ? 60 : 0)
                         .opacity(doGlassesHaveModelGlassTab ? 1 : 0)
                         .allowsHitTesting(doGlassesHaveModelGlassTab)
+                        .background(Color.black)
                     }
                 }
             }
@@ -259,13 +257,12 @@ struct ContentView : View {
                                     image: Images.stars,
                                     text: Localizable.tryOn()
                                 )
-                                .padding(.vertical, 8)
-                                .background(Color.black)
                             }
                         }
                         .frame(height: doGlassesHaveModelWishlistTab ? 60 : 0)
                         .opacity(doGlassesHaveModelWishlistTab ? 1 : 0)
                         .allowsHitTesting(doGlassesHaveModelWishlistTab)
+                        .background(Color.black)
                     }
                 }
             }
@@ -329,13 +326,12 @@ struct ContentView : View {
                                     image: Images.stars,
                                     text: Localizable.tryOn()
                                 )
-                                .padding(.vertical, 8)
-                                .background(Color.black)
                             }
                         }
                         .frame(height: doGlassesHaveModelBagTab ? 60 : 0)
                         .opacity(doGlassesHaveModelBagTab ? 1 : 0)
                         .allowsHitTesting(doGlassesHaveModelBagTab)
+                        .background(Color.black)
                     }
                 }
             }
@@ -378,6 +374,7 @@ struct ContentView : View {
             let name = modelLink?
                 .lastPathComponent
                 .replacingOccurrences(of: "-titanium", with: "")
+                .replacingOccurrences(of: "-1", with: "")
                 .uppercased() ?? ""
             
             ARFittingRoomView(
@@ -419,7 +416,20 @@ struct ContentView : View {
     
     private func loadGlasses(url: URL?, completion: @escaping (Bool) -> Void) {
         guard let url, isARFaceTrackingConfigurationSupported else { return }
-        let folderName = url.lastPathComponent.replacingOccurrences(of: "-titanium", with: "")
+        
+        let folderName: String
+        if url.lastPathComponent.contains("-titanium") {
+            folderName = url.lastPathComponent
+                .replacingOccurrences(of: "-titanium", with: "First")
+                .replacingOccurrences(of: "First-1", with: "Second")
+        } else {
+            if url.lastPathComponent.contains("-1") {
+                folderName = url.lastPathComponent
+                    .replacingOccurrences(of: "-1", with: "Second")
+            } else {
+                folderName = url.lastPathComponent + "First"
+            }
+        }
         guard folderName != "ar" else { return }
         
         s3Service.filesCount(folderName: folderName) { count in
