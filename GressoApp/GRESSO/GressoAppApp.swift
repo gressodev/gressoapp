@@ -25,9 +25,6 @@ struct GressoAppApp: App {
         
         DispatchQueue.main.async {
             let defaults = UserDefaults.standard
-            if defaults.object(forKey: UserDefaultsKey.firstLaunchDate.rawValue) as? Date == nil {
-                defaults.set(Date(), forKey: UserDefaultsKey.firstLaunchDate.rawValue)
-            }
             let appLaunchCounter = defaults.integer(forKey: UserDefaultsKey.appLaunchCounter.rawValue)
             defaults.set(appLaunchCounter + 1, forKey: UserDefaultsKey.appLaunchCounter.rawValue)
         }
