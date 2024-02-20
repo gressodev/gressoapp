@@ -24,7 +24,7 @@ struct WebView: UIViewRepresentable {
 final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UIScrollViewDelegate {
     
     @Published var canGoBack: Bool = false
-    @Published var urlChanges: URL? = nil
+    @Published var urlChanges: URL?
     
     var webView: WKWebView
     
@@ -80,6 +80,10 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         webView.evaluateJavaScript(
             "document.getElementsByClassName('header__icon-wrapper tap-area hidden-desk')[0].click();"
         ) { (key, err) in }
+    }
+    
+    func load(url: URL) {
+        webView.load(URLRequest(url: url))
     }
     
     @MainActor
