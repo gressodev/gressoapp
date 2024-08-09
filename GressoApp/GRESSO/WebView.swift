@@ -53,6 +53,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.scrollView.delegate = self
         webView.scrollView.showsHorizontalScrollIndicator = false
+        webView.uiDelegate = self
         
         guard let url = URL(string: urlString) else { return }
         webView.load(URLRequest(url: url))
@@ -139,5 +140,24 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         if (scrollView.contentOffset.x != 0){
             scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y)
         }
+    }
+}
+
+extension WebViewModel: WKUIDelegate {
+    
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { _ in
+            completionHandler()
+        }))
+        
+        if var topController = UIApplication.topViewController() {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+
+            topController.present(alertController, animated: true)
+        }
+        
     }
 }

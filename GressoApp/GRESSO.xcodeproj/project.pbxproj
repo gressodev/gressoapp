@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9DF8456653DD26525925B71A /* Pods_GRESSO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E3A999C72AEBA3C25959F4 /* Pods_GRESSO.framework */; };
+		F50CC7472C664E6500FC1846 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50CC7462C664E6500FC1846 /* UIApplication+Extension.swift */; };
 		F537587C2A46D31800EF0139 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F537587B2A46D31800EF0139 /* Assets.swift */; };
 		F537587F2A48420200EF0139 /* ClassIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F537587E2A48420200EF0139 /* ClassIdentifiable.swift */; };
 		F53758832A48425700EF0139 /* ColorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53758822A48425700EF0139 /* ColorsView.swift */; };
@@ -64,6 +65,7 @@
 		08E3A999C72AEBA3C25959F4 /* Pods_GRESSO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GRESSO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE37BCC60C5D11179257E99 /* Pods-GRESSO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRESSO.release.xcconfig"; path = "Target Support Files/Pods-GRESSO/Pods-GRESSO.release.xcconfig"; sourceTree = "<group>"; };
 		47FF4BD92E850633C7432851 /* Pods-GRESSO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRESSO.debug.xcconfig"; path = "Target Support Files/Pods-GRESSO/Pods-GRESSO.debug.xcconfig"; sourceTree = "<group>"; };
+		F50CC7462C664E6500FC1846 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		F537587B2A46D31800EF0139 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		F537587E2A48420200EF0139 /* ClassIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassIdentifiable.swift; sourceTree = "<group>"; };
 		F53758822A48425700EF0139 /* ColorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsView.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				F53A8DFB2A62982100825578 /* UIColor+image.swift */,
 				F53A8E192A62C13200825578 /* UIView+Screenshot.swift */,
 				F5ECE2402A809A2800F52008 /* UserDefaults+Key.swift */,
+				F50CC7462C664E6500FC1846 /* UIApplication+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -504,6 +507,7 @@
 				F59E79062A6065F800309218 /* UIImage+textEmbeded.swift in Sources */,
 				F53A8E002A62A85100825578 /* R.generated.swift in Sources */,
 				F53F62D52B0A5917009163C6 /* AnalyticsService.swift in Sources */,
+				F50CC7472C664E6500FC1846 /* UIApplication+Extension.swift in Sources */,
 				F584200A2A4E3A95004C4A27 /* LoadingModel.swift in Sources */,
 				F53A8E182A62BB8B00825578 /* TryOnButton.swift in Sources */,
 				F53758852A48426C00EF0139 /* PagingColorsView.swift in Sources */,
