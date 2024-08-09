@@ -29,6 +29,8 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     var webView: WKWebView
     
     var reloadWishlistCompletion: (() -> Void)?
+    var hideTryOnButtonCompletion: (() -> Void)?
+    var showTryOnButtonCompletion: (() -> Void)?
     
     init(urlString: String) {
         webView = WKWebView(frame: .zero)
@@ -42,6 +44,34 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         )
         contentController.addUserScript(userScript)
         contentController.add(self, name: "buttonClicked")
+        
+        let prescriptionLensesScript = WKUserScript(
+            source: """
+            window.addEventListener("load", (event) => {
+            setTimeout(function() {
+            document.getElementsByClassName('la-select-lenses-btn')[0].addEventListener('click', function(){ window.webkit.messageHandlers.prescriptionLensesScript.postMessage('Button clicked')
+            });
+            },1000);
+            });
+            """,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: false
+        )
+        contentController.addUserScript(prescriptionLensesScript)
+        contentController.add(self, name: "prescriptionLensesScript")
+        
+        let closePrescriptionLensesScript = WKUserScript(
+            source: """
+            document.addEventListener("LensAdvizor:selectLensModal:close", function() {
+                window.webkit.messageHandlers.closePrescriptionLensesScript.postMessage('Button clicked')
+            });
+            """,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: false
+        )
+        contentController.addUserScript(closePrescriptionLensesScript)
+        contentController.add(self, name: "closePrescriptionLensesScript")
+        
         
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
@@ -75,6 +105,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     
     func goBack() {
         webView.goBack()
+        showTryOnButtonCompletion?()
     }
     
     func openMenu() {
@@ -91,6 +122,10 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "buttonClicked" {
             reloadWishlistCompletion?()
+        } else if message.name == "prescriptionLensesScript" {
+            hideTryOnButtonCompletion?()
+        } else if message.name == "closePrescriptionLensesScript" {
+            showTryOnButtonCompletion?()
         }
     }
     

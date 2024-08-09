@@ -357,6 +357,48 @@ struct ContentView : View {
             bagModel.reloadWishlistCompletion = {
                 wishlistModel.reload()
             }
+            
+            homeModel.hideTryOnButtonCompletion = {
+                doGlassesHaveModelHomeTab = false
+            }
+            glassModel.hideTryOnButtonCompletion = {
+                doGlassesHaveModelGlassTab = false
+            }
+            wishlistModel.hideTryOnButtonCompletion = {
+                doGlassesHaveModelWishlistTab = false
+            }
+            bagModel.hideTryOnButtonCompletion = {
+                doGlassesHaveModelBagTab = false
+            }
+            
+            homeModel.showTryOnButtonCompletion = {
+                isPageLoadingHomeTab = true
+                loadGlasses(url: homeModel.urlChanges?.absoluteURL) { have in
+                    doGlassesHaveModelHomeTab = have
+                    isPageLoadingHomeTab = false
+                }
+            }
+            glassModel.showTryOnButtonCompletion = {
+                isPageLoadingGlassTab = true
+                loadGlasses(url: glassModel.urlChanges?.absoluteURL) { have in
+                    doGlassesHaveModelGlassTab = have
+                    isPageLoadingGlassTab = false
+                }
+            }
+            wishlistModel.showTryOnButtonCompletion = {
+                isPageLoadingWishlistTab = true
+                loadGlasses(url: wishlistModel.urlChanges?.absoluteURL) { have in
+                    doGlassesHaveModelWishlistTab = have
+                    isPageLoadingWishlistTab = false
+                }
+            }
+            bagModel.showTryOnButtonCompletion = {
+                isPageLoadingBagTab = true
+                loadGlasses(url: bagModel.urlChanges?.absoluteURL) { have in
+                    doGlassesHaveModelBagTab = have
+                    isPageLoadingBagTab = false
+                }
+            }
         }
         .fullScreenCover(isPresented: $showingAR) {
             var modelLink: URL? {
