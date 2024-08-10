@@ -75,11 +75,12 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
+        config.allowsInlineMediaPlayback = true
         
         webView = WKWebView(frame: .zero, configuration: config)
         
         webView.allowsBackForwardNavigationGestures = true
-        webView.customUserAgent = "Gresso"
+//        webView.customUserAgent = "Gresso"
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.scrollView.delegate = self
         webView.scrollView.showsHorizontalScrollIndicator = false
