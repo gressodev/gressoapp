@@ -25,10 +25,12 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     
     @Published var canGoBack: Bool = false
     @Published var urlChanges: URL? = nil
+    @Published var cartBadgeValueChanges: Int = 0
     
     var webView: WKWebView
     
     var reloadWishlistCompletion: (() -> Void)?
+    var reloadCartCompletion: (() -> Void)?
     var hideTryOnButtonCompletion: (() -> Void)?
     var showTryOnButtonCompletion: (() -> Void)?
     
@@ -72,6 +74,18 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         contentController.addUserScript(closePrescriptionLensesScript)
         contentController.add(self, name: "closePrescriptionLensesScript")
         
+        let addToCartScript = WKUserScript(
+            source: """
+            document.getElementsByClassName('product-form__add-button button button--primary button--full')[0].addEventListener('click', function(){ window.webkit.messageHandlers.addToCartScript.postMessage('Button clicked');
+            });
+            document.getElementsByClassName('la-prescription-form-btn la-translate')[0].addEventListener('click', function(){ window.webkit.messageHandlers.addToCartScript.postMessage('Button clicked');
+            });
+            """,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: false
+        )
+        contentController.addUserScript(addToCartScript)
+        contentController.add(self, name: "addToCartScript")
         
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
@@ -127,6 +141,8 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             hideTryOnButtonCompletion?()
         } else if message.name == "closePrescriptionLensesScript" {
             showTryOnButtonCompletion?()
+        } else if message.name == "addToCartScript" {
+            reloadCartCompletion?()
         }
     }
     
@@ -137,6 +153,11 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             removeHeaderFooter()
             removeChat()
             disableCookies()
+            
+            guard estimatedProgress >= 0.7 else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.addToCart(needToAddOne: false)
+            }
         }
     }
     
@@ -175,6 +196,23 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.x != 0){
             scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y)
+        }
+    }
+    
+    private func addToCart(needToAddOne: Bool) {
+        webView.evaluateJavaScript("""
+            document.getElementsByClassName('header__cart-count header__cart-count--floating bubble-count')[0].innerText
+        """) { [weak self] (result, error) in
+            guard let self else { return }
+            if let error {
+                print("###", error)
+                return
+            } else {
+                let stringValue = "\(result ?? "")"
+                guard var intValue = Int(stringValue) else { return }
+                intValue += (needToAddOne ? 1 : 0)
+                cartBadgeValueChanges = intValue
+            }
         }
     }
 }

@@ -29,6 +29,7 @@ struct ContentView : View {
     @State private var modelsCount: Int = .zero
     
     @State private var showingAR = false
+    @State private var cartBadgeValue = 0
     
     @StateObject private var s3Service = S3ServiceHandler()
     
@@ -344,6 +345,7 @@ struct ContentView : View {
                     .padding(.top, 14)
             }
             .tag(ActiveTab.bag)
+            .badge(cartBadgeValue)
         }
         .preferredColorScheme(ColorScheme.dark)
         .tint(.white)
@@ -356,6 +358,16 @@ struct ContentView : View {
             }
             bagModel.reloadWishlistCompletion = {
                 wishlistModel.reload()
+            }
+            
+            homeModel.reloadCartCompletion = {
+                bagModel.reload()
+            }
+            glassModel.reloadCartCompletion = {
+                bagModel.reload()
+            }
+            wishlistModel.reloadCartCompletion = {
+                bagModel.reload()
             }
             
             homeModel.hideTryOnButtonCompletion = {
@@ -453,6 +465,18 @@ struct ContentView : View {
                 doGlassesHaveModelBagTab = have
                 isPageLoadingBagTab = false
             }
+        }
+        .onChange(of: homeModel.cartBadgeValueChanges) { cartBadgeValue in
+            self.cartBadgeValue = cartBadgeValue
+        }
+        .onChange(of: glassModel.cartBadgeValueChanges) { cartBadgeValue in
+            self.cartBadgeValue = cartBadgeValue
+        }
+        .onChange(of: wishlistModel.cartBadgeValueChanges) { cartBadgeValue in
+            self.cartBadgeValue = cartBadgeValue
+        }
+        .onChange(of: bagModel.cartBadgeValueChanges) { cartBadgeValue in
+            self.cartBadgeValue = cartBadgeValue
         }
     }
     
