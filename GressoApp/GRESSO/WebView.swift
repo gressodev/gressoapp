@@ -156,7 +156,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             
             guard estimatedProgress >= 0.7 else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.addToCart(needToAddOne: false)
+                self.reloadCartBadge()
             }
         }
     }
@@ -199,7 +199,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         }
     }
     
-    private func addToCart(needToAddOne: Bool) {
+    private func reloadCartBadge() {
         webView.evaluateJavaScript("""
             document.getElementsByClassName('header__cart-count header__cart-count--floating bubble-count')[0].innerText
         """) { [weak self] (result, error) in
@@ -209,8 +209,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
                 return
             } else {
                 let stringValue = "\(result ?? "")"
-                guard var intValue = Int(stringValue) else { return }
-                intValue += (needToAddOne ? 1 : 0)
+                guard let intValue = Int(stringValue) else { return }
                 cartBadgeValueChanges = intValue
             }
         }
