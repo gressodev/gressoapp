@@ -30,6 +30,7 @@ struct ContentView : View {
     
     @State private var showingAR = false
     @State private var cartBadgeValue = 0
+    @State private var wishlistBadgeValue = 0
     
     @StateObject private var s3Service = S3ServiceHandler()
     
@@ -276,6 +277,7 @@ struct ContentView : View {
                     .padding(.top, 14)
             }
             .tag(ActiveTab.wishlist)
+            .badge(wishlistBadgeValue)
             
             VStack {
                 VStack {
@@ -477,6 +479,18 @@ struct ContentView : View {
         }
         .onChange(of: bagModel.cartBadgeValueChanges) { cartBadgeValue in
             self.cartBadgeValue = cartBadgeValue
+        }
+        .onChange(of: homeModel.wishlistBadgeValueChanges) { wishlistBadgeValue in
+            self.wishlistBadgeValue = wishlistBadgeValue
+        }
+        .onChange(of: glassModel.wishlistBadgeValueChanges) { wishlistBadgeValue in
+            self.wishlistBadgeValue = wishlistBadgeValue
+        }
+        .onChange(of: wishlistModel.wishlistBadgeValueChanges) { wishlistBadgeValue in
+            self.wishlistBadgeValue = wishlistBadgeValue
+        }
+        .onChange(of: bagModel.wishlistBadgeValueChanges) { wishlistBadgeValue in
+            self.wishlistBadgeValue = wishlistBadgeValue
         }
     }
     

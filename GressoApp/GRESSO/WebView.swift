@@ -26,6 +26,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     @Published var canGoBack: Bool = false
     @Published var urlChanges: URL? = nil
     @Published var cartBadgeValueChanges: Int = 0
+    @Published var wishlistBadgeValueChanges: Int = 0
     
     var webView: WKWebView
     
@@ -33,6 +34,8 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     var reloadCartCompletion: (() -> Void)?
     var hideTryOnButtonCompletion: (() -> Void)?
     var showTryOnButtonCompletion: (() -> Void)?
+    
+    private var minusOneInWishlist = false
     
     init(urlString: String) {
         webView = WKWebView(frame: .zero)
@@ -80,12 +83,48 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             });
             document.getElementsByClassName('la-prescription-form-btn la-translate')[0].addEventListener('click', function(){ window.webkit.messageHandlers.addToCartScript.postMessage('Button clicked');
             });
+            document.getElementsByClassName('wishlist-cart wishlist-move-cart')[0].addEventListener('click', function(){ window.webkit.messageHandlers.addToCartScript.postMessage('Button clicked');
+            });
             """,
             injectionTime: .atDocumentEnd,
             forMainFrameOnly: false
         )
         contentController.addUserScript(addToCartScript)
         contentController.add(self, name: "addToCartScript")
+        
+        let deleteFromWishlistScript = WKUserScript(
+            source: """
+            window.addEventListener("load", (event) => {
+            setTimeout(function() {
+            let elements = document.getElementsByClassName('wh-wishlist-remove wishlist_page_remove_product');
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', function(){ window.webkit.messageHandlers.deleteFromWishlistScript.postMessage('Button clicked')});
+            };
+            },1000);
+            });
+            """,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: false
+        )
+        contentController.addUserScript(deleteFromWishlistScript)
+        contentController.add(self, name: "deleteFromWishlistScript")
+        
+        let addToCartFromWishlistScript = WKUserScript(
+            source: """
+            window.addEventListener("load", (event) => {
+            setTimeout(function() {
+            let elements = document.getElementsByClassName('wishlist-cart wishlist-move-cart');
+            for (let i = 0; i < elements.length; i++) {
+                elements[i].addEventListener('click', function(){ window.webkit.messageHandlers.addToCartFromWishlistScript.postMessage('Button clicked')});
+            };
+            },1000);
+            });
+            """,
+            injectionTime: .atDocumentEnd,
+            forMainFrameOnly: false
+        )
+        contentController.addUserScript(addToCartFromWishlistScript)
+        contentController.add(self, name: "addToCartFromWishlistScript")
         
         let config = WKWebViewConfiguration()
         config.userContentController = contentController
@@ -143,6 +182,17 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             showTryOnButtonCompletion?()
         } else if message.name == "addToCartScript" {
             reloadCartCompletion?()
+        } else if message.name == "deleteFromWishlistScript" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.reloadCartCompletion?()
+                self.minusOneInWishlist = true
+            }
+        } else if message.name == "addToCartFromWishlistScript" {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.reloadCartCompletion?()
+                self.reloadWishlistBadge()
+                self.minusOneInWishlist = true
+            }
         }
     }
     
@@ -154,9 +204,10 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             removeChat()
             disableCookies()
             
-            guard estimatedProgress >= 0.7 else { return }
+            guard estimatedProgress >= 0.75 else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.reloadCartBadge()
+                self.reloadWishlistBadge()
             }
         }
     }
@@ -164,7 +215,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
     private func removeHeaderFooter() {
         let script =
             """
-            var css = '.header,.footer,.announcement-bar {display: none !important;}',
+            var css = '.header,.footer {display: none !important;}',
                     head = document.head || document.getElementsByTagName('head')[0],
                     style = document.createElement('style');
                     
@@ -211,6 +262,23 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
                 let stringValue = "\(result ?? "")"
                 guard let intValue = Int(stringValue) else { return }
                 cartBadgeValueChanges = intValue
+            }
+        }
+    }
+    
+    private func reloadWishlistBadge() {
+        webView.evaluateJavaScript("""
+            document.getElementsByClassName('wishlist-h-count wishlist-total-count')[0].innerText
+        """) { [weak self] (result, error) in
+            guard let self else { return }
+            if let error {
+                print("###", error)
+                return
+            } else {
+                let stringValue = "\(result ?? "")"
+                guard let intValue = Int(stringValue) else { return }
+                wishlistBadgeValueChanges = minusOneInWishlist ? intValue - 1 : intValue
+                minusOneInWishlist = false
             }
         }
     }
