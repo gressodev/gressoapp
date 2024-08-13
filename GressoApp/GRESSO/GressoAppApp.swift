@@ -7,7 +7,7 @@
 
 import SwiftUI
 import AWSCore
-import Adjust
+import AdjustSdk
 import FirebaseCore
 
 let RFont = R.font
@@ -48,12 +48,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     private func setupAdjust() {
         let yourAppToken = "90iu8omef5z4"
         let environment = ADJEnvironmentSandbox
-        let adjustConfig = ADJConfig(
-            appToken: yourAppToken,
-            environment: environment)
-        adjustConfig?.logLevel = ADJLogLevelVerbose
-
-        Adjust.appDidLaunch(adjustConfig)
+        let adjustConfig = ADJConfig(appToken: yourAppToken,
+                                     environment: environment)
+        Adjust.initSdk(adjustConfig)
     }
     
 }

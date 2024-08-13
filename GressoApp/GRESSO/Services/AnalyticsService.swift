@@ -5,7 +5,7 @@
 //  Created by Dmitry Koshelev on 19/11/2023.
 //
 
-import Adjust
+import AdjustSdk
 import FirebaseAnalytics
 
 final class AnalyticsService {
