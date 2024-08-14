@@ -203,6 +203,9 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
             removeHeaderFooter()
             removeChat()
             disableCookies()
+            if let url = webView.url, url.absoluteString.contains("/pages/ar") {
+                removeAnnouncementBar()
+            }
             
             guard estimatedProgress >= 0.75 else { return }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -226,6 +229,24 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         webView.evaluateJavaScript("setTimeout(function() {\(script)});") { response, error -> Void in
             if let error {
                 print("### error removeHeaderFooter", error.localizedDescription)
+            }
+        }
+    }
+    
+    private func removeAnnouncementBar() {
+        let script =
+            """
+            var css = '.announcement-bar {display: none !important;}',
+                    head = document.head || document.getElementsByTagName('head')[0],
+                    style = document.createElement('style');
+                    
+            style.type = 'text/css';
+            style.appendChild(document.createTextNode(css));
+            head.appendChild(style);
+            """
+        webView.evaluateJavaScript("setTimeout(function() {\(script)});") { response, error -> Void in
+            if let error {
+                print("### error removeAnnouncementBar", error.localizedDescription)
             }
         }
     }
