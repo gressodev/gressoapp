@@ -59,6 +59,10 @@
 		F5ECE2412A809A2800F52008 /* UserDefaults+Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECE2402A809A2800F52008 /* UserDefaults+Key.swift */; };
 		F5ECE2432A809AF500F52008 /* AppStoreReviewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5ECE2422A809AF500F52008 /* AppStoreReviewManager.swift */; };
 		F5FEF7452C6B48D600534D27 /* AdjustSdk in Frameworks */ = {isa = PBXBuildFile; productRef = F5FEF7442C6B48D600534D27 /* AdjustSdk */; };
+		F5FEF74A2C6E6C9700534D27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = F5FEF7492C6E6C9700534D27 /* FirebaseAuth */; };
+		F5FEF74C2C6E6C9F00534D27 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F5FEF74B2C6E6C9F00534D27 /* FirebaseCrashlytics */; };
+		F5FEF74E2C6E6CA500534D27 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F5FEF74D2C6E6CA500534D27 /* FirebaseFirestore */; };
+		F5FEF7502C6E6CA800534D27 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = F5FEF74F2C6E6CA800534D27 /* FirebaseMessaging */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -118,6 +122,7 @@
 		F5CA68092A3323CC0014CCDC /* ARViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewContainer.swift; sourceTree = "<group>"; };
 		F5ECE2402A809A2800F52008 /* UserDefaults+Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Key.swift"; sourceTree = "<group>"; };
 		F5ECE2422A809AF500F52008 /* AppStoreReviewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewManager.swift; sourceTree = "<group>"; };
+		F5FEF7482C6E6A8000534D27 /* GRESSO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GRESSO.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +132,11 @@
 			files = (
 				F5FEF7452C6B48D600534D27 /* AdjustSdk in Frameworks */,
 				9DF8456653DD26525925B71A /* Pods_GRESSO.framework in Frameworks */,
+				F5FEF7502C6E6CA800534D27 /* FirebaseMessaging in Frameworks */,
+				F5FEF74C2C6E6C9F00534D27 /* FirebaseCrashlytics in Frameworks */,
 				F54467942A94A4DA00E6D156 /* FirebaseAnalytics in Frameworks */,
+				F5FEF74A2C6E6C9700534D27 /* FirebaseAuth in Frameworks */,
+				F5FEF74E2C6E6CA500534D27 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +248,7 @@
 		F5396D652A30E6E50059E331 /* GRESSO */ = {
 			isa = PBXGroup;
 			children = (
+				F5FEF7482C6E6A8000534D27 /* GRESSO.entitlements */,
 				F53F62D62B0A64DB009163C6 /* GoogleService-Info.plist */,
 				F53A8E1B2A6490DA00825578 /* Info.plist */,
 				F58420082A4E3A8E004C4A27 /* Models */,
@@ -352,6 +362,10 @@
 			packageProductDependencies = (
 				F54467932A94A4DA00E6D156 /* FirebaseAnalytics */,
 				F5FEF7442C6B48D600534D27 /* AdjustSdk */,
+				F5FEF7492C6E6C9700534D27 /* FirebaseAuth */,
+				F5FEF74B2C6E6C9F00534D27 /* FirebaseCrashlytics */,
+				F5FEF74D2C6E6CA500534D27 /* FirebaseFirestore */,
+				F5FEF74F2C6E6CA800534D27 /* FirebaseMessaging */,
 			);
 			productName = GressoApp;
 			productReference = F5396D632A30E6E50059E331 /* GRESSO.app */;
@@ -660,13 +674,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GRESSO/GRESSO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
+				DEVELOPMENT_TEAM = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GRESSO/Info.plist;
@@ -688,7 +701,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gresso.GressoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GressoApp Development";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -704,13 +716,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = GRESSO/GRESSO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 57N6APB8T5;
+				DEVELOPMENT_TEAM = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = GRESSO/Info.plist;
@@ -732,7 +743,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.gresso.GressoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "GressoApp Development";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -794,6 +804,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F544678D2A92238F00E6D156 /* XCRemoteSwiftPackageReference "ios_sdk" */;
 			productName = AdjustSdk;
+		};
+		F5FEF7492C6E6C9700534D27 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F54467922A94A4DA00E6D156 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		F5FEF74B2C6E6C9F00534D27 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F54467922A94A4DA00E6D156 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		F5FEF74D2C6E6CA500534D27 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F54467922A94A4DA00E6D156 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		F5FEF74F2C6E6CA800534D27 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F54467922A94A4DA00E6D156 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
