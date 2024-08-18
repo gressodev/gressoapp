@@ -352,6 +352,11 @@ struct ContentView : View {
         .preferredColorScheme(ColorScheme.dark)
         .tint(.white)
         .onAppear {
+            if #available(iOS 16.0, *) {
+                UNUserNotificationCenter.current().setBadgeCount(0)
+            } else {
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            }
             homeModel.reloadWishlistCompletion = {
                 wishlistModel.reload()
             }
