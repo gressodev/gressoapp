@@ -60,9 +60,13 @@ final class ARFaceTrackingView: ARView {
             scene.addAnchor(model)
             
             if needToDarken {
-                model.notifications.darkenLenses.post()
+                guard let entity = scene.findEntity(named: "dark") else { return }
+                entity.isEnabled = false
+//                model.notifications.darkenLenses.post()
             } else {
-                model.notifications.lightenLenses.post()
+                guard let entity = scene.findEntity(named: "dark") else { return }
+                entity.isEnabled = true
+//                model.notifications.lightenLenses.post()
             }
         } catch {
             print("Fail loading entity.", error.localizedDescription)
