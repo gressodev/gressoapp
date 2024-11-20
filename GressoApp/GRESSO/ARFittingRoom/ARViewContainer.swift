@@ -61,11 +61,11 @@ final class ARFaceTrackingView: ARView {
             
             if needToDarken {
                 guard let entity = scene.findEntity(named: "dark") else { return }
-                entity.isEnabled = false
+                entity.isEnabled = true
 //                model.notifications.darkenLenses.post()
             } else {
                 guard let entity = scene.findEntity(named: "dark") else { return }
-                entity.isEnabled = true
+                entity.isEnabled = false
 //                model.notifications.lightenLenses.post()
             }
         } catch {
