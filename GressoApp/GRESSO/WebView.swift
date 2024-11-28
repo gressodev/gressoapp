@@ -173,6 +173,14 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         webView.reload()
     }
     
+    func load(url: URL) {
+        webView.load(URLRequest(url: url))
+    }
+    
+    func clearHistory() {
+        webView.backForwardList.perform(Selector(("_removeAllItems")))
+    }
+    
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name == "buttonClicked" {
             reloadWishlistCompletion?()

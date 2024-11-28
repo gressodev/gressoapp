@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28CCCE712CF32AAE0020D356 /* RegionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CCCE702CF32AAA0020D356 /* RegionService.swift */; };
+		28CCCE732CF337270020D356 /* ActiveTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CCCE722CF337250020D356 /* ActiveTab.swift */; };
+		28CCCE762CF3374A0020D356 /* StoreCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CCCE752CF3374A0020D356 /* StoreCountry.swift */; };
+		28CCCE7A2CF337C40020D356 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CCCE792CF337C40020D356 /* HomeTabView.swift */; };
 		9DF8456653DD26525925B71A /* Pods_GRESSO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08E3A999C72AEBA3C25959F4 /* Pods_GRESSO.framework */; };
 		F50CC7472C664E6500FC1846 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50CC7462C664E6500FC1846 /* UIApplication+Extension.swift */; };
 		F537587C2A46D31800EF0139 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F537587B2A46D31800EF0139 /* Assets.swift */; };
@@ -68,6 +72,10 @@
 /* Begin PBXFileReference section */
 		08E3A999C72AEBA3C25959F4 /* Pods_GRESSO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GRESSO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FE37BCC60C5D11179257E99 /* Pods-GRESSO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRESSO.release.xcconfig"; path = "Target Support Files/Pods-GRESSO/Pods-GRESSO.release.xcconfig"; sourceTree = "<group>"; };
+		28CCCE702CF32AAA0020D356 /* RegionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionService.swift; sourceTree = "<group>"; };
+		28CCCE722CF337250020D356 /* ActiveTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTab.swift; sourceTree = "<group>"; };
+		28CCCE752CF3374A0020D356 /* StoreCountry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCountry.swift; sourceTree = "<group>"; };
+		28CCCE792CF337C40020D356 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		47FF4BD92E850633C7432851 /* Pods-GRESSO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GRESSO.debug.xcconfig"; path = "Target Support Files/Pods-GRESSO/Pods-GRESSO.debug.xcconfig"; sourceTree = "<group>"; };
 		F50CC7462C664E6500FC1846 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		F537587B2A46D31800EF0139 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
@@ -255,6 +263,9 @@
 				F53758A62A4A16E000EF0139 /* Views */,
 				F5396D662A30E6E50059E331 /* GressoAppApp.swift */,
 				F5396D682A30E6E50059E331 /* ContentView.swift */,
+				28CCCE792CF337C40020D356 /* HomeTabView.swift */,
+				28CCCE752CF3374A0020D356 /* StoreCountry.swift */,
+				28CCCE722CF337250020D356 /* ActiveTab.swift */,
 				F584DFC92A349965002517FD /* WebView.swift */,
 				F53758802A48422900EF0139 /* ARFittingRoom */,
 				F5A82A5C2A39F14D00B033EF /* Services */,
@@ -333,6 +344,7 @@
 		F5A82A5C2A39F14D00B033EF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				28CCCE702CF32AAA0020D356 /* RegionService.swift */,
 				F56F000D2A3F262E00D66042 /* S3ServiceHandler.swift */,
 				F5ECE2422A809AF500F52008 /* AppStoreReviewManager.swift */,
 				F53F62D42B0A5917009163C6 /* AnalyticsService.swift */,
@@ -509,14 +521,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28CCCE762CF3374A0020D356 /* StoreCountry.swift in Sources */,
 				F53A8DFC2A62982100825578 /* UIColor+image.swift in Sources */,
 				F5ECE2412A809A2800F52008 /* UserDefaults+Key.swift in Sources */,
 				F53758A52A49F63C00EF0139 /* SnapshotView.swift in Sources */,
 				F53A8E1A2A62C13200825578 /* UIView+Screenshot.swift in Sources */,
+				28CCCE712CF32AAE0020D356 /* RegionService.swift in Sources */,
 				F53758832A48425700EF0139 /* ColorsView.swift in Sources */,
 				F53758A82A4A16E800EF0139 /* ActivityView.swift in Sources */,
 				F537587F2A48420200EF0139 /* ClassIdentifiable.swift in Sources */,
 				F56F000E2A3F262E00D66042 /* S3ServiceHandler.swift in Sources */,
+				28CCCE732CF337270020D356 /* ActiveTab.swift in Sources */,
 				F537587C2A46D31800EF0139 /* Assets.swift in Sources */,
 				F59E79062A6065F800309218 /* UIImage+textEmbeded.swift in Sources */,
 				F53A8E002A62A85100825578 /* R.generated.swift in Sources */,
@@ -533,6 +548,7 @@
 				F58420072A4E2BE1004C4A27 /* Collection+SafeGetter.swift in Sources */,
 				F53758882A48428900EF0139 /* ColorCollectionCell.swift in Sources */,
 				F5396D672A30E6E50059E331 /* GressoAppApp.swift in Sources */,
+				28CCCE7A2CF337C40020D356 /* HomeTabView.swift in Sources */,
 				F5CA680A2A3323CC0014CCDC /* ARViewContainer.swift in Sources */,
 				F56F00102A3F26E800D66042 /* ARFittingRoomView.swift in Sources */,
 			);
@@ -677,7 +693,7 @@
 				CODE_SIGN_ENTITLEMENTS = GRESSO/GRESSO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
@@ -697,7 +713,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gresso.GressoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -719,7 +735,7 @@
 				CODE_SIGN_ENTITLEMENTS = GRESSO/GRESSO.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 0;
 				DEVELOPMENT_ASSET_PATHS = "\"GRESSO/Preview Content\"";
 				DEVELOPMENT_TEAM = 57N6APB8T5;
 				ENABLE_PREVIEWS = YES;
@@ -739,7 +755,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gresso.GressoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

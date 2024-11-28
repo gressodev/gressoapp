@@ -67,9 +67,37 @@ struct _R {
     }
 
 
-    /// This `_R.string.localizable` struct is generated, and contains static references to 1 localization keys.
+    /// This `_R.string.localizable` struct is generated, and contains static references to 5 localization keys.
     struct localizable {
       let source: RswiftResources.StringResource.Source
+
+      /// en translation: Kazakhstan
+      ///
+      /// Key: Kazakhstan
+      ///
+      /// Locales: en, ru, es-419
+      var kazakhstan: RswiftResources.StringResource { .init(key: "Kazakhstan", tableName: "Localizable", source: source, developmentValue: "Kazakhstan", comment: nil) }
+
+      /// en translation: Russia
+      ///
+      /// Key: Russia
+      ///
+      /// Locales: en, ru, es-419
+      var russia: RswiftResources.StringResource { .init(key: "Russia", tableName: "Localizable", source: source, developmentValue: "Russia", comment: nil) }
+
+      /// en translation: Store Country
+      ///
+      /// Key: Store Country
+      ///
+      /// Locales: en, ru, es-419
+      var storeCountry: RswiftResources.StringResource { .init(key: "Store Country", tableName: "Localizable", source: source, developmentValue: "Store Country", comment: nil) }
+
+      /// en translation: Worldwide
+      ///
+      /// Key: Worldwide
+      ///
+      /// Locales: en, ru, es-419
+      var worldwide: RswiftResources.StringResource { .init(key: "Worldwide", tableName: "Localizable", source: source, developmentValue: "Worldwide", comment: nil) }
 
       /// en translation: TRY-ON
       ///
@@ -88,7 +116,7 @@ struct _R {
     var accentColor: RswiftResources.ColorResource { .init(name: "AccentColor", path: [], bundle: bundle) }
   }
 
-  /// This `_R.image` struct is generated, and contains static references to 18 images.
+  /// This `_R.image` struct is generated, and contains static references to 20 images.
   struct image {
     let bundle: Foundation.Bundle
 
@@ -112,6 +140,12 @@ struct _R {
 
     /// Image `favoritesActive`.
     var favoritesActive: RswiftResources.ImageResource { .init(name: "favoritesActive", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `gearshape`.
+    var gearshape: RswiftResources.ImageResource { .init(name: "gearshape", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
+
+    /// Image `gearshape.fill`.
+    var gearshapeFill: RswiftResources.ImageResource { .init(name: "gearshape.fill", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }
 
     /// Image `home`.
     var home: RswiftResources.ImageResource { .init(name: "home", path: [], bundle: bundle, locale: nil, onDemandResourceTags: nil) }

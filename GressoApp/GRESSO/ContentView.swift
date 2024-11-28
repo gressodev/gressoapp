@@ -8,19 +8,25 @@
 import SwiftUI
 import ARKit
 
-enum ActiveTab: Int {
-    case home = 0
-    case glass = 1
-    case wishlist = 2
-    case bag = 3
-}
+var gressoUrl: String = {
+    if let regionCode = RegionService.shared.getRegionCode() {
+        switch regionCode {
+        case "RU":
+            return "gresso.ru"
+        case "KZ":
+            return "gresso.ru/ru-kz"
+        default:
+            return "gresso.com"
+        }
+    } else {
+        return "gresso.com"
+    }
+}()
 
 struct ContentView : View {
-    
     private enum LocalConstants {
         static let navBarHeight: CGFloat = 44
         static let gressoLabel = "GRESSO"
-        static let gressoUrl = (Locale.current.regionCode ?? "") == "RU" ? "gresso.ru" : "gresso.com"
     }
     
     private let isARFaceTrackingConfigurationSupported = ARFaceTrackingConfiguration.isSupported
@@ -37,16 +43,16 @@ struct ContentView : View {
     @State private var activeTab: ActiveTab = .glass
     
     @StateObject var homeModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl)"
+        urlString: "https://\(gressoUrl)"
     )
     @StateObject var glassModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl)/pages/ar"
+        urlString: "https://\(gressoUrl)/pages/ar"
     )
     @StateObject var wishlistModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl)/apps/wishlist"
+        urlString: "https://\(gressoUrl)/apps/wishlist"
     )
     @StateObject var bagModel = WebViewModel(
-        urlString: "https://\(LocalConstants.gressoUrl)/cart"
+        urlString: "https://\(gressoUrl)/cart"
     )
     
     @State private var doGlassesHaveModelHomeTab = false
@@ -59,8 +65,28 @@ struct ContentView : View {
     @State private var isPageLoadingWishlistTab = false
     @State private var isPageLoadingBagTab = false
     
+    @State private var selectedCountry: StoreCountry // Хранит выбранную страну
+    private let countries: [StoreCountry] = [
+        .worldwide,
+        .russia,
+        .kazakhstan
+    ]
+    
     init() {
         UITabBar.appearance().unselectedItemTintColor = .white
+        
+        if let regionCode = RegionService.shared.getRegionCode() {
+            switch regionCode {
+            case "RU":
+                selectedCountry = .russia
+            case "KZ":
+                selectedCountry = .kazakhstan
+            default:
+                selectedCountry = .worldwide
+            }
+        } else {
+            selectedCountry = .worldwide
+        }
     }
     
     var body: some View {
@@ -348,6 +374,41 @@ struct ContentView : View {
             }
             .tag(ActiveTab.bag)
             .badge(cartBadgeValue)
+            
+            VStack {
+                List {
+                    Section {
+                        ForEach(countries, id: \.self) { country in
+                            HStack {
+                                Text(country.countryName)
+                                Spacer()
+                                if country == selectedCountry {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                            .contentShape(Rectangle()) // Позволяет кликать по всей области строки
+                            .onTapGesture {
+                                selectedCountry = country
+                                RegionService.shared.setRegionCode(country.countryRegionCode)
+                            }
+                        }
+                    } header: {
+                        Text(Localizable.storeCountry())
+                            .font(.system(size: 32))
+                    }
+                    .textCase(nil)
+                }.listStyle(GroupedListStyle())
+            }
+            .tabItem {
+                let image = activeTab == .settings ? Image(uiImage: Images.gearshapeFill) : Image(uiImage: Images.gearshape)
+                image
+                    .resizable()
+                    .renderingMode(.original)
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
+                    .padding(.top, 14)
+            }
+            .tag(ActiveTab.settings)
         }
         .preferredColorScheme(ColorScheme.dark)
         .tint(.white)
@@ -430,6 +491,8 @@ struct ContentView : View {
                     return wishlistModel.urlChanges
                 case .bag:
                     return bagModel.urlChanges
+                default:
+                    return nil
                 }
             }
             let name = modelLink?
@@ -496,6 +559,27 @@ struct ContentView : View {
         }
         .onChange(of: bagModel.wishlistBadgeValueChanges) { wishlistBadgeValue in
             self.wishlistBadgeValue = wishlistBadgeValue
+        }
+        .onChange(of: selectedCountry) { country in
+            switch country.countryRegionCode {
+            case "RU":
+                gressoUrl = "gresso.ru"
+            case "KZ":
+                gressoUrl = "gresso.ru/ru-kz"
+            default:
+                gressoUrl = "gresso.com"
+            }
+            homeModel.clearHistory()
+            homeModel.load(url: URL(string: "https://\(gressoUrl)")!)
+            
+            glassModel.clearHistory()
+            glassModel.load(url: URL(string: "https://\(gressoUrl)/pages/ar")!)
+            
+            wishlistModel.clearHistory()
+            wishlistModel.load(url: URL(string: "https://\(gressoUrl)/apps/wishlist")!)
+            
+            bagModel.clearHistory()
+            bagModel.load(url: URL(string: "https://\(gressoUrl)/cart")!)
         }
     }
     

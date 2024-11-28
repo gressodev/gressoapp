@@ -29,6 +29,8 @@ enum Images {
     static let squares = RImage.squares() ?? UIImage()
     static let favorites = RImage.favorites() ?? UIImage()
     static let bag = RImage.bag() ?? UIImage()
+    static let gearshape = RImage.gearshape() ?? UIImage()
+    static let gearshapeFill = RImage.gearshapeFill() ?? UIImage()
     
     static let stars = RImage.stars() ?? UIImage()
     static let cross = RImage.cross() ?? UIImage()
