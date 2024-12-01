@@ -133,6 +133,7 @@ final class WebViewModel: NSObject, ObservableObject, WKScriptMessageHandler, UI
         webView = WKWebView(frame: .zero, configuration: config)
         
         webView.allowsBackForwardNavigationGestures = true
+        webView.customUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_7_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4.1 Safari/605.1.15"
 //        webView.customUserAgent = "Gresso"
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.scrollView.delegate = self
