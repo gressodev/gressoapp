@@ -12,6 +12,7 @@ import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseMessaging
+import BackgroundTasks
 
 let RFont = R.font
 let RImage = R.image
@@ -42,6 +43,8 @@ struct GressoAppApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
     
+    let backgroundTaskIdentifier = "com.gresso.GressoApp.downloadModels"
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         setupAdjust()
         FirebaseApp.configure()
@@ -50,17 +53,51 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
         Messaging.messaging().token { token, error in
           if let error = error {
             print("Error fetching FCM registration token: \(error)")
-          } else if let token = token {
+          } else if let token {
             print("FCM registration token: \(token)")
-//            self.fcmRegTokenMessage.text  = "Remote FCM registration token: \(token)"
           }
         }
+        
+        // Регистрируем обработчик фоновой задачи
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: backgroundTaskIdentifier, using: nil) { task in
+            self.handleBackgroundTask(task: task as! BGProcessingTask)
+        }
+
+        // Планируем фоновую задачу при запуске приложения
+        scheduleBackgroundTask()
         
         return true
     }
     
+    private func scheduleBackgroundTask() {
+        let request = BGProcessingTaskRequest(identifier: backgroundTaskIdentifier)
+        request.requiresNetworkConnectivity = true // Задача требует интернета
+        request.requiresExternalPower = false // Не требует подключения к зарядке
+
+        do {
+            try BGTaskScheduler.shared.submit(request)
+        } catch {
+            print("### Не удалось запланировать фоновую задачу: \(error)")
+        }
+    }
+    
+    private func handleBackgroundTask(task: BGProcessingTask) {
+        AnalyticsService.shared.backgroundTaskLaunch()
+        // Устанавливаем обработчик завершения задачи
+        task.expirationHandler = {
+            // Вызывается, если задача завершается из-за нехватки времени
+            task.setTaskCompleted(success: false)
+        }
+        
+        // Запускаем загрузку моделей
+        let s3Service = S3ServiceHandler()
+        s3Service.downloadAllModelsIfNeeded {
+            // Уведомляем систему о завершении задачи
+            task.setTaskCompleted(success: true)
+        }
+    }
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        print("### deviceToken:", deviceToken)
         Messaging.messaging().apnsToken = deviceToken
     }
     

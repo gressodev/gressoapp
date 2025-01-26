@@ -45,4 +45,8 @@ final class AnalyticsService {
         let event = ADJEvent(eventToken: "tqg6aw")
         Adjust.trackEvent(event)
     }
+    
+    func backgroundTaskLaunch() {
+        Analytics.logEvent("background_task_launch", parameters: nil)
+    }
 }

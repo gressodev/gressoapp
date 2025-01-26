@@ -14,7 +14,7 @@ var gressoUrl: String = {
         case "RU":
             return "gresso.ru"
         case "KZ":
-            return "gresso.ru/ru-kz"
+            return "gresso.kz"
         default:
             return "gresso.com"
         }
