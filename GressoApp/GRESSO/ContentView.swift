@@ -565,7 +565,7 @@ struct ContentView : View {
             case "RU":
                 gressoUrl = "gresso.ru"
             case "KZ":
-                gressoUrl = "gresso.ru/ru-kz"
+                gressoUrl = "gresso.kz"
             default:
                 gressoUrl = "gresso.com"
             }
